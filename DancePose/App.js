@@ -17,22 +17,36 @@ import {
 } from 'react-native';
 
 import {
-  Header,
-  LearnMoreLinks,
   Colors,
   DebugInstructions,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
+import { 
+  Header,
+  Button
+ } from 'react-native-elements';
+
+import EntypoIcon from 'react-native-vector-icons/Entypo';
+EntypoIcon.loadFont();
+
 const App: () => React$Node = () => {
   return (
     <>
+      <Header
+        containerStyle={{
+          backgroundColor: '#B82303',
+          justifyContent: 'space-around',
+        }}
+        leftComponent={<EntypoIcon name='menu' color='#fff' size={30} />}
+        centerComponent={{ text: 'Dance Pose', style: { color: '#fff', fontSize: 20, fontWeight: 'bold' } }}
+        rightComponent={<EntypoIcon name='home' color='#fff' size={30}/>}
+      />
       <StatusBar barStyle="dark-content" />
       <SafeAreaView>
         <ScrollView
           contentInsetAdjustmentBehavior="automatic"
           style={styles.scrollView}>
-          <Header />
           {global.HermesInternal == null ? null : (
             <View style={styles.engine}>
               <Text style={styles.footer}>Engine: Hermes</Text>
@@ -40,31 +54,41 @@ const App: () => React$Node = () => {
           )}
           <View style={styles.body}>
             <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Step One</Text>
+              <Text style={styles.sectionTitle}>Deep-learning based App</Text>
               <Text style={styles.sectionDescription}>
-                Edit <Text style={styles.highlight}>App.js</Text> to change this
-                screen and then come back to see your edits.
+                Apply Single-Network Whole-Body Pose Estimation which is based on <Text style={styles.highlight}>OpenPose</Text> library.
               </Text>
             </View>
             <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>See Your Changes</Text>
+              <Text style={styles.sectionTitle}>Dancing Pose Correction</Text>
               <Text style={styles.sectionDescription}>
-                <ReloadInstructions />
+                You can correct your dance by comparing your dancing with professional dancers.
               </Text>
             </View>
             <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Debug</Text>
+              <Text style={styles.sectionTitle}>Easy to Use</Text>
               <Text style={styles.sectionDescription}>
-                <DebugInstructions />
+                Just record your dancing and press <Text style={styles.highlight}>Start Analysis</Text> button.
               </Text>
             </View>
             <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Learn More</Text>
+              <Text style={styles.sectionTitle}>Provide Feedback</Text>
               <Text style={styles.sectionDescription}>
-                Read the docs to discover what to do next:
+                You can get feedback of your dance pose which is compared with professional dancers.
               </Text>
             </View>
-            <LearnMoreLinks />
+            <View style={{
+              flex: 1,
+              marginTop: 40,
+              marginHorizontal: 64,
+            }}>
+              <Button
+                title='Start Record'
+                // titleStyle={{ fontWeight: 'bold' }}
+                buttonStyle= {{ backgroundColor: '#B82303' }}
+                onPress={() => {}}
+              />
+            </View>
           </View>
         </ScrollView>
       </SafeAreaView>
