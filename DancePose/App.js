@@ -18,8 +18,8 @@ import {
 
 import {
   Colors,
-  DebugInstructions,
-  ReloadInstructions,
+  // DebugInstructions,
+  // ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
 import { 
