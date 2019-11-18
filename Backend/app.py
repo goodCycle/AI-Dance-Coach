@@ -12,7 +12,6 @@ app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
 @app.route('/')
 def hello_world():
-    z = 123
     return 'Hello World!'
 
 
