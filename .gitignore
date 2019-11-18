@@ -1,10 +1,6 @@
 package-lock.json
 yarn.lock
 
-# ignore mp4 and jpg
-*.mp4
-*.jpg
-
 ### Python template
 # Byte-compiled / optimized / DLL files
 __pycache__/
