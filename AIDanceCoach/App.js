@@ -11,10 +11,27 @@ import MainView from './component/MainView';
 import CameraView from './component/CameraView';
 
 export class App extends React.Component {
+  state = {
+    recording: false
+  }
+
+  onPressStartRecord = () => {
+    if (!this.state.recording) {
+      this.setState({ recording: true });
+    }
+  }
+
+  onPressStopRecord = () => {
+    if (this.state.recording) {
+      this.setState({ recording: false });
+    }
+  }
+
   render() {
     return (
-      // <MainView />
-      <CameraView />
+      this.state.recording
+      ? <CameraView onPressStopRecord={this.onPressStopRecord}/>
+      : <MainView onPressStartRecord={this.onPressStartRecord}/>
     );
   }
 };

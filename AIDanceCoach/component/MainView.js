@@ -1,5 +1,6 @@
 'use strict';
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import {
   SafeAreaView,
   StyleSheet,
@@ -23,6 +24,11 @@ import Icon from 'react-native-vector-icons/Entypo';
 Icon.loadFont();
 
 class MainView extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+
   render() {
     return (
       <>
@@ -79,9 +85,7 @@ class MainView extends Component {
                   title='Start Record'
                   // titleStyle={{ fontWeight: 'bold' }}
                   buttonStyle= {{ backgroundColor: '#B82303' }}
-                  onPress={() => {
-                
-                  }}
+                  onPress={this.props.onPressStartRecord}
                 />
               </View>
             </View>
@@ -130,5 +134,9 @@ const styles = StyleSheet.create({
     textAlign: 'right',
   },
 });
+
+MainView.propTypes = {
+  onPressStartRecord: PropTypes.func.isRequired,
+};
 
 export default MainView;
