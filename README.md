@@ -6,6 +6,8 @@ CS470(Introduction to Artificial Intelligence) final project - React Native App 
 * After you clone our project,
 ```
    > cd AIDanceCoach
-   > npm install
+   > yarn
+   > cd ios && pod install
+   > cd ..
    > react-native run-ios
 ```
