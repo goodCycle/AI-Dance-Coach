@@ -1,17 +1,38 @@
-'use strict';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {
-  AppRegistry,
-  Dimensions,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
-  Button
+  Button,
+  ActivityIndicator,
 } from 'react-native';
 import { RNCamera } from 'react-native-camera';
 // import Config from "react-native-config";
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    flexDirection: 'column',
+  },
+  preview: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+  },
+  capture: {
+    // flex: 0,
+    backgroundColor: '#B82303',
+    borderRadius: 5,
+    color: '#000',
+    padding: 10,
+    marginHorizontal: 70,
+    marginBottom: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
 
 class CameraView extends Component {
   constructor() {
@@ -22,8 +43,39 @@ class CameraView extends Component {
   getInitialState() {
     return {
       recording: false,
-      processing: false
+      processing: false,
     };
+  }
+
+  startRecording = async () => {
+    this.setState({ recording: true });
+    // default to mp4 for android as codec is not set
+    const { uri, codec = 'mp4' } = await this.camera.recordAsync();
+    this.setState({ recording: false, processing: true });
+    const type = `video/${codec}`;
+
+    const data = new FormData();
+    data.append('video', {
+      name: 'mobile-video-upload',
+      type,
+      uri,
+    });
+
+    try {
+      // await fetch(Config.ENDPOINT, {
+      //   method: "post",
+      //   body: data
+      // });
+      console.log('fetch!');
+    } catch (e) {
+      console.error(e);
+    }
+
+    this.setState({ processing: false });
+  }
+
+  stopRecording = () => {
+    this.camera.stopRecording();
   }
 
   render() {
@@ -31,17 +83,17 @@ class CameraView extends Component {
 
     let button = (
       <TouchableOpacity
-        onPress={this.startRecording.bind(this)}
+        onPress={this.startRecording}
         style={styles.capture}
       >
-        <Text style={{ fontSize: 14 }}> RECORD </Text>
+        <Text style={{ fontSize: 14, color: '#fff' }}> RECORD </Text>
       </TouchableOpacity>
     );
 
     if (recording) {
       button = (
         <TouchableOpacity
-          onPress={this.stopRecording.bind(this)}
+          onPress={this.stopRecording}
           style={styles.capture}
         >
           <Text style={{ fontSize: 14 }}> STOP </Text>
@@ -57,10 +109,12 @@ class CameraView extends Component {
       );
     }
 
+    const { onPressStopRecord } = this.props;
+
     return (
       <View style={styles.container}>
         <RNCamera
-          ref={ref => {
+          ref={(ref) => {
             this.camera = ref;
           }}
           style={styles.preview}
@@ -68,71 +122,19 @@ class CameraView extends Component {
           flashMode={RNCamera.Constants.FlashMode.on}
         />
         <View
-          style={{ flex: 1, flexDirection: "column", justifyContent: "center" }}
+          style={{ flex: 0.3, flexDirection: 'column', justifyContent: 'center' }}
         >
           {button}
           <Button
-            title='Stop Record'
-            // titleStyle={{ fontWeight: 'bold' }}
-            buttonStyle= {{ backgroundColor: '#B82303' }}
-            onPress={this.props.onPressStopRecord}
+            title="Go to Home"
+            buttonStyle={{ backgroundColor: '#B82303' }}
+            onPress={onPressStopRecord}
           />
         </View>
       </View>
     );
   }
-
-  async startRecording() {
-    this.setState({ recording: true });
-    // default to mp4 for android as codec is not set
-    const { uri, codec = "mp4" } = await this.camera.recordAsync();
-    this.setState({ recording: false, processing: true });
-    const type = `video/${codec}`;
-  
-    const data = new FormData();
-    data.append("video", {
-      name: "mobile-video-upload",
-      type,
-      uri
-    });
-  
-    try {
-      // await fetch(Config.ENDPOINT, {
-      //   method: "post",
-      //   body: data
-      // });
-      console.log('fetch!');
-    } catch (e) {
-      console.error(e);
-    }
-  
-    this.setState({ processing: false });
-  }
-
-  stopRecording() {
-      this.camera.stopRecording();
-  }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: 'row',
-  },
-  preview: {
-    flex: 1,
-    justifyContent: 'flex-end',
-    alignItems: 'center'
-  },
-  capture: {
-    flex: 0,
-    backgroundColor: '#fff',
-    borderRadius: 5,
-    color: '#000',
-    padding: 10,
-    margin: 40
-  }
-});
 
 CameraView.propTypes = {
   onPressStopRecord: PropTypes.func.isRequired,
