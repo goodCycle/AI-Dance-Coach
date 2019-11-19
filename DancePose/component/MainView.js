@@ -18,7 +18,7 @@ import {
  } from 'react-native-elements';
 
 import Icon from 'react-native-vector-icons/Entypo';
-// EntypoIcon.loadFont();
+Icon.loadFont();
 
 class MainView extends Component {
   render() {

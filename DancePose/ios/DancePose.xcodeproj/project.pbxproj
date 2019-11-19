@@ -8,18 +8,19 @@
 
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* DancePoseTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* DancePoseTests.m */; };
-		03A26CACEB141658E7557CB0 /* libPods-DancePose-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BBA6F8860B390C206BB34C75 /* libPods-DancePose-tvOS.a */; };
-		0E5845D981BAEEF2484FE27E /* libPods-DancePose-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 719BE1A0A477725F09FDFCFE /* libPods-DancePose-tvOSTests.a */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB11A68108700A75B9A /* LaunchScreen.xib */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		1B458FDBCD5F424B98766A59 /* libPods-DancePoseTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F1DD3C07A4F075C13160BB7F /* libPods-DancePoseTests.a */; };
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2DCD954D1E0B4F2C00145EB5 /* DancePoseTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* DancePoseTests.m */; };
-		6EB1D8A2DF49F675218D1230 /* libPods-DancePose.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BFAFCDA435574862750671DA /* libPods-DancePose.a */; };
+		41E94335A5FA91292E53E03A /* libPods-DancePose.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F6C4CCABF88986CF3A314EA6 /* libPods-DancePose.a */; };
+		4D4DD470196AC721114F4111 /* libPods-DancePose-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C532E2A3FEBE8D7D800F23F4 /* libPods-DancePose-tvOSTests.a */; };
+		50311E087A6F88CB17C1743F /* libPods-DancePoseTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 64F74B490DC14EEC4C8FAAB4 /* libPods-DancePoseTests.a */; };
+		5E1C086623839DC3008206FE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5E1C086423839DC3008206FE /* GoogleService-Info.plist */; };
+		F0F9B3DAD276006C60BF9C24 /* libPods-DancePose-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E2F5E8574970FA88647361D /* libPods-DancePose-tvOS.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,20 +54,21 @@
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = DancePose/main.m; sourceTree = "<group>"; };
 		2D02E47B1E0B4A5D006451C7 /* DancePose-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "DancePose-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* DancePose-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "DancePose-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		5D584EB475CA055B78211A63 /* Pods-DancePoseTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DancePoseTests.release.xcconfig"; path = "Target Support Files/Pods-DancePoseTests/Pods-DancePoseTests.release.xcconfig"; sourceTree = "<group>"; };
-		719BE1A0A477725F09FDFCFE /* libPods-DancePose-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-DancePose-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		87D0429210F039C9ACD61A84 /* Pods-DancePose.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DancePose.debug.xcconfig"; path = "Target Support Files/Pods-DancePose/Pods-DancePose.debug.xcconfig"; sourceTree = "<group>"; };
-		9C4C806F5E86219A61EBF166 /* Pods-DancePoseTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DancePoseTests.debug.xcconfig"; path = "Target Support Files/Pods-DancePoseTests/Pods-DancePoseTests.debug.xcconfig"; sourceTree = "<group>"; };
-		B54FF6333A4611644F97750B /* Pods-DancePose-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DancePose-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-DancePose-tvOS/Pods-DancePose-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
-		BBA6F8860B390C206BB34C75 /* libPods-DancePose-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-DancePose-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		BFAFCDA435574862750671DA /* libPods-DancePose.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-DancePose.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		D2476D5949E8097094EC5446 /* Pods-DancePose-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DancePose-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-DancePose-tvOSTests/Pods-DancePose-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
-		DC84E98BA58396CBA0559C37 /* Pods-DancePose-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DancePose-tvOS.release.xcconfig"; path = "Target Support Files/Pods-DancePose-tvOS/Pods-DancePose-tvOS.release.xcconfig"; sourceTree = "<group>"; };
-		EAEC0A52D79AAC42A01A52F3 /* Pods-DancePose.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DancePose.release.xcconfig"; path = "Target Support Files/Pods-DancePose/Pods-DancePose.release.xcconfig"; sourceTree = "<group>"; };
+		396DE8C6B96A0046AB72593E /* Pods-DancePose-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DancePose-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-DancePose-tvOS/Pods-DancePose-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
+		53E6CF1C2DF6425631580A51 /* Pods-DancePoseTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DancePoseTests.debug.xcconfig"; path = "Target Support Files/Pods-DancePoseTests/Pods-DancePoseTests.debug.xcconfig"; sourceTree = "<group>"; };
+		556FB70C8E5754D7A68D9C26 /* Pods-DancePose-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DancePose-tvOS.release.xcconfig"; path = "Target Support Files/Pods-DancePose-tvOS/Pods-DancePose-tvOS.release.xcconfig"; sourceTree = "<group>"; };
+		5E1C086423839DC3008206FE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		5E2F5E8574970FA88647361D /* libPods-DancePose-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-DancePose-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		64F74B490DC14EEC4C8FAAB4 /* libPods-DancePoseTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-DancePoseTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7109666E8602A3B8C742CA92 /* Pods-DancePose.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DancePose.debug.xcconfig"; path = "Target Support Files/Pods-DancePose/Pods-DancePose.debug.xcconfig"; sourceTree = "<group>"; };
+		A9289E12A3ADD627BECE171E /* Pods-DancePose.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DancePose.release.xcconfig"; path = "Target Support Files/Pods-DancePose/Pods-DancePose.release.xcconfig"; sourceTree = "<group>"; };
+		AA6DE0FFA0B72C7E8C8B72BA /* Pods-DancePose-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DancePose-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-DancePose-tvOSTests/Pods-DancePose-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
+		C532E2A3FEBE8D7D800F23F4 /* libPods-DancePose-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-DancePose-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C9F083ECDD89A0309A4A21F1 /* Pods-DancePose-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DancePose-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-DancePose-tvOSTests/Pods-DancePose-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
+		DD270F75B6D261516509EC8F /* Pods-DancePoseTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DancePoseTests.release.xcconfig"; path = "Target Support Files/Pods-DancePoseTests/Pods-DancePoseTests.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
-		F1DD3C07A4F075C13160BB7F /* libPods-DancePoseTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-DancePoseTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		F2D182EC5E939633A102DE5F /* Pods-DancePose-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DancePose-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-DancePose-tvOSTests/Pods-DancePose-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
+		F6C4CCABF88986CF3A314EA6 /* libPods-DancePose.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-DancePose.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,7 +76,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1B458FDBCD5F424B98766A59 /* libPods-DancePoseTests.a in Frameworks */,
+				50311E087A6F88CB17C1743F /* libPods-DancePoseTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -82,7 +84,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6EB1D8A2DF49F675218D1230 /* libPods-DancePose.a in Frameworks */,
+				41E94335A5FA91292E53E03A /* libPods-DancePose.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -90,7 +92,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				03A26CACEB141658E7557CB0 /* libPods-DancePose-tvOS.a in Frameworks */,
+				F0F9B3DAD276006C60BF9C24 /* libPods-DancePose-tvOS.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -98,7 +100,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0E5845D981BAEEF2484FE27E /* libPods-DancePose-tvOSTests.a in Frameworks */,
+				4D4DD470196AC721114F4111 /* libPods-DancePose-tvOSTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -127,12 +129,12 @@
 			children = (
 			);
 			name = Resources;
-			path = "";
 			sourceTree = "<group>";
 		};
 		13B07FAE1A68108700A75B9A /* DancePose */ = {
 			isa = PBXGroup;
 			children = (
+				5E1C086423839DC3008206FE /* GoogleService-Info.plist */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -149,10 +151,10 @@
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
-				BFAFCDA435574862750671DA /* libPods-DancePose.a */,
-				BBA6F8860B390C206BB34C75 /* libPods-DancePose-tvOS.a */,
-				719BE1A0A477725F09FDFCFE /* libPods-DancePose-tvOSTests.a */,
-				F1DD3C07A4F075C13160BB7F /* libPods-DancePoseTests.a */,
+				F6C4CCABF88986CF3A314EA6 /* libPods-DancePose.a */,
+				5E2F5E8574970FA88647361D /* libPods-DancePose-tvOS.a */,
+				C532E2A3FEBE8D7D800F23F4 /* libPods-DancePose-tvOSTests.a */,
+				64F74B490DC14EEC4C8FAAB4 /* libPods-DancePoseTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -160,16 +162,15 @@
 		6307E53965F10D7A020F820F /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				87D0429210F039C9ACD61A84 /* Pods-DancePose.debug.xcconfig */,
-				EAEC0A52D79AAC42A01A52F3 /* Pods-DancePose.release.xcconfig */,
-				B54FF6333A4611644F97750B /* Pods-DancePose-tvOS.debug.xcconfig */,
-				DC84E98BA58396CBA0559C37 /* Pods-DancePose-tvOS.release.xcconfig */,
-				D2476D5949E8097094EC5446 /* Pods-DancePose-tvOSTests.debug.xcconfig */,
-				F2D182EC5E939633A102DE5F /* Pods-DancePose-tvOSTests.release.xcconfig */,
-				9C4C806F5E86219A61EBF166 /* Pods-DancePoseTests.debug.xcconfig */,
-				5D584EB475CA055B78211A63 /* Pods-DancePoseTests.release.xcconfig */,
+				7109666E8602A3B8C742CA92 /* Pods-DancePose.debug.xcconfig */,
+				A9289E12A3ADD627BECE171E /* Pods-DancePose.release.xcconfig */,
+				396DE8C6B96A0046AB72593E /* Pods-DancePose-tvOS.debug.xcconfig */,
+				556FB70C8E5754D7A68D9C26 /* Pods-DancePose-tvOS.release.xcconfig */,
+				C9F083ECDD89A0309A4A21F1 /* Pods-DancePose-tvOSTests.debug.xcconfig */,
+				AA6DE0FFA0B72C7E8C8B72BA /* Pods-DancePose-tvOSTests.release.xcconfig */,
+				53E6CF1C2DF6425631580A51 /* Pods-DancePoseTests.debug.xcconfig */,
+				DD270F75B6D261516509EC8F /* Pods-DancePoseTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -214,7 +215,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "DancePoseTests" */;
 			buildPhases = (
-				03868EFF188915DC5AF0CD8C /* [CP] Check Pods Manifest.lock */,
+				ED5F1200415EF8B0E95AF93F /* [CP] Check Pods Manifest.lock */,
 				00E356EA1AD99517003FC87E /* Sources */,
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
@@ -233,13 +234,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "DancePose" */;
 			buildPhases = (
-				FB7E5B6F16C1F7BCCFD107D2 /* [CP] Check Pods Manifest.lock */,
+				F3E9578DEB0F3DED0F395E37 /* [CP] Check Pods Manifest.lock */,
 				FD10A7F022414F080027D42C /* Start Packager */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				49C9B9ED52777B8334192817 /* [CP] Copy Pods Resources */,
+				FABCED0FA28F1CE2AAA63573 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -254,7 +255,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2D02E4BA1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "DancePose-tvOS" */;
 			buildPhases = (
-				7393AE5ADE3E919F58C6F4B5 /* [CP] Check Pods Manifest.lock */,
+				9400D92CD06080EFB06B4CC0 /* [CP] Check Pods Manifest.lock */,
 				FD10A7F122414F3F0027D42C /* Start Packager */,
 				2D02E4771E0B4A5D006451C7 /* Sources */,
 				2D02E4781E0B4A5D006451C7 /* Frameworks */,
@@ -274,7 +275,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "DancePose-tvOSTests" */;
 			buildPhases = (
-				7B0389C67B196AC9D4FA028C /* [CP] Check Pods Manifest.lock */,
+				BC7C80072E8EC6A88DF58B82 /* [CP] Check Pods Manifest.lock */,
 				2D02E48C1E0B4A5D006451C7 /* Sources */,
 				2D02E48D1E0B4A5D006451C7 /* Frameworks */,
 				2D02E48E1E0B4A5D006451C7 /* Resources */,
@@ -318,6 +319,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -348,6 +350,7 @@
 			files = (
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
+				5E1C086623839DC3008206FE /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -383,28 +386,6 @@
 			shellPath = /bin/sh;
 			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
 		};
-		03868EFF188915DC5AF0CD8C /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-DancePoseTests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
 		2D02E4CB1E0B4B27006451C7 /* Bundle React Native Code And Images */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -419,55 +400,7 @@
 			shellPath = /bin/sh;
 			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
 		};
-		49C9B9ED52777B8334192817 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-DancePose/Pods-DancePose-resources.sh",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Entypo.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Feather.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Brands.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Regular.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Solid.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Fontisto.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Foundation.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Octicons.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Zocial.ttf",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AntDesign.ttf",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Entypo.ttf",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/EvilIcons.ttf",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Feather.ttf",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FontAwesome.ttf",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FontAwesome5_Brands.ttf",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FontAwesome5_Regular.ttf",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FontAwesome5_Solid.ttf",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Fontisto.ttf",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Foundation.ttf",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Ionicons.ttf",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MaterialCommunityIcons.ttf",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MaterialIcons.ttf",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Octicons.ttf",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/SimpleLineIcons.ttf",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Zocial.ttf",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-DancePose/Pods-DancePose-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		7393AE5ADE3E919F58C6F4B5 /* [CP] Check Pods Manifest.lock */ = {
+		9400D92CD06080EFB06B4CC0 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -489,7 +422,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		7B0389C67B196AC9D4FA028C /* [CP] Check Pods Manifest.lock */ = {
+		BC7C80072E8EC6A88DF58B82 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -511,7 +444,29 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		FB7E5B6F16C1F7BCCFD107D2 /* [CP] Check Pods Manifest.lock */ = {
+		ED5F1200415EF8B0E95AF93F /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-DancePoseTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F3E9578DEB0F3DED0F395E37 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -531,6 +486,58 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		FABCED0FA28F1CE2AAA63573 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-DancePose/Pods-DancePose-resources.sh",
+				"${PODS_CONFIGURATION_BUILD_DIR}/FirebaseMLVisionFaceModel/GoogleMVFaceDetectorResources.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/FirebaseMLVisionTextModel/GoogleMVTextDetectorResources.bundle",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Entypo.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Feather.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Brands.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Regular.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Solid.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Fontisto.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Foundation.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Octicons.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf",
+				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Zocial.ttf",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleMVFaceDetectorResources.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleMVTextDetectorResources.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AntDesign.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Entypo.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/EvilIcons.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Feather.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FontAwesome.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FontAwesome5_Brands.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FontAwesome5_Regular.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FontAwesome5_Solid.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Fontisto.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Foundation.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Ionicons.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MaterialCommunityIcons.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MaterialIcons.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Octicons.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/SimpleLineIcons.ttf",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Zocial.ttf",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-DancePose/Pods-DancePose-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FD10A7F022414F080027D42C /* Start Packager */ = {
@@ -638,7 +645,7 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9C4C806F5E86219A61EBF166 /* Pods-DancePoseTests.debug.xcconfig */;
+			baseConfigurationReference = 53E6CF1C2DF6425631580A51 /* Pods-DancePoseTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -661,7 +668,7 @@
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5D584EB475CA055B78211A63 /* Pods-DancePoseTests.release.xcconfig */;
+			baseConfigurationReference = DD270F75B6D261516509EC8F /* Pods-DancePoseTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
@@ -681,7 +688,7 @@
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 87D0429210F039C9ACD61A84 /* Pods-DancePose.debug.xcconfig */;
+			baseConfigurationReference = 7109666E8602A3B8C742CA92 /* Pods-DancePose.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CURRENT_PROJECT_VERSION = 1;
@@ -701,7 +708,7 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = EAEC0A52D79AAC42A01A52F3 /* Pods-DancePose.release.xcconfig */;
+			baseConfigurationReference = A9289E12A3ADD627BECE171E /* Pods-DancePose.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CURRENT_PROJECT_VERSION = 1;
@@ -720,7 +727,7 @@
 		};
 		2D02E4971E0B4A5E006451C7 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B54FF6333A4611644F97750B /* Pods-DancePose-tvOS.debug.xcconfig */;
+			baseConfigurationReference = 396DE8C6B96A0046AB72593E /* Pods-DancePose-tvOS.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -748,7 +755,7 @@
 		};
 		2D02E4981E0B4A5E006451C7 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DC84E98BA58396CBA0559C37 /* Pods-DancePose-tvOS.release.xcconfig */;
+			baseConfigurationReference = 556FB70C8E5754D7A68D9C26 /* Pods-DancePose-tvOS.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -776,7 +783,7 @@
 		};
 		2D02E4991E0B4A5E006451C7 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D2476D5949E8097094EC5446 /* Pods-DancePose-tvOSTests.debug.xcconfig */;
+			baseConfigurationReference = C9F083ECDD89A0309A4A21F1 /* Pods-DancePose-tvOSTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
@@ -803,7 +810,7 @@
 		};
 		2D02E49A1E0B4A5E006451C7 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F2D182EC5E939633A102DE5F /* Pods-DancePose-tvOSTests.release.xcconfig */;
+			baseConfigurationReference = AA6DE0FFA0B72C7E8C8B72BA /* Pods-DancePose-tvOSTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;

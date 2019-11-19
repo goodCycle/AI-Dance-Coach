@@ -8,20 +8,20 @@ import {
   TouchableHighlight,
   View
 } from 'react-native';
-import Camera from 'react-native-camera';
+import { RNCamera } from 'react-native-camera';
 
 class CameraView extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Camera
+        <RNCamera
           ref={(cam) => {
             this.camera = cam;
           }}
           style={styles.preview}
           aspect={Camera.constants.Aspect.fill}>
           <Text style={styles.capture} onPress={this.takePicture}>[CAPTURE]</Text>
-        </Camera>
+        </RNCamera>
       </View>
     );
   }

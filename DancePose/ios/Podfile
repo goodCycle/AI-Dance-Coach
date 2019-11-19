@@ -34,9 +34,13 @@ target 'DancePose' do
   pod 'glog', :podspec => '../node_modules/react-native/third-party-podspecs/glog.podspec'
   pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
 
-  # pod 'react-native-camera', path: '../node_modules/react-native-camera', subspecs: [
-  # 'FaceDetectorMLKit'
-  # ]
+  pod 'react-native-camera', path: '../node_modules/react-native-camera', subspecs: [
+    'TextDetector',
+    'FaceDetectorMLKit',
+    'BarcodeDetectorMLKit'
+  ]
+  pod 'Firebase/Core'
+  pod 'Firebase/Analytics'
 
   target 'DancePoseTests' do
     inherit! :search_paths
@@ -44,6 +48,14 @@ target 'DancePose' do
   end
 
   use_native_modules!
+end
+
+post_install do |installer|
+  installer.pods_project.targets.each do |target|
+    if target.name == "React"
+      target.remove_from_project
+    end
+  end
 end
 
 target 'DancePose-tvOS' do
