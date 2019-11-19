@@ -1,39 +1,38 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
-
 import React from 'react';
 import MainView from './component/MainView';
 import CameraView from './component/CameraView';
 
-export class App extends React.Component {
-  state = {
-    recording: false
+class App extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      recording: false,
+    };
   }
 
   onPressStartRecord = () => {
-    if (!this.state.recording) {
+    const { recording } = this.state;
+    if (!recording) {
       this.setState({ recording: true });
     }
   }
 
   onPressStopRecord = () => {
-    if (this.state.recording) {
+    const { recording } = this.state;
+    if (recording) {
       this.setState({ recording: false });
     }
   }
 
   render() {
+    const { recording } = this.state;
+
     return (
-      this.state.recording
-      ? <CameraView onPressStopRecord={this.onPressStopRecord}/>
-      : <MainView onPressStartRecord={this.onPressStartRecord}/>
+      recording
+        ? <CameraView onPressStopRecord={this.onPressStopRecord} />
+        : <MainView onPressStartRecord={this.onPressStartRecord} />
     );
   }
-};
+}
 
 export default App;
