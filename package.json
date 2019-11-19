@@ -6,7 +6,5 @@
   "devDependencies": {
     "ignite-bowser": "^4.11.2"
   },
-  "dependencies": {
-    "react-native-camera": "^3.9.0"
-  }
+  "dependencies": {}
 }

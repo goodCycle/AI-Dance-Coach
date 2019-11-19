@@ -13,8 +13,8 @@ import CameraView from './component/CameraView';
 export class App extends React.Component {
   render() {
     return (
-      // <MainView />
-      <CameraView />
+      <MainView />
+      // <CameraView />
     );
   }
 };
