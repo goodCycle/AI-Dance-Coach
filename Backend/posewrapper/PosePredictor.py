@@ -13,7 +13,7 @@ except ImportError as e:
 
 class PosePredictor:
 
-    def __init__(self, model="../../openpose/models/"):  # "../../../openpose/models/"?
+    def __init__(self, model="../../openpose/models/", disable_blending =False):  # "../../../openpose/models/"?
 
         params = dict()
         params["model_folder"] = model
@@ -22,7 +22,7 @@ class PosePredictor:
 
         # TODO set as parameter (transmit from the device?)
         params["net_resolution"] = "-1x368"
-        params["disable_blending"] = "True"
+        params["disable_blending"] = str(disable_blending)  # check if broken
         # params["scale_number"] = "4"
         # params["scale_gap"] = "0.25"
 
@@ -38,12 +38,7 @@ class PosePredictor:
         self.opWrapper.emplaceAndPop([datum])
 
         # Display Image
-        print("Body keypoints: \n" + str(datum.poseKeypoints))
-        print("Face keypoints: \n" + str(datum.faceKeypoints))
-        print("Left hand keypoints: \n" + str(datum.handKeypoints[0]))
-        print("Right hand keypoints: \n" + str(datum.handKeypoints[1]))
 
-        cv2.imwrite("test.jpg", datum.cvOutputData)
 
         return datum
 

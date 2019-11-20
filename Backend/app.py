@@ -2,18 +2,19 @@ from flask import Flask, request, Response
 import os
 import cv2
 import json
+
+from videoextractor.VideoExtractor import VideoExtractor
 # simon.zocholl@mnet-mail.de
 
 from posewrapper.PosePredictor import PosePredictor
 
 app = Flask(__name__)
 UPLOAD_FOLDER = './video'
-IMAGE_FOLDER = './images'
 
 app.secret_key = "super secret key"
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
-pred = PosePredictor()
+
 
 
 # pred.predict_image(image_path) for inference
@@ -32,42 +33,16 @@ def video_in():
     if not os.path.exists(UPLOAD_FOLDER):
         os.makedirs(UPLOAD_FOLDER)
 
-    file.save(os.path.join(app.config['UPLOAD_FOLDER'], 'input_file.mp4'))
+    input_path = os.path.join(app.config['UPLOAD_FOLDER'], 'input_file.mp4')
+    file.save(input_path)
 
-    # just for testing
-    sample_pictures()
-    result = pred.predict_image('images/1.jpg')
-    result_string = json.dump(result)
+    vd = VideoExtractor("dummid", input_path, 30)
+    vd.extract()
+
+
+
     response = Response(status=200, response=result_string)
     return response
-
-
-#  it will capture image in each 0.5 second
-def sample_pictures(frame_rate=.5):
-    video_path = os.path.join(app.config['UPLOAD_FOLDER'], 'input_file.mp4')
-    video = cv2.VideoCapture(video_path)
-
-    if not os.path.exists('./images'):
-        os.makedirs('./images')
-    # clear previous images
-    list(map(os.unlink, (os.path.join(IMAGE_FOLDER + "/", f) for f in os.listdir("images"))))
-
-    def get_frame(sec):
-        video.set(cv2.CAP_PROP_POS_MSEC, sec * 1000)
-        has_frames, image = video.read()
-        if has_frames:
-            cv2.imwrite("./images/" + str(count) + ".jpg", image)  # save frame as JPG file
-        return has_frames
-
-    sec = 0
-    count = 1
-    success = get_frame(sec)
-
-    while success:
-        count += 1
-        sec += frame_rate
-        sec = round(sec, 2)
-        success = get_frame(sec)
 
 
 if __name__ == '__main__':
