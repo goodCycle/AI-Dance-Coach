@@ -1,7 +1,7 @@
 from flask import Flask, request, Response
 import os
 import cv2
-from .posewrapper import PosePredictor
+from Backend.posewrapper.PosePredictor import PosePredictor
 
 app = Flask(__name__)
 UPLOAD_FOLDER = './video'
@@ -11,6 +11,7 @@ app.secret_key = "super secret key"
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
 pred = PosePredictor()
+
 
 # call pred.predict_image(image_path) for inference
 
@@ -25,7 +26,7 @@ def hello_world():
 @app.route('/', methods=['POST'])
 def video_in():
     file = request.files['file']
-    #   file_name = secure_filename(file.filename)
+    # file_name = secure_filename(file.filename)
     if not os.path.exists(UPLOAD_FOLDER):
         os.makedirs(UPLOAD_FOLDER)
 
@@ -67,5 +68,4 @@ def sample_pictures(frame_rate=.5):
 
 
 if __name__ == '__main__':
-
     app.run()
