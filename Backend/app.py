@@ -2,7 +2,7 @@ from flask import Flask, request, Response
 import os
 import cv2
 
-# from Backend.posewrapper.PosePredictor import PosePredictor
+from posewrapper.PosePredictor import PosePredictor
 
 app = Flask(__name__)
 UPLOAD_FOLDER = './video'
@@ -11,12 +11,10 @@ IMAGE_FOLDER = './images'
 app.secret_key = "super secret key"
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
-
-# pred = PosePredictor()
+pred = PosePredictor()
 
 
 # call pred.predict_image(image_path) for inference
-
 
 @app.route('/')
 def hello_world():
@@ -70,4 +68,4 @@ def sample_pictures(frame_rate=.5):
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.0')
