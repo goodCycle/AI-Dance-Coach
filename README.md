@@ -3,6 +3,14 @@ CS470(Introduction to Artificial Intelligence) final project - React Native App 
 
 ## How to Start App (iOS only)
 * You need to install **Xcode** to build iOS App
+* You need to install `yarn`
+```
+   > brew install yarn
+```
+* You need to install `cocoapods`
+```
+   > sudo gem install cocoapods
+```
 * After you clone our project,
 ```
    > cd AIDanceCoach
