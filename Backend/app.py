@@ -1,7 +1,8 @@
 from flask import Flask, request, Response
 import os
 import cv2
-from Backend.posewrapper.PosePredictor import PosePredictor
+
+# from Backend.posewrapper.PosePredictor import PosePredictor
 
 app = Flask(__name__)
 UPLOAD_FOLDER = './video'
@@ -10,7 +11,8 @@ IMAGE_FOLDER = './images'
 app.secret_key = "super secret key"
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
-pred = PosePredictor()
+
+# pred = PosePredictor()
 
 
 # call pred.predict_image(image_path) for inference
@@ -47,7 +49,7 @@ def sample_pictures(frame_rate=.5):
     if not os.path.exists('./images'):
         os.makedirs('./images')
     # clear previous images
-    list(map(os.unlink, (os.path.join("IMAGE_FOLDER" + "/", f) for f in os.listdir("images"))))
+    list(map(os.unlink, (os.path.join(IMAGE_FOLDER + "/", f) for f in os.listdir("images"))))
 
     def get_frame(sec):
         video.set(cv2.CAP_PROP_POS_MSEC, sec * 1000)
