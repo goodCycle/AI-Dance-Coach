@@ -36,7 +36,8 @@ def video_in():
     # just for testing
     sample_pictures()
     result = pred.predict_image('images/1.jpg')
-    response = Response(status=200, response=result)
+    result_string = f'{result}'
+    response = Response(status=200, response=result_string)
     return response
 
 
