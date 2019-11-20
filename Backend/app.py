@@ -14,7 +14,7 @@ app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 pred = PosePredictor()
 
 
-# call pred.predict_image(image_path) for inference
+# pred.predict_image(image_path) for inference
 
 @app.route('/')
 def hello_world():
@@ -34,6 +34,8 @@ def video_in():
 
     # just for testing
     sample_pictures()
+    result = pred.predict_image('images/1.jpg')
+    print(result)
     data = '{ "Hello":"Frontend"}'
     response = Response(status=200, response=data)
     return response
