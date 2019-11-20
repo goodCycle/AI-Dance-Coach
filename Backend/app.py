@@ -1,6 +1,7 @@
 from flask import Flask, request, Response
 import os
 import cv2
+import json
 # simon.zocholl@mnet-mail.de
 
 from posewrapper.PosePredictor import PosePredictor
@@ -36,7 +37,7 @@ def video_in():
     # just for testing
     sample_pictures()
     result = pred.predict_image('images/1.jpg')
-    result_string = f'{result}'
+    result_string = json.dump(result)
     response = Response(status=200, response=result_string)
     return response
 
