@@ -17,8 +17,14 @@ class PosePredictor:
 
         params = dict()
         params["model_folder"] = model
-        params["face"] = True
-        params["hand"] = True
+
+        params["model_pose"] = "BODY_25"  # "BODY_25B"D
+
+        # TODO set as parameter (transmit from the device?)
+        params["net_resolution"] = "-1x368"
+        params["disable_blending"] = "True"
+        # params["scale_number"] = "4"
+        # params["scale_gap"] = "0.25"
 
         # Starting OpenPose
         self.opWrapper = op.WrapperPython()
@@ -36,6 +42,8 @@ class PosePredictor:
         print("Face keypoints: \n" + str(datum.faceKeypoints))
         print("Left hand keypoints: \n" + str(datum.handKeypoints[0]))
         print("Right hand keypoints: \n" + str(datum.handKeypoints[1]))
+
+        cv2.imwrite("test.jpg", datum.cvOutputData)
 
         return datum
 
