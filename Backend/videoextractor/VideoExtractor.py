@@ -94,7 +94,7 @@ class VideoExtractor:
             overlay = Image.new(mode='RGB', size=picture.size)
             overlay.paste(picture, (0, 0))
             overlay.paste(skeleton, (0, 0))
-            overlay.save(os.path.join(self.overlay_dir), str(i) + ".jpg", format="jpg")
+            overlay.save(os.path.join(self.overlay_dir, str(i) + ".jpg"), format="jpg")
         # https://stackoverflow.com/questions/38627870/how-to-paste-a-png-image-with-transparency-to-another-image-in-pil-without-white
 
     def _generate_video(self, use_overlayed=False):
