@@ -16,7 +16,7 @@ class VideoExtractor:
         self.media_dir = media_dir
         self.picture_dir = os.path.join(self.media_dir, "pictures")
         self.skeleton_dir = os.path.join(self.media_dir, "skeletons")
-        self.bodies_dir = os.path.join(self.body_dir, "bodies")
+        self.body_dir = os.path.join(self.media_dir, "bodies")
 
         self.video = cv2.VideoCapture(self.video_path)
         self.predictor = PosePredictor(model=model_path, disable_blending=True)
@@ -71,12 +71,12 @@ class VideoExtractor:
         # put in loop
         print(2.1)
         self.clear_dir(self.skeleton_dir)
-        self.clear_dir(self.bodies_dir)
+        self.clear_dir(self.body_dir)
         for i, pictures in enumerate(os.listdir(self.picture_dir)):
             print(2.2)
             datum = self.predictor.predict_image(os.path.join(self.picture_dir, pictures))
 
-            with open(os.path.join(self.bodies_dir, str(i) + ".json")) as f:
+            with open(os.path.join(self.body_dir, str(i) + ".json")) as f:
                 json.dump(datum.poseKeypoints, f)
             cv2.imwrite(os.path.join(self.skeleton_dir, str(i) + ".jpg"), datum.cvOutputData)
             '''
