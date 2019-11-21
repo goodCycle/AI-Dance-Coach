@@ -6,8 +6,6 @@ import json
 from videoextractor.VideoExtractor import VideoExtractor
 # simon.zocholl@mnet-mail.de
 
-from posewrapper.PosePredictor import PosePredictor
-
 app = Flask(__name__)
 UPLOAD_FOLDER = './video'
 
@@ -28,19 +26,20 @@ def hello_world():
 # curl -X POST -F file=@"/mnt/c/Users/nomis/Desktop/testvideo1.mp4" http://127.0.0.1:5000
 @app.route('/', methods=['POST'])
 def video_in():
+    video_name = "video1.mp4"
+    video_dir = "./video"
+
     file = request.files['file']
-    # file_name = secure_filename(file.filename)
     if not os.path.exists(UPLOAD_FOLDER):
         os.makedirs(UPLOAD_FOLDER)
 
-    input_path = os.path.join(app.config['UPLOAD_FOLDER'], 'input_file.mp4')
+    input_path = os.path.join(app.config['UPLOAD_FOLDER'], video_name)
     file.save(input_path)
 
-    vd = VideoExtractor("dummid", input_path, 30)
+    vd = VideoExtractor(video_name=video_name, video_dir=video_dir,
+                        media_dir="./media",
+                        model_path = )
     vd.extract()
-
-
-
     response = Response(status=200, response=result_string)
     return response
 

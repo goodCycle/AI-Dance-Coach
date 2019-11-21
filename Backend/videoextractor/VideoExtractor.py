@@ -7,36 +7,25 @@ from posewrapper.PosePredictor import PosePredictor
 
 class VideoExtractor:
 
-    def __init__(self):
-        self.video_id = ""
-        self.src_path = ""
-        self.frequency = 0
-
-        self.video = cv2.VideoCapture(self.src_path)
-        self.media_dir = os.path.join(self.MEDIA_ROOT, str(id))
-
-        self.predictor = PosePredictor(model="../../openpose/models/", disable_blending=True)
-        self.MEDIA_ROOT = "./media"
+    def __init__(self, video_name="anonymous", video_dir="./video",
+                 media_dir="./media", model_path="../../openpose/models/",
+                 framerate=-1):
+        self.video_name = video_name
+        self.video_path = os.path.join(video_dir, video_name)
+        self.media_dir = media_dir
+        self.video = cv2.VideoCapture(self.video_path)
+        self.predictor = PosePredictor(model=model_path, disable_blending=True)
+        self.frequency = 1 / framerate
 
     def __call__(self, *args, **kwargs):
         return self.extract(*args, **kwargs)
 
-    def extract(self, video_id, src_path, framerate):
-
-        self.video_id = video_id
-        self.src_path = src_path
-        self.frequency = 1 / framerate
-
-        self.video = cv2.VideoCapture(self.src_path)
-        self.media_dir = os.path.join(self.MEDIA_ROOT, str(id))
-
-        if not os.path.exists(self.MEDIA_ROOT):
-            os.makedirs(self.MEDIA_ROOT)
+    def extract(self, framerate):
+        self.video = cv2.VideoCapture(self.video_path)
 
         # clear previous media with same id
         if os.path.exists(self.media_dir):
             shutil.rmtree(self.media_dir, ignore_errors=True)
-
         os.makedirs(self.media_dir)
 
         self._sample_pictures()
@@ -78,7 +67,6 @@ class VideoExtractor:
 
         cv2.imwrite("test.jpg", datum.cvOutputData)  # skeleton - Black background
 
-
         pass
 
     def _overlay_images(self):
@@ -88,4 +76,3 @@ class VideoExtractor:
     def _generate_video(self, use_overlayed=False):
         # Little priority
         pass
-
