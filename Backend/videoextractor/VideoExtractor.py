@@ -2,6 +2,8 @@ import cv2
 import os
 import shutil
 import json
+import codecs
+import numpy as np
 
 from posewrapper.PosePredictor import PosePredictor
 
@@ -25,7 +27,7 @@ class VideoExtractor:
     def __call__(self, *args, **kwargs):
         return self.extract(*args, **kwargs)
 
-    def clear_dir(self, directory):
+    def create_and_clear(self, directory):
         if os.path.exists(directory):
             shutil.rmtree(directory, ignore_errors=True)
         os.makedirs(directory)
@@ -33,7 +35,7 @@ class VideoExtractor:
     def extract(self):
         self.video = cv2.VideoCapture(self.video_path)
         # clear previous media with same id
-        self.clear_dir(self.media_dir)
+        self.create_and_clear(self.media_dir)
 
         self._sample_pictures()
         print(2)
@@ -48,7 +50,7 @@ class VideoExtractor:
 
     #  it will capture image in each 0.5 second
     def _sample_pictures(self):
-        self.clear_dir(self.picture_dir)
+        self.create_and_clear(self.picture_dir)
 
         def get_frame(sec):
             self.video.set(cv2.CAP_PROP_POS_MSEC, sec * 1000)
@@ -70,14 +72,15 @@ class VideoExtractor:
     def _extract_keypoints(self):
         # put in loop
         print(2.1)
-        self.clear_dir(self.skeleton_dir)
-        self.clear_dir(self.body_dir)
+        self.create_and_clear(self.skeleton_dir)
+        self.create_and_clear(self.body_dir)
         for i, pictures in enumerate(os.listdir(self.picture_dir)):
             print(2.2)
             datum = self.predictor.predict_image(os.path.join(self.picture_dir, pictures))
 
             with open(os.path.join(self.body_dir, str(i) + ".json"), "w") as f:
-                json.dump(datum.poseKeypoints, f)
+                datum_list = datum.poseKeypoints.tolist()
+                json.dump(datum_list, f)
             cv2.imwrite(os.path.join(self.skeleton_dir, str(i) + ".jpg"), datum.cvOutputData)
             '''
             print("Body keypoints: \n" + str(datum.poseKeypoints))
