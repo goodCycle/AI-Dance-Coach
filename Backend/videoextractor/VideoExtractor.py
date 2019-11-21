@@ -30,7 +30,6 @@ class VideoExtractor:
         # clear previous media with same id
         self.clear_dir(self.media_dir)
 
-        print(1)
         self._sample_pictures()
         print(2)
         self._extract_keypoints()
@@ -48,11 +47,12 @@ class VideoExtractor:
         picture_dir = os.path.join(self.media_dir, "pictures")
         self.clear_dir(picture_dir)
         print(1.2)
+
         def get_frame(sec):
             self.video.set(cv2.CAP_PROP_POS_MSEC, sec * 1000)
             has_frames, image = self.video.read()
             if has_frames:
-                cv2.imwrite(picture_dir + str(count) + ".jpg", image)  # save frame as JPG file
+                cv2.imwrite(os.path.join(picture_dir, str(count) + ".jpg"), image)  # save frame as JPG file
             return has_frames
 
         sec = 0

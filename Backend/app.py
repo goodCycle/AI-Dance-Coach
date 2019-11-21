@@ -38,7 +38,7 @@ def video_in():
     vd = VideoExtractor(video_name=video_name, video_dir=video_dir,
                         media_dir="./media",
                         model_path="../../openpose/models/",
-                        framerate=10)
+                        framerate=10) # framerate > 1 !!!
     vd.extract()
     response = Response(status=200, response="result_string")
     return response
