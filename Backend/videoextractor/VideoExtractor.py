@@ -105,7 +105,7 @@ class VideoExtractor:
         size = img_arr[0].shape
 
         out = cv2.VideoWriter(os.path.join(self.media_dir, 'overlay_video.avi'),
-                              cv2.VideoWriter_fourcc(*'DIVX', 15, size))
+                              cv2.VideoWriter_fourcc(*'DIVX'), 15, size)
         for img in img_arr:
             out.write(img)
         out.release()
