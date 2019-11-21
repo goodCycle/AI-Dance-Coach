@@ -4,6 +4,7 @@ import cv2
 import json
 
 from videoextractor.VideoExtractor import VideoExtractor
+
 # simon.zocholl@mnet-mail.de
 
 app = Flask(__name__)
@@ -11,8 +12,6 @@ UPLOAD_FOLDER = './video'
 
 app.secret_key = "super secret key"
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
-
-
 
 
 # pred.predict_image(image_path) for inference
@@ -38,9 +37,9 @@ def video_in():
 
     vd = VideoExtractor(video_name=video_name, video_dir=video_dir,
                         media_dir="./media",
-                        model_path = )
+                        model_path="../../openpose/models/")
     vd.extract()
-    response = Response(status=200, response=result_string)
+    response = Response(status=200, response="result_string")
     return response
 
 
