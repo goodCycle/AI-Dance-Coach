@@ -20,29 +20,38 @@ class VideoExtractor:
     def __call__(self, *args, **kwargs):
         return self.extract(*args, **kwargs)
 
-    def extract(self, framerate):
+    def clear_dir(self, directory):
+        if os.path.exists(directory):
+            shutil.rmtree(directory, ignore_errors=True)
+        os.makedirs(directory)
+
+    def extract(self):
         self.video = cv2.VideoCapture(self.video_path)
-
         # clear previous media with same id
-        if os.path.exists(self.media_dir):
-            shutil.rmtree(self.media_dir, ignore_errors=True)
-        os.makedirs(self.media_dir)
+        self.clear_dir(self.media_dir)
 
+        print(1)
         self._sample_pictures()
+        print(2)
         self._extract_keypoints()
+        print(3)
         self._overlay_images()
-
+        print(4)
         self._generate_video()
+        print(5)
         self._generate_video(use_overlayed=False)
+        print(6)
 
     #  it will capture image in each 0.5 second
     def _sample_pictures(self):
+        picture_dir = os.path.join(self.media_dir, "pictures")
+        self.clear_dir(picture_dir)
 
         def get_frame(sec):
             self.video.set(cv2.CAP_PROP_POS_MSEC, sec * 1000)
             has_frames, image = self.video.read()
             if has_frames:
-                cv2.imwrite("./images/" + str(count) + ".jpg", image)  # save frame as JPG file
+                cv2.imwrite(picture_dir + str(count) + ".jpg", image)  # save frame as JPG file
             return has_frames
 
         sec = 0
