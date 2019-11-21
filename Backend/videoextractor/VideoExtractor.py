@@ -77,10 +77,9 @@ class VideoExtractor:
         for i, pictures in enumerate(os.listdir(self.picture_dir)):
             print(2.2)
             datum = self.predictor.predict_image(os.path.join(self.picture_dir, pictures))
-
-            with open(os.path.join(self.body_dir, str(i) + ".json"), "w") as f:
-                datum_list = datum.poseKeypoints.tolist()
-                json.dump(datum_list, f)
+            datum_list = datum.poseKeypoints.tolist()
+            json.dump(datum_list, codecs.open(os.path.join(self.body_dir, str(i) + ".json"), 'w', encoding='utf-8'),
+                      separators=(',', ':'))  ### this saves the array in .json format
             cv2.imwrite(os.path.join(self.skeleton_dir, str(i) + ".jpg"), datum.cvOutputData)
             '''
             print("Body keypoints: \n" + str(datum.poseKeypoints))
