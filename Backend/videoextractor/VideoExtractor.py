@@ -41,11 +41,8 @@ class VideoExtractor:
         self._sample_pictures()
         self._extract_keypoints()
         self._overlay_images()
-        print(4)
         self._generate_video()
-        print(5)
         self._generate_video(use_overlayed=False)
-        print(6)
 
     #  it will capture image in each 0.5 second
     def _sample_pictures(self):
