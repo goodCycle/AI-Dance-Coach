@@ -68,6 +68,7 @@ class VideoExtractor:
     def _extract_keypoints(self):
         # put in loop
         print(2.1)
+        self.clear_dir(self.skeleton_dir)
         for i, pictures in enumerate(os.listdir(self.picture_dir)):
             print(2.2)
             datum = self.predictor.predict_image(os.path.join(self.picture_dir, pictures))
