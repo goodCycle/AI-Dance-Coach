@@ -3,7 +3,7 @@ import os
 import shutil
 import json
 import codecs
-import numpy as np
+from PIL import Image, ImageDraw, ImageFont
 
 from posewrapper.PosePredictor import PosePredictor
 
@@ -19,6 +19,7 @@ class VideoExtractor:
         self.picture_dir = os.path.join(self.media_dir, "pictures")
         self.skeleton_dir = os.path.join(self.media_dir, "skeletons")
         self.body_dir = os.path.join(self.media_dir, "bodies")
+        self.overlay_dir = os.path.join(self.media_dir, "overlays")
 
         self.video = cv2.VideoCapture(self.video_path)
         self.predictor = PosePredictor(model=model_path, disable_blending=True)
@@ -38,7 +39,6 @@ class VideoExtractor:
         self.create_and_clear(self.media_dir)
 
         self._sample_pictures()
-        print(2)
         self._extract_keypoints()
         print(3)
         self._overlay_images()
@@ -71,11 +71,9 @@ class VideoExtractor:
 
     def _extract_keypoints(self):
         # put in loop
-        print(2.1)
         self.create_and_clear(self.skeleton_dir)
         self.create_and_clear(self.body_dir)
         for i, pictures in enumerate(os.listdir(self.picture_dir)):
-            print(2.2)
             datum = self.predictor.predict_image(os.path.join(self.picture_dir, pictures))
             datum_list = datum.poseKeypoints.tolist()
             json.dump(datum_list, codecs.open(os.path.join(self.body_dir, str(i) + ".json"), 'w', encoding='utf-8'),
@@ -87,11 +85,17 @@ class VideoExtractor:
             print("Left hand keypoints: \n" + str(datum.handKeypoints[0]))
             print("Right hand keypoints: \n" + str(datum.handKeypoints[1]))
             '''
-        print(2.3)
 
     def _overlay_images(self):
+        self.create_and_clear(self.overlay_dir)
+        for i, pic, ske in enumerate(zip(os.listdir(self.picture_dir), os.listdir(self.skeleton_dir))):
+            picture = Image.open(pic, 'r')
+            skeleton = Image.open(ske, 'r')
+            overlay = Image.new(mode='RGB', size=picture.size)
+            overlay.paste(picture, (0, 0))
+            overlay.paste(skeleton, (0, 0))
+            overlay.save(os.path.join(self.overlay_dir), str(i) + ".jpg", format="jpg")
         # https://stackoverflow.com/questions/38627870/how-to-paste-a-png-image-with-transparency-to-another-image-in-pil-without-white
-        pass
 
     def _generate_video(self, use_overlayed=False):
         # Little priority
