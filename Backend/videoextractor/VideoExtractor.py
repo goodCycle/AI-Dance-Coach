@@ -40,7 +40,6 @@ class VideoExtractor:
 
         self._sample_pictures()
         self._extract_keypoints()
-        print(3)
         self._overlay_images()
         print(4)
         self._generate_video()
@@ -98,5 +97,18 @@ class VideoExtractor:
         # https://stackoverflow.com/questions/38627870/how-to-paste-a-png-image-with-transparency-to-another-image-in-pil-without-white
 
     def _generate_video(self, use_overlayed=False):
-        # Little priority
+        img_arr = []
+        for file in os.listdir(self.overlay_dir):
+            img = cv2.imread(os.path.join(self.overlay_dir, file))
+            img_arr.append(img)
+
+        size = img_arr[0].shape
+
+        out = cv2.VideoWriter(os.path.join(self.media_dir, 'overlay_video.avi'),
+                              cv2.VideoWriter_fourcc(*'DIVX', 15, size))
+        for img in img_arr:
+            out.write(img)
+        out.release()
+        # https://theailearner.com/2018/10/15/creating-video-from-images-using-opencv-python/
+        # to find out, how to build mp4 ?
         pass
