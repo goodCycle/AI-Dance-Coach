@@ -3,7 +3,8 @@ import os
 import shutil
 import json
 import codecs
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image
+from skvideo.io import VideoWriter
 
 from posewrapper.PosePredictor import PosePredictor
 
@@ -102,7 +103,7 @@ class VideoExtractor:
             img = cv2.imread(os.path.join(self.overlay_dir, file))
             img_arr.append(img)
 
-        size = img_arr[0].shape
+        size = img_arr[0].shape[1::-1]
 
         out = cv2.VideoWriter(os.path.join(self.media_dir, 'overlay_video.avi'),
                               cv2.VideoWriter_fourcc(*'DIVX'), 15, size)
