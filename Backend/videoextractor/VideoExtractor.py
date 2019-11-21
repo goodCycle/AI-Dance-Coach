@@ -88,7 +88,7 @@ class VideoExtractor:
 
     def _overlay_images(self):
         self.create_and_clear(self.overlay_dir)
-        for i, pic, ske in enumerate(zip(os.listdir(self.picture_dir), os.listdir(self.skeleton_dir))):
+        for i, (pic, ske) in enumerate(zip(os.listdir(self.picture_dir), os.listdir(self.skeleton_dir))):
             picture = Image.open(pic, 'r')
             skeleton = Image.open(ske, 'r')
             overlay = Image.new(mode='RGB', size=picture.size)
