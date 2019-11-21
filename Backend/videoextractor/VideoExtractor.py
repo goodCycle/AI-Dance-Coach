@@ -76,7 +76,7 @@ class VideoExtractor:
             print(2.2)
             datum = self.predictor.predict_image(os.path.join(self.picture_dir, pictures))
 
-            with open(os.path.join(self.body_dir, str(i) + ".json")) as f:
+            with open(os.path.join(self.body_dir, str(i) + ".json"), "w") as f:
                 json.dump(datum.poseKeypoints, f)
             cv2.imwrite(os.path.join(self.skeleton_dir, str(i) + ".jpg"), datum.cvOutputData)
             '''
