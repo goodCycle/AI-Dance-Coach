@@ -4,7 +4,6 @@ import shutil
 import json
 import codecs
 from PIL import Image
-from skvideo.io import VideoWriter
 
 from posewrapper.PosePredictor import PosePredictor
 
