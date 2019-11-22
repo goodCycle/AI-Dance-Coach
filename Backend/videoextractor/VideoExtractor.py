@@ -81,7 +81,7 @@ class VideoExtractor:
         # put in loop
         self.clear_and_create(self.skeleton_dir)
         self.clear_and_create(self.body_keypoints_dir)
-        for i, pictures in enumerate(sorted(os.listdir(self.picture_dir))):
+        for i, pictures in enumerate(sorted(os.listdir(self.picture_dir), key=lambda x: int(x.split('.')[0]))):
             datum = self.predictor.predict_image(os.path.join(self.picture_dir, pictures))
             datum_list = datum.poseKeypoints.tolist()
             json.dump(datum_list,
@@ -92,7 +92,8 @@ class VideoExtractor:
     def _overlay_images(self):
         self.clear_and_create(self.overlay_dir)
         for i, (pic, ske) in enumerate(
-                zip(sorted(os.listdir(self.picture_dir)), sorted(os.listdir(self.skeleton_dir)))):
+                zip(sorted(os.listdir(self.picture_dir), key=lambda x: int(x.split('.')[0])),
+                    sorted(os.listdir(self.skeleton_dir), key=lambda x: int(x.split('.')[0])))):
             picture = Image.open(os.path.join(self.picture_dir, pic), 'r').convert("RGBA")
             skeleton = Image.open(os.path.join(self.skeleton_dir, ske), 'r').convert("RGBA")
 
@@ -102,7 +103,7 @@ class VideoExtractor:
 
     def _generate_video(self, use_overlayed=False):
         img_arr = []
-        for file in sorted(os.listdir(self.skeleton_dir)):
+        for file in sorted(os.listdir(self.skeleton_dir), key=lambda x: int(x.split('.')[0])):
             img = cv2.imread(os.path.join(self.skeleton_dir, file))
             img_arr.append(img)
 
