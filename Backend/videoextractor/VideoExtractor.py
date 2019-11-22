@@ -52,7 +52,7 @@ class VideoExtractor:
 
         self._sample_pictures()
         self._extract_keypoints()
-        #self._overlay_images()
+        # self._overlay_images()
         self._generate_video()
         self._generate_video(use_overlayed=False)
 
@@ -81,7 +81,7 @@ class VideoExtractor:
         # put in loop
         self.clear_and_create(self.skeleton_dir)
         self.clear_and_create(self.body_keypoints_dir)
-        for i, pictures in enumerate(os.listdir(self.picture_dir)):
+        for i, pictures in enumerate(sorted(os.listdir(self.picture_dir))):
             datum = self.predictor.predict_image(os.path.join(self.picture_dir, pictures))
             datum_list = datum.poseKeypoints.tolist()
             json.dump(datum_list,
@@ -91,7 +91,8 @@ class VideoExtractor:
 
     def _overlay_images(self):
         self.clear_and_create(self.overlay_dir)
-        for i, (pic, ske) in enumerate(zip(os.listdir(self.picture_dir), os.listdir(self.skeleton_dir))):
+        for i, (pic, ske) in enumerate(
+                zip(sorted(os.listdir(self.picture_dir)), sorted(os.listdir(self.skeleton_dir)))):
             picture = Image.open(os.path.join(self.picture_dir, pic), 'r').convert("RGBA")
             skeleton = Image.open(os.path.join(self.skeleton_dir, ske), 'r').convert("RGBA")
 
