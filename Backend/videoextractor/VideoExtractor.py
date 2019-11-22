@@ -32,8 +32,7 @@ class VideoExtractor:
         self.picture_dir = os.path.join(self.media_dir, "pictures")
         self.skeleton_dir = os.path.join(self.media_dir, "skeletons")
         self.body_keypoints_dir = os.path.join(self.media_dir, "bodies_keypoints")
-        self.overlay_dir = os.path.join(self.media_dir, "overlays")
-
+        # self.overlay_dir = os.path.join(self.media_dir, "overlays")
         self.video = cv2.VideoCapture(self.video_path)
         self.predictor = PosePredictor(model=model_path, disable_blending=True)
         self.frequency = 1 / framerate
@@ -95,20 +94,21 @@ class VideoExtractor:
         for i, (pic, ske) in enumerate(zip(os.listdir(self.picture_dir), os.listdir(self.skeleton_dir))):
             picture = Image.open(os.path.join(self.picture_dir, pic), 'r').convert("RGBA")
             skeleton = Image.open(os.path.join(self.skeleton_dir, ske), 'r').convert("RGBA")
+
             picture.paste(skeleton, (0, 0), skeleton)
             picture.save(os.path.join(self.overlay_dir, str(i) + ".png"), format="PNG")
         # https://stackoverflow.com/questions/38627870/how-to-paste-a-png-image-with-transparency-to-another-image-in-pil-without-white
 
     def _generate_video(self, use_overlayed=False):
         img_arr = []
-        for file in os.listdir(self.overlay_dir):
-            img = cv2.imread(os.path.join(self.overlay_dir, file))
+        for file in os.listdir(self.skeleton_dir):
+            img = cv2.imread(os.path.join(self.skeleton_dir, file))
             img_arr.append(img)
 
         size = img_arr[0].shape[1::-1]
 
         out = cv2.VideoWriter(os.path.join(self.media_dir, 'overlay_video.avi'),
-                              cv2.VideoWriter_fourcc(*'DIVX'), 15, size)
+                              cv2.VideoWriter_fourcc(*'DIVX'), int((1 / self.frequency)), size)
         for img in img_arr:
             out.write(img)
         out.release()
