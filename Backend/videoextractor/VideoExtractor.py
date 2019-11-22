@@ -6,6 +6,7 @@ import codecs
 from PIL import Image
 
 from posewrapper.PosePredictor import PosePredictor
+
 '''
     media
     -> 0
@@ -89,13 +90,12 @@ class VideoExtractor:
                       separators=(',', ':'))  ### this saves the array in .json format
             cv2.imwrite(os.path.join(self.skeleton_dir, str(i) + ".jpg"), datum.cvOutputData)
 
-
     def _overlay_images(self):
         self.clear_and_create(self.overlay_dir)
         for i, (pic, ske) in enumerate(zip(os.listdir(self.picture_dir), os.listdir(self.skeleton_dir))):
-            picture = Image.open(os.path.join(self.picture_dir, pic), 'r')
-            skeleton = Image.open(os.path.join(self.skeleton_dir, ske), 'r')
-            overlay = Image.new('RGBA', picture.size, (0, 0, 0, 0))
+            picture = Image.open(os.path.join(self.picture_dir, pic), 'r').convert("RGB")
+            skeleton = Image.open(os.path.join(self.skeleton_dir, ske), 'r').convert("RGB")
+            overlay = Image.new('RGB', picture.size, (0, 0, 0))
             overlay.paste(picture, (0, 0))
             overlay.paste(skeleton, (0, 0), mask=skeleton)
             overlay.save(os.path.join(self.overlay_dir, str(i) + ".jpg"), format="JPEG")
@@ -116,4 +116,3 @@ class VideoExtractor:
         out.release()
         # https://theailearner.com/2018/10/15/creating-video-from-images-using-opencv-python/
         # to find out, how to build mp4 ?
-        pass
