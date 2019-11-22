@@ -96,7 +96,7 @@ class VideoExtractor:
             picture = Image.open(os.path.join(self.picture_dir, pic), 'r').convert("RGBA")
             skeleton = Image.open(os.path.join(self.skeleton_dir, ske), 'r').convert("RGBA")
             picture.paste(skeleton, (0, 0), mask=skeleton)
-            picture.convert("RGB")
+            picture = picture.convert("RGB")
             picture.save(os.path.join(self.overlay_dir, str(i) + ".jpg"), format="JPEG")
         # https://stackoverflow.com/questions/38627870/how-to-paste-a-png-image-with-transparency-to-another-image-in-pil-without-white
 
