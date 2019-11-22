@@ -102,7 +102,7 @@ class VideoExtractor:
 
     def _generate_video(self, use_overlayed=False):
         img_arr = []
-        for file in os.listdir(self.skeleton_dir):
+        for file in sorted(os.listdir(self.skeleton_dir)):
             img = cv2.imread(os.path.join(self.skeleton_dir, file))
             img_arr.append(img)
 
