@@ -95,9 +95,11 @@ class VideoExtractor:
         for i, (pic, ske) in enumerate(zip(os.listdir(self.picture_dir), os.listdir(self.skeleton_dir))):
             picture = Image.open(os.path.join(self.picture_dir, pic), 'r').convert("RGBA")
             skeleton = Image.open(os.path.join(self.skeleton_dir, ske), 'r').convert("RGBA")
-            picture.paste(skeleton, (0, 0), mask=skeleton)
-            picture = picture.convert("RGB")
-            picture.save(os.path.join(self.overlay_dir, str(i) + ".jpg"), format="JPEG")
+            text_img = Image.new('RGBA', picture.size, (0, 0, 0, 0))
+            text_img.paste(picture, (0, 0))
+            text_img.paste(skeleton, (0, 0), mask=skeleton)
+            text_img = text_img.convert("RGB")
+            text_img.save(os.path.join(self.overlay_dir, str(i) + ".jpg"), format="JPEG")
         # https://stackoverflow.com/questions/38627870/how-to-paste-a-png-image-with-transparency-to-another-image-in-pil-without-white
 
     def _generate_video(self, use_overlayed=False):
