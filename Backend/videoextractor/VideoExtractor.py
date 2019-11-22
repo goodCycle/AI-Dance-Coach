@@ -32,7 +32,7 @@ class VideoExtractor:
         self.picture_dir = os.path.join(self.media_dir, "pictures")
         self.skeleton_dir = os.path.join(self.media_dir, "skeletons")
         self.body_keypoints_dir = os.path.join(self.media_dir, "bodies_keypoints")
-        # self.overlay_dir = os.path.join(self.media_dir, "overlays")
+        self.overlay_dir = os.path.join(self.media_dir, "overlays")
         self.video = cv2.VideoCapture(self.video_path)
         self.predictor = PosePredictor(model=model_path, disable_blending=True)
         self.frequency = 1 / framerate
@@ -52,7 +52,7 @@ class VideoExtractor:
 
         self._sample_pictures()
         self._extract_keypoints()
-        self._overlay_images()
+        #self._overlay_images()
         self._generate_video()
         self._generate_video(use_overlayed=False)
 
