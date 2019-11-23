@@ -82,7 +82,9 @@ class VideoExtractor:
     def _extract_keypoints(self):
         # put in loop
         VideoExtractor.create_and_clear(self.skeleton_dir)
+        print(self.skeleton_dir)
         VideoExtractor.create_and_clear(self.body_dir)
+        print(self.body_dir)
         for i, pictures in enumerate(os.listdir(self.picture_dir)):
             datum = self.predictor.predict_image(os.path.join(self.picture_dir, pictures))
             print(datum.poseKeypoints)
