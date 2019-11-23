@@ -87,7 +87,8 @@ class VideoExtractor:
         print(self.body_dir)
         for i, pictures in enumerate(os.listdir(self.picture_dir)):
             datum = self.predictor.predict_image(os.path.join(self.picture_dir, pictures))
-            print(datum.poseKeypoints)
+            print(os.path.join(self.picture_dir, pictures))
+            print("test"+str(datum.poseKeypoints))
             np.save(os.path.join(self.body_dir, str(i) + ".npy"), datum.poseKeypoints)
             cv2.imwrite(os.path.join(self.skeleton_dir, str(i) + ".jpg"), datum.cvOutputData)
 
