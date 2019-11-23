@@ -57,7 +57,7 @@ class DifferenceCalculator:
 
         def convert_to_2d_array(x): return np.array([np.array(xi) for xi in x])
 
-        print(remove_confidence(keypoints_a))
+        print(keypoints_a)
         removed_confidence_a = remove_confidence(keypoints_a)
         removed_confidence_b = remove_confidence(keypoints_b)
 
