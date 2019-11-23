@@ -9,7 +9,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { RNCamera } from 'react-native-camera';
-// import Config from "react-native-config";
+import Config from "react-native-config";
 
 const styles = StyleSheet.create({
   container: {
@@ -22,7 +22,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   capture: {
-    // flex: 0,
     backgroundColor: '#B82303',
     borderRadius: 5,
     color: '#000',
@@ -50,23 +49,25 @@ class CameraView extends Component {
   startRecording = async () => {
     this.setState({ recording: true });
     // default to mp4 for android as codec is not set
-    const { uri, codec = 'mp4' } = await this.camera.recordAsync();
+    const { uri, codec='H264' } = await this.camera.recordAsync();
     this.setState({ recording: false, processing: true });
     const type = `video/${codec}`;
 
     const data = new FormData();
-    data.append('video', {
-      name: 'mobile-video-upload',
+    data.append('file', {
+      name: 'app-video',
       type,
-      uri,
+      uri
     });
 
     try {
-      // await fetch(Config.ENDPOINT, {
-      //   method: "post",
-      //   body: data
-      // });
-      console.log('fetch!');
+      await fetch(Config.ENDPOINT, {
+        method: "post",
+        body: data
+      })
+      .then((response) => {
+        console.log('response!', response.json());
+      })
     } catch (e) {
       console.error(e);
     }
