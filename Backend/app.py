@@ -8,10 +8,10 @@ from videoextractor.VideoExtractor import VideoExtractor
 # simon.zocholl@mnet-mail.de
 
 app = Flask(__name__)
-UPLOAD_FOLDER = './video'
+VIDEO_DIR = './video'
 
 app.secret_key = "super secret key"
-app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
+app.config["UPLOAD_FOLDER"] = VIDEO_DIR
 
 
 # pred.predict_image(image_path) for inference
@@ -26,20 +26,18 @@ def hello_world():
 @app.route('/', methods=['POST'])
 def video_in():
     video_name = "video1.mp4"
-    video_dir = "./video"
+    video_path = os.path.join(VIDEO_DIR, video_name)
 
     file = request.files['file']
-    if not os.path.exists(UPLOAD_FOLDER):
-        os.makedirs(UPLOAD_FOLDER)
+    if not os.path.exists(VIDEO_DIR):
+        os.makedirs(VIDEO_DIR)
 
-    input_path = os.path.join(app.config['UPLOAD_FOLDER'], video_name)
+    input_path = os.path.join(app.config['VIDEO_DIR'], video_name)
     file.save(input_path)
 
-    vd = VideoExtractor(video_name=video_name, video_dir=video_dir,
-                        base_dir="./media",
-                        model_path="../../openpose/models/",
-                        framerate=120)  # framerate > 1 !!!
-    vd.extract()
+    vd = VideoExtractor(media_dir="./media", model_path="../../openpose/models/")  # framerate > 1 !!!
+    body_points = vd.extract(video_path, video_name.split('.')[0], framerate=10)
+
     response = Response(status=200, response="result_string")
     return response
 
