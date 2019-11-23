@@ -41,7 +41,7 @@ class VideoExtractor:
     # set video_path and frame rate
     def extract(self, video_path, result_name, framerate):
         self.video_path = video_path
-        print(self.video_path)
+
         self.video = cv2.VideoCapture(self.video_path)
         self.frequency = 1 / framerate
 
@@ -74,7 +74,6 @@ class VideoExtractor:
         success = get_frame(sec)
 
         while success:
-            print(f'count: {count}')
             count += 1
             sec += self.frequency
             sec = round(sec, 2)
@@ -83,12 +82,9 @@ class VideoExtractor:
     def _extract_keypoints(self):
         # put in loop
         VideoExtractor.create_and_clear(self.skeleton_dir)
-        print(self.skeleton_dir)
         VideoExtractor.create_and_clear(self.body_dir)
-        print(self.picture_dir)
 
         for i, pictures in enumerate(os.listdir(self.picture_dir)):
-            print(os.listdir(self.picture_dir))
             datum = self.predictor.predict_image(os.path.join(self.picture_dir, pictures))
             self.body_points.append(datum.poseKeypoints)
             np.save(os.path.join(self.body_dir, str(i) + ".npy"), datum.poseKeypoints)
