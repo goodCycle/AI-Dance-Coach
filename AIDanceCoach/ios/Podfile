@@ -41,13 +41,3 @@ target 'AIDanceCoach' do
 
   use_native_modules!
 end
-
-target 'AIDanceCoach-tvOS' do
-  # Pods for AIDanceCoach-tvOS
-
-  target 'AIDanceCoach-tvOSTests' do
-    inherit! :search_paths
-    # Pods for testing
-  end
-
-end
