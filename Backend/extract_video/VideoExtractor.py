@@ -41,6 +41,7 @@ class VideoExtractor:
     # set video_path and frame rate
     def extract(self, video_path, result_name, framerate):
         self.video_path = video_path
+        print(self.video_path)
         self.video = cv2.VideoCapture(self.video_path)
         self.frequency = 1 / framerate
 
@@ -84,7 +85,7 @@ class VideoExtractor:
         VideoExtractor.create_and_clear(self.skeleton_dir)
         print(self.skeleton_dir)
         VideoExtractor.create_and_clear(self.body_dir)
-        print(self.body_dir)
+        print(self.picture_dir)
         for i, pictures in enumerate(os.listdir(self.picture_dir)):
             datum = self.predictor.predict_image(os.path.join(self.picture_dir, pictures))
             print(os.path.join(self.picture_dir, pictures))
