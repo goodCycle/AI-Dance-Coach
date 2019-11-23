@@ -53,7 +53,7 @@ class DifferenceCalculator:
         :return: the pose difference between the two poses for each bodypart as a dictionary (name: (score, weight))
         """
 
-        def remove_confidence(x): return [[a, b] for [a, b, _] in x]
+        def remove_confidence(x): return [[a[0], a[1]] for a in x]
 
         def convert_to_2d_array(x): return np.array([np.array(xi) for xi in x])
 
