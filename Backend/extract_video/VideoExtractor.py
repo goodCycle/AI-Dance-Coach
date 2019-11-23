@@ -56,7 +56,6 @@ class VideoExtractor:
         self._extract_keypoints()
         # self._overlay_images()
         self._generate_video()
-        self._generate_video(use_overlayed=False)
         return self.body_points
 
     #  it will capture image in each 0.5 second
@@ -86,13 +85,8 @@ class VideoExtractor:
         VideoExtractor.create_and_clear(self.body_dir)
         for i, pictures in enumerate(os.listdir(self.picture_dir)):
             datum = self.predictor.predict_image(os.path.join(self.picture_dir, pictures))
+            print(datum.poseKeypoints)
             np.save(os.path.join(self.body_dir, str(i) + ".npy"), datum.poseKeypoints)
-            '''
-            self.body_points.append(datum.poseKeypoints)  # <- store unprocessed points for return value
-            datum_list = datum.poseKeypoints.tolist()
-            json.dump(datum_list, codecs.open(os.path.join(self.body_dir, str(i) + ".json"), 'w', encoding='utf-8'),
-                      separators=(',', ':'))  ### this saves the array in .json format
-            '''
             cv2.imwrite(os.path.join(self.skeleton_dir, str(i) + ".jpg"), datum.cvOutputData)
 
     # currently not working :/
@@ -114,9 +108,8 @@ class VideoExtractor:
             img_arr.append(img)
 
         size = img_arr[0].shape[1::-1]
-
         out = cv2.VideoWriter(os.path.join(self.result_dir, 'skeleton_video.avi'),
-                              cv2.VideoWriter_fourcc(*'DIVX'), 15, size)
+                              cv2.VideoWriter_fourcc(*'DIVX'), 30, size)
         for img in img_arr:
             out.write(img)
         out.release()

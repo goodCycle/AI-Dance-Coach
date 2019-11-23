@@ -1,7 +1,6 @@
 from flask import Flask, request, Response
 import os
 
-
 from extract_video.VideoExtractor import VideoExtractor
 
 app = Flask(__name__)
