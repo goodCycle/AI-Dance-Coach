@@ -1,8 +1,7 @@
 import cv2
 import os
 import shutil
-import json
-import codecs
+import numpy as np
 from PIL import Image
 
 from posewrapper.PosePredictor import PosePredictor
@@ -83,10 +82,9 @@ class VideoExtractor:
         self.clear_and_create(self.body_keypoints_dir)
         for i, pictures in enumerate(sorted(os.listdir(self.picture_dir), key=lambda x: int(x.split('.')[0]))):
             datum = self.predictor.predict_image(os.path.join(self.picture_dir, pictures))
-            datum_list = datum.poseKeypoints.tolist()
-            json.dump(datum_list,
-                      codecs.open(os.path.join(self.body_keypoints_dir, str(i) + ".json"), 'w', encoding='utf-8'),
-                      separators=(',', ':'))  ### this saves the array in .json format
+            np.savetxt(
+                os.path.join(self.body_keypoints_dir, str(i) + ".csv", datum.poseKeypoints, delimiter=',', fmt='%d'))
+            # datum_list = datum.poseKeypoints.tolist()
             cv2.imwrite(os.path.join(self.skeleton_dir, str(i) + ".jpg"), datum.cvOutputData)
 
     def _overlay_images(self):
