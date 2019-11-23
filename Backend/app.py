@@ -1,7 +1,9 @@
 from flask import Flask, request, Response
 import os
+import json
 
 from extract_video.VideoExtractor import VideoExtractor
+from build_response.ResponseBuilder import ResponseBuilder
 
 app = Flask(__name__)
 VIDEO_DIR = './video'
@@ -31,10 +33,13 @@ def video_in():
     input_path = os.path.join(VIDEO_DIR, video_name)
     file.save(input_path)
 
+    rb = ResponseBuilder(input_path=video_path, sample_id=video_name.split('.')[0])
+    result = rb.build()
+    '''
     vd = VideoExtractor(media_dir="./media", model_path="../../openpose/models/")  # framerate > 1 !!!
     body_points = vd.extract(video_path, video_name.split('.')[0], framerate=30)
-
-    response = Response(status=200, response="result_string")
+    '''
+    response = Response(status=200, response=json.dumps(result))
     return response
 
 
