@@ -5,11 +5,13 @@ import {
   Text,
   TouchableOpacity,
   View,
-  Button,
   ActivityIndicator,
 } from 'react-native';
+
 import { RNCamera } from 'react-native-camera';
-import Config from "react-native-config";
+import Config from 'react-native-config';
+
+import HeaderContainer from './HeaderContainer';
 
 const styles = StyleSheet.create({
   container: {
@@ -21,15 +23,24 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     alignItems: 'center',
   },
-  capture: {
+  recordButtonContainer: {
+    flex: 0.2,
+    flexDirection: 'column',
+    justifyContent: 'center',
     backgroundColor: '#B82303',
+  },
+  recordButton: {
+    backgroundColor: '#fff',
     borderRadius: 5,
-    color: '#000',
     padding: 10,
     marginHorizontal: 70,
-    marginBottom: 10,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  recordButtonText: {
+    fontSize: 14,
+    color: '#B82303',
+    fontWeight: 'bold',
   },
 });
 
@@ -43,13 +54,14 @@ class CameraView extends Component {
     return {
       recording: false,
       processing: false,
+      result: null,
     };
   }
 
   startRecording = async () => {
     this.setState({ recording: true });
     // default to mp4 for android as codec is not set
-    const { uri, codec='H264' } = await this.camera.recordAsync();
+    const { uri, codec = 'H264' } = await this.camera.recordAsync();
     this.setState({ recording: false, processing: true });
     const type = `video/${codec}`;
 
@@ -57,17 +69,16 @@ class CameraView extends Component {
     data.append('file', {
       name: 'app-video',
       type,
-      uri
+      uri,
     });
 
     try {
-      await fetch(Config.ENDPOINT, {
-        method: "post",
-        body: data
-      })
-      .then((response) => {
-        console.log('response!', response.json());
-      })
+      const response = await fetch(Config.ENDPOINT, {
+        method: 'post',
+        body: data,
+      });
+      const result = await response.json();
+      this.setState({ result });
     } catch (e) {
       console.error(e);
     }
@@ -81,39 +92,15 @@ class CameraView extends Component {
 
   render() {
     const { recording, processing } = this.state;
-
-    let button = (
-      <TouchableOpacity
-        onPress={this.startRecording}
-        style={styles.capture}
-      >
-        <Text style={{ fontSize: 14, color: '#fff' }}> RECORD </Text>
-      </TouchableOpacity>
-    );
-
-    if (recording) {
-      button = (
-        <TouchableOpacity
-          onPress={this.stopRecording}
-          style={styles.capture}
-        >
-          <Text style={{ fontSize: 14 }}> STOP </Text>
-        </TouchableOpacity>
-      );
-    }
-
-    if (processing) {
-      button = (
-        <View style={styles.capture}>
-          <ActivityIndicator animating size={18} />
-        </View>
-      );
-    }
-
     const { onPressStopRecord } = this.props;
 
     return (
       <View style={styles.container}>
+        <HeaderContainer
+          leftIcon="chevron-left"
+          onPressLeftIcon={onPressStopRecord}
+          headerText="Record Dance"
+        />
         <RNCamera
           ref={(ref) => {
             this.camera = ref;
@@ -123,14 +110,26 @@ class CameraView extends Component {
           flashMode={RNCamera.Constants.FlashMode.on}
         />
         <View
-          style={{ flex: 0.3, flexDirection: 'column', justifyContent: 'center' }}
+          style={styles.recordButtonContainer}
         >
-          {button}
-          <Button
-            title="Go to Home"
-            buttonStyle={{ backgroundColor: '#B82303' }}
-            onPress={onPressStopRecord}
-          />
+          {
+          processing
+            ? (
+              <View style={styles.recordButton}>
+                <ActivityIndicator animating size={18} />
+              </View>
+            )
+            : (
+              <TouchableOpacity
+                onPress={recording ? this.stopRecording : this.startRecording}
+                style={styles.recordButton}
+              >
+                <Text style={styles.recordButtonText}>
+                  {recording ? 'STOP' : 'RECORD'}
+                </Text>
+              </TouchableOpacity>
+            )
+        }
         </View>
       </View>
     );
