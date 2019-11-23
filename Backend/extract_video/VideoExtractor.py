@@ -4,6 +4,7 @@ import shutil
 import json
 import codecs
 from PIL import Image
+import numpy as np
 
 from extract_video.posewrapper.PosePredictor import PosePredictor
 
@@ -87,10 +88,13 @@ class VideoExtractor:
         VideoExtractor.create_and_clear(self.body_dir)
         for i, pictures in enumerate(os.listdir(self.picture_dir)):
             datum = self.predictor.predict_image(os.path.join(self.picture_dir, pictures))
+            np.savetxt(os.path.join(self.body_dir, str(i) + ".csv"), [datum.poseKeypoints], delimiter=',', fmt='%d')
+            '''
             self.body_points.append(datum.poseKeypoints)  # <- store unprocessed points for return value
             datum_list = datum.poseKeypoints.tolist()
             json.dump(datum_list, codecs.open(os.path.join(self.body_dir, str(i) + ".json"), 'w', encoding='utf-8'),
                       separators=(',', ':'))  ### this saves the array in .json format
+            '''
             cv2.imwrite(os.path.join(self.skeleton_dir, str(i) + ".jpg"), datum.cvOutputData)
 
     # currently not working :/
