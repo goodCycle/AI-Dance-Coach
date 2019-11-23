@@ -13,7 +13,7 @@ class MovementAnalyzer:
 
     def analyze(self, input_path):
 
-        analyzation_fps = 15
+        analyzation_fps = 30
         sample_fps = 30
 
         step = sample_fps/analyzation_fps
