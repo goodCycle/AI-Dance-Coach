@@ -55,7 +55,7 @@ class VideoExtractor:
         self._sample_pictures()
         self._extract_keypoints()
         # self._overlay_images()
-        self._generate_video()
+        # self._generate_video()
         return self.body_points
 
     #  it will capture image in each 0.5 second
