@@ -20,7 +20,7 @@ class MovementAnalyzer:
         poses = self.extract(input_path, "temp_vid", analyzation_fps)
         print(poses)
 
-        score_dicts = self.difference([(pose, i*step) for i, pose in enumerate(poses)])
+        score_dicts = self.difference([(pose, int(i*step)) for i, pose in enumerate(poses)])
 
         result = list()
         for i, score_dict in enumerate(score_dicts):
