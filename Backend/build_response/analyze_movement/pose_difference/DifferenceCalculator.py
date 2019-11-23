@@ -1,16 +1,15 @@
 import os
 import json
-import codecs
 import numpy as np
 
 
 # TODO do the transformation the other way around?
 class DifferenceCalculator:
 
-    def __init__(self, sample_keypoint_path="media/video1/bodies"):
+    def __init__(self, sample_keypoint_path="./media/video1/bodies_keypoints"):
         self.sample_keypoint_path = sample_keypoint_path
 
-        self.sample_keypoints = [json.load(codecs.open(filename, 'w', encoding='utf-8'), separators=(',', ':'))
+        self.sample_keypoints = [np.load(filename)
                                  for filename in os.listdir(sample_keypoint_path)
                                  if filename.endswith(".json")]
 
