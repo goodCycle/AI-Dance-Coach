@@ -32,7 +32,7 @@ def video_in():
     if not os.path.exists(VIDEO_DIR):
         os.makedirs(VIDEO_DIR)
 
-    input_path = os.path.join(app.config['VIDEO_DIR'], video_name)
+    input_path = os.path.join(VIDEO_DIR, video_name)
     file.save(input_path)
     a = 5000000
 
