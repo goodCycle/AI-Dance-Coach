@@ -3,7 +3,7 @@ yarn.lock
 node_modules/
 
 .idea
-Backend/venv/
+Backend/venv
 
 Backend/images/
 Backend/posewrapper/__pycache__/

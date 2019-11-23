@@ -3,7 +3,7 @@ import os
 import cv2
 import json
 
-from videoextractor.VideoExtractor import VideoExtractor
+from extract_video.VideoExtractor import VideoExtractor
 
 # simon.zocholl@mnet-mail.de
 
