@@ -34,10 +34,9 @@ def video_in():
 
     input_path = os.path.join(VIDEO_DIR, video_name)
     file.save(input_path)
-    a = 5000000
 
     vd = VideoExtractor(media_dir="./media", model_path="../../openpose/models/")  # framerate > 1 !!!
-    body_points = vd.extract(video_path, video_name.split('.')[0], framerate=10)
+    body_points = vd.extract(video_path, video_name.split('.')[0], framerate=30)
 
     response = Response(status=200, response="result_string")
     return response

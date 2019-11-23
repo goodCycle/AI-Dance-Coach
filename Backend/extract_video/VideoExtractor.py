@@ -1,8 +1,6 @@
 import cv2
 import os
 import shutil
-import json
-import codecs
 from PIL import Image
 import numpy as np
 
@@ -49,7 +47,7 @@ class VideoExtractor:
         self.result_dir = os.path.join(self.media_dir, result_name)
         self.picture_dir = os.path.join(self.result_dir, "pictures")
         self.skeleton_dir = os.path.join(self.result_dir, "skeletons")
-        self.body_dir = os.path.join(self.result_dir, "bodies")
+        self.body_dir = os.path.join(self.result_dir, "body_keypoints")
         self.overlay_dir = os.path.join(self.result_dir, "overlays")
 
         # clear previous result with same id
