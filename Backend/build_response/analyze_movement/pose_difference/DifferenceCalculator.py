@@ -10,8 +10,7 @@ class DifferenceCalculator:
         self.sample_keypoint_path = sample_keypoint_path
 
         self.sample_keypoints = [np.load(filename)
-                                 for filename in os.listdir(sample_keypoint_path)
-                                 if filename.endswith(".json")]
+                                 for filename in os.listdir(sample_keypoint_path)]
 
     def __call__(self, *args, **kwargs):
         return self.list_difference(*args, **kwargs)
@@ -39,8 +38,6 @@ class DifferenceCalculator:
             },
         ]
 
-        print(len(self.sample_keypoints))
-        print(len(keypoint_list))
         return [(self.bin_difference(bodypart_indicies, keypoints, self.sample_keypoints[i]), i)
                 for (keypoints, i) in keypoint_list]
 
