@@ -26,6 +26,7 @@ def hello_world():
 @app.route('/', methods=['POST'])
 def video_in():
     video_name = "video1.mp4"
+    a = 123
     video_path = os.path.join(VIDEO_DIR, video_name)
 
     file = request.files['file']
