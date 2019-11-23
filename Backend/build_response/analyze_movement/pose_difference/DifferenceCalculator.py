@@ -57,13 +57,14 @@ class DifferenceCalculator:
 
         def convert_to_2d_array(x): return np.array([np.array(xi) for xi in x])
 
+        print(keypoints_a)
         sample_features = convert_to_2d_array(remove_confidence(keypoints_a))
         input_features = convert_to_2d_array(remove_confidence(keypoints_b))
 
         score_dict = dict()
 
         for bodypart in bodypart_indicies:
-            print(sample_features)
+
             sample = sample_features[np.array(bodypart["indicies"])]
             input_ = input_features[np.array(bodypart["indicies"])]
 
