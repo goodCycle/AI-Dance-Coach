@@ -67,7 +67,7 @@ class VideoExtractor:
         def get_frame(sec):
             self.video.set(cv2.CAP_PROP_POS_MSEC, sec * 1000)
             has_frames, image = self.video.read()
-            print(f'has_frames: {has_frames}')
+            print(f'path: {os.path.join(self.picture_dir, str(count) + ".jpg"), image}')
             if has_frames:
                 cv2.imwrite(os.path.join(self.picture_dir, str(count) + ".jpg"), image)  # save frame as JPG file
             return has_frames
