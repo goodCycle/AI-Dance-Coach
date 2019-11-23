@@ -63,6 +63,7 @@ class DifferenceCalculator:
         score_dict = dict()
 
         for bodypart in bodypart_indicies:
+            print(sample_features)
             sample = sample_features[np.array(bodypart["indicies"])]
             input_ = input_features[np.array(bodypart["indicies"])]
 
