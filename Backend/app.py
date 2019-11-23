@@ -36,7 +36,7 @@ def video_in():
     file.save(input_path)
 
     vd = VideoExtractor(video_name=video_name, video_dir=video_dir,
-                        media_dir="./media",
+                        base_dir="./media",
                         model_path="../../openpose/models/",
                         framerate=120)  # framerate > 1 !!!
     vd.extract()
