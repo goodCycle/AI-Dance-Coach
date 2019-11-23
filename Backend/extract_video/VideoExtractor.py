@@ -82,13 +82,14 @@ class VideoExtractor:
             sec += self.frequency
             sec = round(sec, 2)
             success = get_frame(sec)
-        print(os.listdir(self.picture_dir))
+
     def _extract_keypoints(self):
         # put in loop
         VideoExtractor.create_and_clear(self.skeleton_dir)
         print(self.skeleton_dir)
         VideoExtractor.create_and_clear(self.body_dir)
         print(self.picture_dir)
+        print(os.listdir(self.picture_dir))
         for i, pictures in enumerate(os.listdir(self.picture_dir)):
             datum = self.predictor.predict_image(os.path.join(self.picture_dir, pictures))
             np.save(os.path.join(self.body_dir, str(i) + ".npy"), datum.poseKeypoints)
