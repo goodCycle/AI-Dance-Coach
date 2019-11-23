@@ -22,13 +22,13 @@ from posewrapper.PosePredictor import PosePredictor
 
 class VideoExtractor:
 
-    def __init__(self, video_name="anonymous", video_dir="./video",
-                 media_dir="./media", model_path="../../openpose/models/",
+    def __init__(self, video_name="anonymous.mp4", video_dir="./video",
+                 base_dir="./media", model_path="../../openpose/models/",
                  framerate=-1):
         self.video_name = video_name
         self.video_path = os.path.join(video_dir, video_name)
-
-        self.media_dir = media_dir
+        name = video_name.split('.')[0]
+        self.media_dir = os.path.join(base_dir, name)
         self.picture_dir = os.path.join(self.media_dir, "pictures")
         self.skeleton_dir = os.path.join(self.media_dir, "skeletons")
         self.body_keypoints_dir = os.path.join(self.media_dir, "bodies_keypoints")
