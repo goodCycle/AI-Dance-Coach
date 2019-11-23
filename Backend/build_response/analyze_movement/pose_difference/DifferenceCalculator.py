@@ -9,7 +9,7 @@ class DifferenceCalculator:
     def __init__(self, sample_keypoint_path="./media/video1/bodies_keypoints"):
         self.sample_keypoint_path = sample_keypoint_path
 
-        self.sample_keypoints = [np.load(filename)
+        self.sample_keypoints = [np.load(self.sample_keypoint_path+"/"+filename)
                                  for filename in os.listdir(sample_keypoint_path)]
 
     def __call__(self, *args, **kwargs):
