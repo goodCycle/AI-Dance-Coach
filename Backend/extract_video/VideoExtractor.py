@@ -88,7 +88,7 @@ class VideoExtractor:
         VideoExtractor.create_and_clear(self.body_dir)
         for i, pictures in enumerate(os.listdir(self.picture_dir)):
             datum = self.predictor.predict_image(os.path.join(self.picture_dir, pictures))
-            np.savetxt(os.path.join(self.body_dir, str(i) + ".csv"), [datum.poseKeypoints], delimiter=',', fmt='%f')
+            np.save(os.path.join(self.body_dir, str(i) + ".npy"), datum.poseKeypoints)
             '''
             self.body_points.append(datum.poseKeypoints)  # <- store unprocessed points for return value
             datum_list = datum.poseKeypoints.tolist()
