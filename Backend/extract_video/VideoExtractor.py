@@ -54,9 +54,11 @@ class VideoExtractor:
         # clear previous result with same id
         VideoExtractor.create_and_clear(self.result_dir)
         self._sample_pictures()
+        print(os.listdir("2: " + self.picture_dir))
         self._extract_keypoints()
-        # self._overlay_images()
+        print(os.listdir("3: " + self.picture_dir))
         self._generate_video()
+        print(os.listdir("4: " + self.picture_dir))
         return self.body_points
 
     #  it will capture image in each 0.5 second
@@ -67,7 +69,6 @@ class VideoExtractor:
         def get_frame(sec):
             self.video.set(cv2.CAP_PROP_POS_MSEC, sec * 1000)
             has_frames, image = self.video.read()
-            print(f'path: {os.path.join(self.picture_dir, str(count) + ".jpg"), image}')
             if has_frames:
                 cv2.imwrite(os.path.join(self.picture_dir, str(count) + ".jpg"), image)  # save frame as JPG file
             return has_frames
@@ -89,8 +90,9 @@ class VideoExtractor:
         print(self.skeleton_dir)
         VideoExtractor.create_and_clear(self.body_dir)
         print(self.picture_dir)
-        print(os.listdir(self.picture_dir))
+
         for i, pictures in enumerate(os.listdir(self.picture_dir)):
+            print(os.listdir(self.picture_dir))
             datum = self.predictor.predict_image(os.path.join(self.picture_dir, pictures))
             np.save(os.path.join(self.body_dir, str(i) + ".npy"), datum.poseKeypoints)
             cv2.imwrite(os.path.join(self.skeleton_dir, str(i) + ".jpg"), datum.cvOutputData)
