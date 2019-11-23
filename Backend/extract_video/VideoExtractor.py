@@ -33,7 +33,7 @@ class VideoExtractor:
     def create_and_clear(directory):
         if os.path.exists(directory):
             shutil.rmtree(directory, ignore_errors=True)
-        os.makedirs(directory)
+        os.makedirs(directory, exist_ok=True)
 
     def get_body_points(self):
         return self.body_points
