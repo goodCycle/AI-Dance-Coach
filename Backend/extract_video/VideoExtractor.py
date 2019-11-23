@@ -61,11 +61,13 @@ class VideoExtractor:
 
     #  it will capture image in each 0.5 second
     def _sample_pictures(self):
+        print(f'picture_dir: {self.picture_dir}')
         VideoExtractor.create_and_clear(self.picture_dir)
 
         def get_frame(sec):
             self.video.set(cv2.CAP_PROP_POS_MSEC, sec * 1000)
             has_frames, image = self.video.read()
+            print(f'has_frames: {has_frames}')
             if has_frames:
                 cv2.imwrite(os.path.join(self.picture_dir, str(count) + ".jpg"), image)  # save frame as JPG file
             return has_frames
@@ -75,6 +77,7 @@ class VideoExtractor:
         success = get_frame(sec)
 
         while success:
+            print(f'count: {count}')
             count += 1
             sec += self.frequency
             sec = round(sec, 2)
