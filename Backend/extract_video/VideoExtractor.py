@@ -56,7 +56,7 @@ class VideoExtractor:
         self._sample_pictures()
         self._extract_keypoints()
         # self._overlay_images()
-        # self._generate_video()
+        self._generate_video()
         return self.body_points
 
     #  it will capture image in each 0.5 second
@@ -91,8 +91,6 @@ class VideoExtractor:
         print(self.picture_dir)
         for i, pictures in enumerate(os.listdir(self.picture_dir)):
             datum = self.predictor.predict_image(os.path.join(self.picture_dir, pictures))
-            print(os.path.join(self.picture_dir, pictures))
-            print("test"+str(datum.poseKeypoints))
             np.save(os.path.join(self.body_dir, str(i) + ".npy"), datum.poseKeypoints)
             cv2.imwrite(os.path.join(self.skeleton_dir, str(i) + ".jpg"), datum.cvOutputData)
 
