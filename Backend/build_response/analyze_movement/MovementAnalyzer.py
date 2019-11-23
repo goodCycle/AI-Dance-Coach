@@ -1,12 +1,12 @@
-from videoextractor.VideoExtractor import VideoExtractor
+from extract_video.VideoExtractor import VideoExtractor
 from build_response.analyze_movement.pose_difference.DifferenceCalculator import DifferenceCalculator
 
 
 class MovementAnalyzer:
 
     def __init__(self, sample_id):
-        self.extract = VideoExtractor(base_dir="./media", model_path="../../openpose/models/")
-        self.difference = DifferenceCalculator(sample_keypoint_path="media/"+sample_id+"/bodies")
+        self.extract = VideoExtractor(media_dir="./media", model_path="../../openpose/models/")
+        self.difference = DifferenceCalculator(sample_keypoint_path="./media/"+sample_id+"/bodies_keypoints")
 
     def __call__(self, *args, **kwargs):
         return self.analyze(*args, **kwargs)
@@ -17,11 +17,9 @@ class MovementAnalyzer:
         sample_fps = 30
 
         step = sample_fps/analyzation_fps
-        poses = self.extract(input_path, analyzation_fps)
+        poses = self.extract(input_path, "temp_vid", analyzation_fps)
 
         score_dicts = self.difference([(pose, i*step) for i, pose in enumerate(poses)])
-
-        # TODO clarify structure
 
         result = list()
         for i, score_dict in enumerate(score_dicts):
@@ -33,6 +31,5 @@ class MovementAnalyzer:
 
             result.append(current_frame_dict)
 
-        # TODO decide on what to return -> First point of failure above threshold
         return result
 
