@@ -65,9 +65,6 @@ class DifferenceCalculator:
         sample_features = convert_to_2d_array(removed_confidence_a)
         input_features = convert_to_2d_array(removed_confidence_b)
 
-
-        print(f'input_features: {input_features}')
-
         score_dict = dict()
 
         for bodypart in bodypart_indicies:
@@ -77,13 +74,6 @@ class DifferenceCalculator:
 
             matrix = DifferenceCalculator.find_affine_matrix(input_, sample)
             transformed_input = DifferenceCalculator.affine_transform(matrix, input_)
-
-            print("Input:")
-            print(input_)
-            print("A:")
-            print(matrix)
-            print("Result:")
-            print(transformed_input)
 
             # normalizing the inputs for scoring
             sample = sample / np.linalg.norm(sample)
