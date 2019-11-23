@@ -54,19 +54,12 @@ class VideoExtractor:
         # clear previous result with same id
         VideoExtractor.create_and_clear(self.result_dir)
         self._sample_pictures()
-        print(1)
-        print(os.listdir(self.picture_dir))
         self._extract_keypoints()
-        print(2)
-        print(os.listdir(self.picture_dir))
         self._generate_video()
-        print(3)
-        print(os.listdir(self.picture_dir))
         return self.body_points
 
     #  it will capture image in each 0.5 second
     def _sample_pictures(self):
-        print(f'picture_dir: {self.picture_dir}')
         VideoExtractor.create_and_clear(self.picture_dir)
 
         def get_frame(sec):
