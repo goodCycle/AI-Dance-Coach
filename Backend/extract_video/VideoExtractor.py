@@ -82,7 +82,7 @@ class VideoExtractor:
             sec += self.frequency
             sec = round(sec, 2)
             success = get_frame(sec)
-
+        print(os.listdir(self.picture_dir))
     def _extract_keypoints(self):
         # put in loop
         VideoExtractor.create_and_clear(self.skeleton_dir)
