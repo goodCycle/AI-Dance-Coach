@@ -22,10 +22,10 @@ class MovementAnalyzer:
         score_dicts = self.difference([(pose, int(i*step)) for i, pose in enumerate(poses)])
 
         result = list()
-        for i, score_dict in enumerate(score_dicts):
+        for i, (score_dict, frame_num) in enumerate(score_dicts):
 
             current_frame_dict = dict()
-            current_frame_dict["frame_number"] = i*step
+            current_frame_dict["frame_number"] = frame_num
             current_frame_dict["score"] = sum([score*weight for _, (score, weight) in score_dict.items()])
             current_frame_dict["raw_data"] = score_dict
 
