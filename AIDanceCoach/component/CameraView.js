@@ -9,7 +9,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { RNCamera } from 'react-native-camera';
-// import Config from "react-native-config";
+import Config from 'react-native-config';
 
 const styles = StyleSheet.create({
   container: {
@@ -54,22 +54,34 @@ class CameraView extends Component {
     this.setState({ recording: false, processing: true });
     const type = `video/${codec}`;
 
-    const data = new FormData();
-    data.append('video', {
-      name: 'mobile-video-upload',
-      type,
-      uri,
-    });
+    // const data = new FormData();
+    // data.append('video', {
+    //   name: 'mobile-video-upload',
+    //   type,
+    //   uri,
+    // });
+
+    // const filename = Date.now().toString();
+    // MovToMp4.convertMovToMp4(uri, filename + ".mp4", (results) => {
+    //   //here you can upload the video...
+    //   console.log(results);
+    //   fetch('http://208.43.39.216:4000',{
+    //     method: "post",
+    //     body: results
+    //   });
+    // });
 
     try {
-      // await fetch(Config.ENDPOINT, {
-      //   method: "post",
-      //   body: data
-      // });
-      console.log('fetch!');
+      console.log('fetch!', Config.ENDPOINT);
+      await fetch(Config.ENDPOINT, {
+        method: "post",
+        body: codec
+      });
     } catch (e) {
       console.error(e);
     }
+
+
 
     this.setState({ processing: false });
   }

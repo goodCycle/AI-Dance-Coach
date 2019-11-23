@@ -34,6 +34,8 @@ target 'AIDanceCoach' do
   pod 'glog', :podspec => '../node_modules/react-native/third-party-podspecs/glog.podspec'
   pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
 
+  pod 'react-native-config', :path => '../node_modules/react-native-config'
+
   target 'AIDanceCoachTests' do
     inherit! :search_paths
     # Pods for testing
@@ -42,12 +44,12 @@ target 'AIDanceCoach' do
   use_native_modules!
 end
 
-target 'AIDanceCoach-tvOS' do
-  # Pods for AIDanceCoach-tvOS
+# target 'AIDanceCoach-tvOS' do
+#   # Pods for AIDanceCoach-tvOS
 
-  target 'AIDanceCoach-tvOSTests' do
-    inherit! :search_paths
-    # Pods for testing
-  end
+#   target 'AIDanceCoach-tvOSTests' do
+#     inherit! :search_paths
+#     # Pods for testing
+#   end
 
-end
+# end
