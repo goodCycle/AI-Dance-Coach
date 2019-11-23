@@ -3,7 +3,7 @@ import os
 import cv2
 import json
 
-from extract_video.VideoExtractor import VideoExtractor
+# from extract_video.VideoExtractor import VideoExtractor
 
 # simon.zocholl@mnet-mail.de
 
@@ -25,23 +25,23 @@ def hello_world():
 # curl -X POST -F file=@"/mnt/c/Users/nomis/Desktop/testvideo1.mp4" http://127.0.0.1:5000
 @app.route('/', methods=['POST'])
 def video_in():
-    video_name = "video1.mp4"
-    a = 123
+    file = request.files['file']
+    video_name = file.filename
     video_path = os.path.join(VIDEO_DIR, video_name)
 
-    file = request.files['file']
     if not os.path.exists(VIDEO_DIR):
         os.makedirs(VIDEO_DIR)
 
     input_path = os.path.join(VIDEO_DIR, video_name)
     file.save(input_path)
 
-    vd = VideoExtractor(media_dir="./media", model_path="../../openpose/models/")  # framerate > 1 !!!
-    body_points = vd.extract(video_path, video_name.split('.')[0], framerate=30)
+    # vd = VideoExtractor(media_dir="./media", model_path="../../openpose/models/")  # framerate > 1 !!!
+    # body_points = vd.extract(video_path, video_name.split('.')[0], framerate=30)
 
     response = Response(status=200, response="result_string")
     return response
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0')
+    app.run(debug=True)
+    # app.run(host='0.0.0.0')
