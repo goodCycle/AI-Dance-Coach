@@ -39,6 +39,8 @@ class DifferenceCalculator:
             },
         ]
 
+        print(len(self.sample_keypoints))
+        print(len(keypoint_list))
         return [(self.bin_difference(bodypart_indicies, keypoints, self.sample_keypoints[i]), i)
                 for (keypoints, i) in keypoint_list]
 
