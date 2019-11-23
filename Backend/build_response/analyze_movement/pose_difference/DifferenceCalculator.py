@@ -38,7 +38,7 @@ class DifferenceCalculator:
             },
         ]
 
-        return [(self.bin_difference(bodypart_indicies, keypoints, self.sample_keypoints[i]), i)
+        return [(self.bin_difference(bodypart_indicies, keypoints[0], self.sample_keypoints[i]), i)
                 for (keypoints, i) in keypoint_list]
 
     @staticmethod
@@ -53,7 +53,7 @@ class DifferenceCalculator:
         :return: the pose difference between the two poses for each bodypart as a dictionary (name: (score, weight))
         """
 
-        def remove_confidence(x): return [[a[0][0], a[0][1]] for a in x]
+        def remove_confidence(x): return [[a[0], a[1]] for a in x]
 
         def convert_to_2d_array(x): return np.array([np.array(xi) for xi in x])
 
