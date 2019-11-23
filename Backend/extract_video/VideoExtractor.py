@@ -106,13 +106,14 @@ class VideoExtractor:
 
     def _generate_video(self, use_overlayed=False):
         img_arr = []
-        for file in os.listdir(self.overlay_dir):
-            img = cv2.imread(os.path.join(self.overlay_dir, file))
+
+        for file in os.listdir(self.skeleton_dir):
+            img = cv2.imread(os.path.join(self.skeleton_dir, file))
             img_arr.append(img)
 
         size = img_arr[0].shape[1::-1]
 
-        out = cv2.VideoWriter(os.path.join(self.result_dir, 'overlay_video.avi'),
+        out = cv2.VideoWriter(os.path.join(self.result_dir, 'skeleton_video.avi'),
                               cv2.VideoWriter_fourcc(*'DIVX'), 15, size)
         for img in img_arr:
             out.write(img)
