@@ -7,7 +7,7 @@ import numpy as np
 # TODO do the transformation the other way around?
 class DifferenceCalculator:
 
-    def __init__(self, sample_keypoint_path="media/bodies"):
+    def __init__(self, sample_keypoint_path="media/video1/bodies"):
         self.sample_keypoint_path = sample_keypoint_path
 
         self.sample_keypoints = [json.load(codecs.open(filename, 'w', encoding='utf-8'), separators=(',', ':'))
@@ -26,17 +26,17 @@ class DifferenceCalculator:
             {
                 "name": "face",
                 "indicies": [0, 15, 16, 17, 18],
-                "weight": 0.0
+                "weight": 1.0
             },
             {
                 "name": "torso",
                 "indicies": [1, 2, 3, 4, 5, 6, 7],
-                "weight": 0.0
+                "weight": 1.0
             },
             {
                 "name": "legs",
                 "indicies": [8, 9, 10, 11, 12, 13, 14, 19, 20, 21, 22, 23, 24],
-                "weight": 0.0
+                "weight": 1.0
             },
         ]
 
@@ -52,7 +52,7 @@ class DifferenceCalculator:
         :param bodypart_indicies: a mapping of bodyparts to keypoints (see the ?.json for more details)
         :param keypoints_a: pose in keypoint format
         :param keypoints_b: pose in keypoint format
-        :return: the pose difference between the two poses for each bodypart as a dictionary (name:score)
+        :return: the pose difference between the two poses for each bodypart as a dictionary (name: (score, weight))
         """
 
         def remove_confidence(x): return [[a, b] for [a, b, _] in x]
@@ -71,6 +71,13 @@ class DifferenceCalculator:
             matrix = DifferenceCalculator.find_affine_matrix(input_, sample)
             transformed_input = DifferenceCalculator.affine_transform(matrix, input_)
 
+            print("Input:")
+            print(input_)
+            print("A:")
+            print(matrix)
+            print("Result:")
+            print(transformed_input)
+
             # normalizing the inputs for scoring
             sample = sample / np.linalg.norm(sample)
             transformed_input = transformed_input / np.linalg.norm(transformed_input)
@@ -79,7 +86,7 @@ class DifferenceCalculator:
             # TODO get rotation between sample and transformed input
             score = dist
 
-            score_dict[bodypart["name"]] = score
+            score_dict[bodypart["name"]] = (score, bodypart["weight"])
 
         return score_dict
 
