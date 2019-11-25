@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     flex: 0.2,
-    flexDirection: 'row',
+    flexDirection: 'column',
     justifyContent: 'center',
     backgroundColor: '#B82303',
   },

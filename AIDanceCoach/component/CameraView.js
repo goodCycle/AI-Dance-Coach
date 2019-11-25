@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
   },
   recordButtonContainer: {
     flex: 0.2,
-    flexDirection: 'row',
+    flexDirection: 'column',
     justifyContent: 'center',
     backgroundColor: '#B82303',
   },
@@ -64,11 +64,16 @@ class CameraView extends Component {
     this.setState({ recording: false, processing: true });
     const type = `video/${codec}`;
 
+    const json_data = {
+      is_false: false,
+      compare_to: uri
+    }
     const data = new FormData();
     data.append('file', {
       name: 'app-video',
       type,
-      uri,
+      // uri,
+      json_data,
     });
 
     try {
