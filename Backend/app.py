@@ -56,7 +56,7 @@ def video_in():
     else:
         rb = ResponseBuilder(input_path=video_path,sample_id=video_name.split('.')[0])  # video_path: attempt, sample_id: sample
         result = rb.build()
-        return Response(status=200, response="json.dumps(result)")
+        return Response(status=200, response=json.dumps(result))
 
 
 if __name__ == '__main__':
