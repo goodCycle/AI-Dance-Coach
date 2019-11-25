@@ -11,8 +11,6 @@ import {
 import { RNCamera } from 'react-native-camera';
 import Config from 'react-native-config';
 
-import HeaderContainer from './HeaderContainer';
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -25,7 +23,7 @@ const styles = StyleSheet.create({
   },
   recordButtonContainer: {
     flex: 0.2,
-    flexDirection: 'column',
+    flexDirection: 'row',
     justifyContent: 'center',
     backgroundColor: '#B82303',
   },
@@ -45,8 +43,8 @@ const styles = StyleSheet.create({
 });
 
 class CameraView extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = this.getInitialState();
   }
 
@@ -54,7 +52,8 @@ class CameraView extends Component {
     return {
       recording: false,
       processing: false,
-      result: null,
+      hasOpenPoseResult: false,
+      openPoseResult: null,
     };
   }
 
@@ -78,7 +77,9 @@ class CameraView extends Component {
         body: data,
       });
       const result = await response.json();
-      this.setState({ result });
+      console.log('result', result);
+      const { setOpenPoseResult } = this.props;
+      setOpenPoseResult(result);
     } catch (e) {
       console.error(e);
     }
@@ -92,15 +93,9 @@ class CameraView extends Component {
 
   render() {
     const { recording, processing } = this.state;
-    const { onPressStopRecord } = this.props;
 
     return (
-      <View style={styles.container}>
-        <HeaderContainer
-          leftIcon="chevron-left"
-          onPressLeftIcon={onPressStopRecord}
-          headerText="Record Dance"
-        />
+      <>
         <RNCamera
           ref={(ref) => {
             this.camera = ref;
@@ -129,15 +124,15 @@ class CameraView extends Component {
                 </Text>
               </TouchableOpacity>
             )
-        }
+          }
         </View>
-      </View>
+      </>
     );
   }
 }
 
 CameraView.propTypes = {
-  onPressStopRecord: PropTypes.func.isRequired,
+  setOpenPoseResult: PropTypes.func.isRequired,
 };
 
 export default CameraView;

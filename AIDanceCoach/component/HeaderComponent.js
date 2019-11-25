@@ -10,9 +10,10 @@ import {
 } from 'react-native-elements';
 
 import Icon from 'react-native-vector-icons/Entypo';
+Icon.loadFont();
 
 const styles = StyleSheet.create({
-  headerContainerStyle: {
+  HeaderComponentStyle: {
     backgroundColor: '#B82303',
     justifyContent: 'space-around',
   },
@@ -27,7 +28,7 @@ const styles = StyleSheet.create({
   },
 });
 
-class HeaderContainer extends Component {
+class HeaderComponent extends Component {
   constructor(props) {
     super(props);
     this.state = this.getInitialState();
@@ -47,7 +48,7 @@ class HeaderContainer extends Component {
 
     return (
       <Header
-        containerStyle={styles.headerContainerStyle}
+        containerStyle={styles.HeaderComponentStyle}
         leftComponent={(
           <TouchableOpacity onPress={onPressLeftIcon}>
             <Icon name={leftIcon} style={styles.headerIconStyle} />
@@ -59,14 +60,14 @@ class HeaderContainer extends Component {
   }
 }
 
-HeaderContainer.propTypes = {
+HeaderComponent.propTypes = {
   leftIcon: PropTypes.string.isRequired,
   onPressLeftIcon: PropTypes.func,
   headerText: PropTypes.string.isRequired,
 };
 
-HeaderContainer.defaultProps = {
+HeaderComponent.defaultProps = {
   onPressLeftIcon: () => {},
 };
 
-export default HeaderContainer;
+export default HeaderComponent;

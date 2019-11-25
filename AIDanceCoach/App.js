@@ -1,6 +1,6 @@
 import React from 'react';
-import MainView from './component/MainView';
-import CameraView from './component/CameraView';
+import MainContainer from './component/MainContainer';
+import VideoContainer from './component/VideoContainer';
 
 class App extends React.Component {
   constructor() {
@@ -29,8 +29,8 @@ class App extends React.Component {
 
     return (
       recording
-        ? <CameraView onPressStopRecord={this.onPressStopRecord} />
-        : <MainView onPressStartRecord={this.onPressStartRecord} />
+        ? <VideoContainer onPressStopRecord={this.onPressStopRecord} />
+        : <MainContainer onPressStartRecord={this.onPressStartRecord} />
     );
   }
 }

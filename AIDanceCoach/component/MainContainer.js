@@ -12,7 +12,7 @@ import {
 
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 
-import HeaderContainer from './HeaderContainer';
+import HeaderComponent from './HeaderComponent';
 
 const styles = StyleSheet.create({
   scrollView: {
@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
   },
 });
 
-class MainView extends Component {
+class MainContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -66,7 +66,7 @@ class MainView extends Component {
 
     return (
       <>
-        <HeaderContainer
+        <HeaderComponent
           leftIcon="menu"
           headerText="AI Dance Coach"
         />
@@ -105,8 +105,8 @@ class MainView extends Component {
   }
 }
 
-MainView.propTypes = {
+MainContainer.propTypes = {
   onPressStartRecord: PropTypes.func.isRequired,
 };
 
-export default MainView;
+export default MainContainer;
