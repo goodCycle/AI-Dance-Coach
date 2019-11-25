@@ -18,7 +18,7 @@ class PosePredictor:
         params = dict()
         params["model_folder"] = model
 
-        params["model_pose"] = "BODY_25"  # "BODY_25B"D
+        params["model_pose"] = "BODY_25"
 
         # TODO set as parameter (transmit from the device?)
         params["net_resolution"] = "-1x368"
