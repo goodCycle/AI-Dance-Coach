@@ -1,18 +1,16 @@
 import os
 import json
-import codecs
 import numpy as np
 
 
 # TODO do the transformation the other way around?
 class DifferenceCalculator:
 
-    def __init__(self, sample_keypoint_path="media/bodies"):
+    def __init__(self, sample_keypoint_path="./media/video1/bodies_keypoints"):
         self.sample_keypoint_path = sample_keypoint_path
 
-        self.sample_keypoints = [json.load(codecs.open(filename, 'w', encoding='utf-8'), separators=(',', ':'))
-                                 for filename in os.listdir(sample_keypoint_path)
-                                 if filename.endswith(".json")]
+        self.sample_keypoints = [np.load(self.sample_keypoint_path+"/"+filename)
+                                 for filename in os.listdir(sample_keypoint_path)]
 
     def __call__(self, *args, **kwargs):
         return self.list_difference(*args, **kwargs)
@@ -26,21 +24,21 @@ class DifferenceCalculator:
             {
                 "name": "face",
                 "indicies": [0, 15, 16, 17, 18],
-                "weight": 0.0
+                "weight": 1.0
             },
             {
                 "name": "torso",
                 "indicies": [1, 2, 3, 4, 5, 6, 7],
-                "weight": 0.0
+                "weight": 1.0
             },
             {
                 "name": "legs",
                 "indicies": [8, 9, 10, 11, 12, 13, 14, 19, 20, 21, 22, 23, 24],
-                "weight": 0.0
+                "weight": 1.0
             },
         ]
 
-        return [(self.bin_difference(bodypart_indicies, keypoints, self.sample_keypoints[i]), i)
+        return [(self.bin_difference(bodypart_indicies, keypoints[0], self.sample_keypoints[i][0]), i)
                 for (keypoints, i) in keypoint_list]
 
     @staticmethod
@@ -52,19 +50,25 @@ class DifferenceCalculator:
         :param bodypart_indicies: a mapping of bodyparts to keypoints (see the ?.json for more details)
         :param keypoints_a: pose in keypoint format
         :param keypoints_b: pose in keypoint format
-        :return: the pose difference between the two poses for each bodypart as a dictionary (name:score)
+        :return: the pose difference between the two poses for each bodypart as a dictionary (name: (score, weight))
         """
 
-        def remove_confidence(x): return [[a, b] for [a, b, _] in x]
+        def remove_confidence(x): return [[a[0], a[1]] for a in x]
 
         def convert_to_2d_array(x): return np.array([np.array(xi) for xi in x])
 
-        sample_features = convert_to_2d_array(remove_confidence(keypoints_a))
-        input_features = convert_to_2d_array(remove_confidence(keypoints_b))
+        removed_confidence_a = remove_confidence(keypoints_a)
+        removed_confidence_b = remove_confidence(keypoints_b)
+
+
+
+        sample_features = convert_to_2d_array(removed_confidence_a)
+        input_features = convert_to_2d_array(removed_confidence_b)
 
         score_dict = dict()
 
         for bodypart in bodypart_indicies:
+
             sample = sample_features[np.array(bodypart["indicies"])]
             input_ = input_features[np.array(bodypart["indicies"])]
 
@@ -79,7 +83,7 @@ class DifferenceCalculator:
             # TODO get rotation between sample and transformed input
             score = dist
 
-            score_dict[bodypart["name"]] = score
+            score_dict[bodypart["name"]] = (score, bodypart["weight"])
 
         return score_dict
 
