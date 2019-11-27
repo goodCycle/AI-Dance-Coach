@@ -40,13 +40,15 @@ def process_videos():
         os.makedirs(VIDEO_DIR)
     input_path = os.path.join(VIDEO_DIR, video_name)
     video_file.save(input_path)
+    print(f'video_path: {video_path}')
+    print(f'input_path: {input_path}')
 
     if is_sample:
         vd = VideoExtractor(media_dir="./media", model_path="../../openpose/models/")  # framerate > 1 !!!
         body_points = vd.extract(video_path, video_name.split('.')[0], framerate=30)
         return Response(status=200, response="Added sample")
     else:
-        rb = ResponseBuilder(input_path=video_path,
+        rb = ResponseBuilder(input_path=input_path,
                              sample_id=compare_to.split('.')[0])  # video_path: attempt, sample_id: sample
         result_path = rb.build()
         return send_from_directory(result_path, 'result.tar.gz', as_attachment=True)
