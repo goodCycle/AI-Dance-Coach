@@ -11,6 +11,9 @@ import {
 import { RNCamera } from 'react-native-camera';
 import CameraRoll from '@react-native-community/cameraroll';
 import Config from 'react-native-config';
+import RNFetchBlob from 'rn-fetch-blob';
+
+const RNFS = require('react-native-fs');
 
 const styles = StyleSheet.create({
   container: {
@@ -74,6 +77,8 @@ class CameraView extends Component {
     this.setState({ recording: true });
     // default to mp4 for android as codec is not set
     const { uri, codec = 'H264' } = await this.camera.recordAsync();
+    const videoUri = this.saveVideoToCameraRoll(uri);
+    this.setState({ recentVideoUri: videoUri });
     this.setState({ recording: false, processing: true });
     const type = `video/${codec}`;
 
@@ -83,33 +88,38 @@ class CameraView extends Component {
       type,
       uri,
     });
-    console.log('URI!!!!', uri);
-    const videoUri = this.saveVideoToCameraRoll(uri);
-    this.setState({ recentVideoUri: videoUri });
 
     const config = {
-      is_sample: true,
+      is_sample: false,
       compare_to: 'sample_video_snipped.mp4',
     };
-    const configJson = JSON.stringify(config);
-    const blob = new Blob([configJson], {
-      type: 'application/json'
-    });
-    const fileOfBlob = new File([blob], 'video_config.json');
-    data.append('file', fileOfBlob);
 
-    // try {
-    //   const response = await fetch(Config.ENDPOINT, {
-    //     method: 'post',
-    //     body: data,
-    //   });
-    //   const result = await response.json();
-    //   console.log('result', result);
-    //   const { setOpenPoseResult } = this.props;
-    //   setOpenPoseResult(result);
-    // } catch (e) {
-    //   console.error(e);
-    // }
+    const configJson = JSON.stringify(config);
+
+    const jsonPath = RNFS.DocumentDirectoryPath + '/config.json';
+
+    // write the file
+    await RNFS.writeFile(jsonPath, configJson, 'utf8');
+
+    data.append('file', {
+      name: 'video_config.json',
+      type: 'applpication/json',
+      uri: jsonPath,
+    });
+
+    try {
+      const response = await fetch(Config.ENDPOINT, {
+        method: 'post',
+        body: data,
+      });
+
+      // const result = await response.json();
+      // console.log('result', result);
+      // const { setOpenPoseResult } = this.props;
+      // setOpenPoseResult(result);
+    } catch (e) {
+      console.error(e);
+    }
 
     this.setState({ processing: false });
   }
