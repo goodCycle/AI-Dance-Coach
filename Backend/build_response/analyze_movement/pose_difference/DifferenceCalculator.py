@@ -72,12 +72,30 @@ class DifferenceCalculator:
             matrix = DifferenceCalculator.find_affine_matrix(input_, sample)
             transformed_input = DifferenceCalculator.affine_transform(matrix, input_)
 
+            # print("Input:")
+            # print(input_)
+            # print("A:")
+            # print(matrix)
+            # print("Result:")
+            # print(transformed_input)
+
             # normalizing the inputs for scoring
             sample = sample / np.linalg.norm(sample)
             transformed_input = transformed_input / np.linalg.norm(transformed_input)
 
-            dist = np.linalg.norm(sample - transformed_input)
-            # TODO get rotation between sample and transformed input
+            # determining rotation still buggy
+            rot = np.degrees(
+                -1 * np.arctan2(matrix[0][1] / np.linalg.norm(matrix[0]), matrix[0][0] / np.linalg.norm(matrix[0])))
+            print(bodypart["name"] + " " + str(rot))
+
+            # use max values instead of average?
+            # dist = np.linalg.norm(sample - transformed_input)
+            dist = 0
+
+            for i, point in enumerate(sample):
+                temp = np.linalg.norm(point - transformed_input[i])
+                if temp > dist:
+                    dist = temp
             score = dist
 
             score_dict[bodypart["name"]] = (score, bodypart["weight"])
