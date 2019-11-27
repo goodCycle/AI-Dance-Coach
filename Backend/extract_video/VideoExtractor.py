@@ -68,7 +68,7 @@ class VideoExtractor:
         VideoExtractor.create_and_clear(self.picture_dir)
 
         def get_frame(sec):
-            self.video.set(cv2.CAP_PROP_POS_MSEC, sec * 1000)  # old: sec * 1000
+            self.video.set(cv2.CV_CAP_PROP_POS_FRAMES, sec)  # (cv2.CAP_PROP_POS_MSEC, sec * 1000)
             has_frames, image = self.video.read()
             if has_frames:
                 print(f'count: {count}')
@@ -84,7 +84,7 @@ class VideoExtractor:
             sec += self.frequency
             # sec = round(sec, 2)
             print(f"sec: {sec}")
-            success = get_frame(sec)
+            success = get_frame(count)# old: (sec)
 
     def _extract_keypoints(self):
         # put in loop
