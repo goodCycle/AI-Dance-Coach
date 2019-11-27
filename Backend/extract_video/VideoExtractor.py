@@ -65,7 +65,7 @@ class VideoExtractor:
         VideoExtractor.create_and_clear(self.picture_dir)
 
         def get_frame(sec):
-            self.video.set(cv2.CAP_PROP_POS_MSEC, sec * 1000)  # old: sec * 1000
+            self.video.set(cv2.CAP_PROP_POS_MSEC, sec * 100)  # old: sec * 1000
             has_frames, image = self.video.read()
             if has_frames:
                 cv2.imwrite(os.path.join(self.picture_dir, str(count) + ".jpg"), image)  # save frame as JPG file
@@ -78,7 +78,7 @@ class VideoExtractor:
         while success:
             count += 1
             sec += self.frequency
-            #sec = round(sec, 3)
+            sec = round(sec, 3)
             print(f"sec: {sec}")
             success = get_frame(sec)
 
