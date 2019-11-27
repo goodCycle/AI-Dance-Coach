@@ -96,7 +96,7 @@ class VideoExtractor:
         amount_of_frames = self.video.get(cv2.CV_CAP_PROP_FRAME_COUNT)
         count = 0
         for i in range(amount_of_frames):
-            self.set(cv2.CV_CAP_PROP_POS_FRAMES, i)
+            self.set(cv2.CAP_PROP_POS_FRAMES, i)
             res, frame = self.video.read()
             print(f'i: {i}, res: {res}')
             cv2.imwrite(os.path.join(self.picture_dir, str(count) + ".jpg"), frame)
