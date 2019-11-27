@@ -1,8 +1,9 @@
 import cv2
 import os
 import shutil
+import json
+import codecs
 from PIL import Image
-import numpy as np
 
 from extract_video.posewrapper.PosePredictor import PosePredictor
 
@@ -33,7 +34,7 @@ class VideoExtractor:
     def create_and_clear(directory):
         if os.path.exists(directory):
             shutil.rmtree(directory, ignore_errors=True)
-        os.makedirs(directory, exist_ok=True)
+        os.makedirs(directory)
 
     def get_body_points(self):
         return self.body_points
@@ -41,23 +42,25 @@ class VideoExtractor:
     # set video_path and frame rate
     def extract(self, video_path, result_name, framerate):
         self.video_path = video_path
-
         self.video = cv2.VideoCapture(self.video_path)
         self.frequency = 1 / framerate
 
         self.result_dir = os.path.join(self.media_dir, result_name)
         self.picture_dir = os.path.join(self.result_dir, "pictures")
         self.skeleton_dir = os.path.join(self.result_dir, "skeletons")
-        self.body_dir = os.path.join(self.result_dir, "bodies_keypoints")
+        self.body_dir = os.path.join(self.result_dir, "bodies")
         self.overlay_dir = os.path.join(self.result_dir, "overlays")
 
         # clear previous result with same id
         VideoExtractor.create_and_clear(self.result_dir)
         self._sample_pictures()
         self._extract_keypoints()
+        # self._overlay_images()
         self._generate_video()
+        self._generate_video(use_overlayed=False)
         return self.body_points
 
+    #  it will capture image in each 0.5 second
     def _sample_pictures(self):
         VideoExtractor.create_and_clear(self.picture_dir)
 
@@ -82,17 +85,19 @@ class VideoExtractor:
         # put in loop
         VideoExtractor.create_and_clear(self.skeleton_dir)
         VideoExtractor.create_and_clear(self.body_dir)
-
-        for i, pictures in enumerate(os.listdir(self.picture_dir)):
+        for i, pictures in enumerate(sorted(os.listdir(self.picture_dir), key=lambda x: int(x.split('.')[0]))):
             datum = self.predictor.predict_image(os.path.join(self.picture_dir, pictures))
-            self.body_points.append(datum.poseKeypoints)
-            np.save(os.path.join(self.body_dir, str(i) + ".npy"), datum.poseKeypoints)
+            self.body_points.append(datum.poseKeypoints)  # <- store unprocessed points for return value
+            datum_list = datum.poseKeypoints.tolist()
+            json.dump(datum_list, codecs.open(os.path.join(self.body_dir, str(i) + ".json"), 'w', encoding='utf-8'),
+                      separators=(',', ':'))  ### this saves the array in .json format
             cv2.imwrite(os.path.join(self.skeleton_dir, str(i) + ".jpg"), datum.cvOutputData)
 
     # currently not working :/
     def _overlay_images(self):
         VideoExtractor.create_and_clear(self.overlay_dir)
-        for i, (pic, ske) in enumerate(zip(os.listdir(self.picture_dir), os.listdir(self.skeleton_dir))):
+        for i, (pic, ske) in enumerate(zip(sorted(os.listdir(self.picture_dir), key=lambda x: int(x.split('.')[0])),
+                                           sorted(os.listdir(self.skeleton_dir), key=lambda x: int(x.split('.')[0])))):
             picture = Image.open(os.path.join(self.picture_dir, pic), 'r')
             skeleton = Image.open(os.path.join(self.skeleton_dir, ske), 'r')
             overlay = Image.new(mode='RGB', size=picture.size)
@@ -102,13 +107,12 @@ class VideoExtractor:
 
     def _generate_video(self):
         img_arr = []
-        for file in os.listdir(self.skeleton_dir):
-            img = cv2.imread(os.path.join(self.skeleton_dir, file))
+        for file in sorted(os.listdir(self.overlay_dir), key=lambda x: int(x.split('.')[0])):
+            img = cv2.imread(os.path.join(self.overlay_dir, file))
             img_arr.append(img)
 
         size = img_arr[0].shape[1::-1]
-        out = cv2.VideoWriter(os.path.join(self.result_dir, 'skeleton_video.avi'),
-                              cv2.VideoWriter_fourcc(*'DIVX'), 30, size)
-        for img in img_arr:
-            out.write(img)
+        out = cv2.VideoWriter(os.path.join(self.result_dir, 'overlay_video.avi'),
+                              cv2.VideoWriter_fourcc(*'DIVX'), 15, size)
+        map(out.write, img_arr)
         out.release()
