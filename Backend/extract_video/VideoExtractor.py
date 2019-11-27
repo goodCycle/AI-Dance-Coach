@@ -89,7 +89,6 @@ class VideoExtractor:
                 cv2.imwrite(os.path.join(self.picture_dir, str(count) + ".jpg"), frame)
                 count += 1
 
-
             # sec += self.frequency
             # sec = round(sec, 2)
             # print(f"sec: {sec}")
@@ -125,7 +124,7 @@ class VideoExtractor:
         for file in sorted(os.listdir(self.skeleton_dir),
                            key=lambda x: int(x.split('.')[0])):
             img = cv2.imread(os.path.join(self.skeleton_dir, file))
-        img_arr.append(img)
+            img_arr.append(img)
 
         size = img_arr[0].shape[1::-1]
         out = cv2.VideoWriter(os.path.join(self.result_dir, 'skeleton_video.avi'),
