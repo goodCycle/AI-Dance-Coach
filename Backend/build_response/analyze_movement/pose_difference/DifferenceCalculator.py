@@ -82,8 +82,8 @@ class DifferenceCalculator:
             # print(transformed_input)
 
             # normalizing the inputs for scoring
-            sample = sample / np.linalg.norm(sample)
-            transformed_input = transformed_input / np.linalg.norm(transformed_input)
+            #sample = sample / np.linalg.norm(sample)
+            #transformed_input = transformed_input / np.linalg.norm(transformed_input)
 
             # determining rotation still buggy
             rot = np.degrees(

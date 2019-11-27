@@ -4,6 +4,7 @@ node_modules/
 
 .idea
 Backend/venv
+Venv/
 
 Backend/images/
 Backend/posewrapper/__pycache__/
