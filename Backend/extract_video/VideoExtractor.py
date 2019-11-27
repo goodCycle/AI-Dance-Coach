@@ -78,7 +78,7 @@ class VideoExtractor:
         while success:
             count += 1
             sec += self.frequency
-            sec = round(sec, 3)
+            #sec = round(sec, 3)
             print(f"sec: {sec}")
             success = get_frame(sec)
 
