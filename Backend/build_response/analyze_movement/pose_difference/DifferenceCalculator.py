@@ -105,9 +105,10 @@ class DifferenceCalculator:
 
             for i, point in enumerate(sample):
                 temp = np.linalg.norm(point - transformed_input[i])
-                print(point)
-                print(transformed_input)
-                if temp > dist:
+                #print(point)
+                #print(transformed_input)
+
+                if temp > dist and np.linalg.norm(point) != 0 and np.linalg.norm(transformed_input[i]) != 0:
                     dist = temp
             score = dist
             print("max: " + str(score))
