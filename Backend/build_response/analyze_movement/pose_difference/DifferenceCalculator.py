@@ -9,7 +9,7 @@ class DifferenceCalculator:
     def __init__(self, sample_keypoint_path="./media/video1/bodies_keypoints"):
         self.sample_keypoint_path = sample_keypoint_path
 
-        self.sample_keypoints = [np.load(self.sample_keypoint_path+"/"+filename)
+        self.sample_keypoints = [np.load(self.sample_keypoint_path + "/" + filename)
                                  for filename in os.listdir(sample_keypoint_path)]
 
     def __call__(self, *args, **kwargs):
@@ -28,7 +28,7 @@ class DifferenceCalculator:
             },
             {
                 "name": "body",
-                "indicies": [1, 2, 3, 4, 5, 6, 7,8, 9, 10, 11, 12, 13, 14, 19, 20, 21, 22, 23, 24],
+                "indicies": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 19, 20, 21, 22, 23, 24],
                 "weight": 1.0
             },
             {
@@ -59,8 +59,6 @@ class DifferenceCalculator:
 
         removed_confidence_a = remove_confidence(keypoints_a)
         removed_confidence_b = remove_confidence(keypoints_b)
-
-
 
         sample_features = convert_to_2d_array(removed_confidence_a)
         input_features = convert_to_2d_array(removed_confidence_b)
@@ -106,7 +104,6 @@ class DifferenceCalculator:
 
     @staticmethod
     def find_affine_matrix(input_features, sample_features):
-
         matrix, _, _, _ = np.linalg.lstsq(DifferenceCalculator.pad(input_features),
                                           DifferenceCalculator.pad(sample_features))
         matrix[np.abs(matrix) < 1e-11] = 0
