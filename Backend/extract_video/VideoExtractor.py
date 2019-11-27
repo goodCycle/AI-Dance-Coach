@@ -93,13 +93,15 @@ class VideoExtractor:
             # print(f"sec: {sec}")
             # success = get_frame(count)# old: (sec)
         '''
-        amount_of_frames = self.video.get(cv2.CV_CAP_PROP_FRAME_COUNT)
-        count = 0
-        for i in range(amount_of_frames):
+        i = 0
+        while True:
             self.set(1, i)
             res, frame = self.video.read()
-            print(f'i: {i}, res: {res}')
-            cv2.imwrite(os.path.join(self.picture_dir, str(count) + ".jpg"), frame)
+            if not res:
+                break
+            else:
+                print(f'i: {i}, res: {res}')
+                cv2.imwrite(os.path.join(self.picture_dir, str(i) + ".jpg"), frame)
 
     def _extract_keypoints(self):
         # put in loop
