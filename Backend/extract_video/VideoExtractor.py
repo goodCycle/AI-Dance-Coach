@@ -86,7 +86,7 @@ class VideoExtractor:
         VideoExtractor.create_and_clear(self.skeleton_dir)
         VideoExtractor.create_and_clear(self.body_dir)
 
-        for i, pictures in enumerate(os.listdir(self.picture_dir)):
+        for i, pictures in enumerate(sorted(os.listdir(self.picture_dir), key=lambda x: int(x.split('.')[0]))):
             datum = self.predictor.predict_image(os.path.join(self.picture_dir, pictures))
             self.body_points.append(datum.poseKeypoints)
             np.save(os.path.join(self.body_dir, str(i) + ".npy"), datum.poseKeypoints)
@@ -95,7 +95,9 @@ class VideoExtractor:
     # currently not working :/
     def _overlay_images(self):
         VideoExtractor.create_and_clear(self.overlay_dir)
-        for i, (pic, ske) in enumerate(zip(os.listdir(self.picture_dir), os.listdir(self.skeleton_dir))):
+        for i, (pic, ske) in enumerate(zip(sorted(os.listdir(self.picture_dir), key=lambda x: int(x.split('.')[0])),
+                                           sorted(os.listdir(self.skeleton_dir),
+                                                  key=lambda x: int(x.split('.')[0])))):
             picture = Image.open(os.path.join(self.picture_dir, pic), 'r')
             skeleton = Image.open(os.path.join(self.skeleton_dir, ske), 'r')
             overlay = Image.new(mode='RGB', size=picture.size)
@@ -106,9 +108,10 @@ class VideoExtractor:
     def _generate_video(self):
         img_arr = []
 
-        for file in os.listdir(self.skeleton_dir):
+        for file in sorted(os.listdir(self.skeleton_dir),
+                           key=lambda x: int(x.split('.')[0])):
             img = cv2.imread(os.path.join(self.skeleton_dir, file))
-            img_arr.append(img)
+        img_arr.append(img)
 
         size = img_arr[0].shape[1::-1]
         out = cv2.VideoWriter(os.path.join(self.result_dir, 'skeleton_video.avi'),
