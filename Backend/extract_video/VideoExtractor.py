@@ -49,7 +49,7 @@ class VideoExtractor:
         self.picture_dir = os.path.join(self.result_dir, "pictures")
         self.skeleton_dir = os.path.join(self.result_dir, "skeletons")
         self.body_dir = os.path.join(self.result_dir, "bodies")
-        self.overlay_dir = os.path.join(self.result_dir, "overlays")
+        #self.overlay_dir = os.path.join(self.result_dir, "overlays")
 
         # clear previous result with same id
         VideoExtractor.create_and_clear(self.result_dir)
@@ -57,7 +57,7 @@ class VideoExtractor:
         self._extract_keypoints()
         # self._overlay_images()
         self._generate_video()
-        self._generate_video(use_overlayed=False)
+        self._generate_video()
         return self.body_points
 
     #  it will capture image in each 0.5 second
@@ -107,7 +107,7 @@ class VideoExtractor:
 
     def _generate_video(self):
         img_arr = []
-        for file in sorted(os.listdir(self.overlay_dir), key=lambda x: int(x.split('.')[0])):
+        for file in sorted(os.listdir(self.skeleton_dir), key=lambda x: int(x.split('.')[0])):
             img = cv2.imread(os.path.join(self.overlay_dir, file))
             img_arr.append(img)
 
