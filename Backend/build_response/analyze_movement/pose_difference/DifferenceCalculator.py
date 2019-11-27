@@ -69,6 +69,9 @@ class DifferenceCalculator:
             sample = sample_features[np.array(bodypart["indicies"])]
             input_ = input_features[np.array(bodypart["indicies"])]
 
+            sample = sample / np.linalg.norm(sample)
+            input_ = input_ / np.linalg.norm(input_)
+
             matrix = DifferenceCalculator.find_affine_matrix(input_, sample)
             transformed_input = DifferenceCalculator.affine_transform(matrix, input_)
 
