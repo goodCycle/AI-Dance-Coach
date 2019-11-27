@@ -78,7 +78,7 @@ class VideoExtractor:
         while success:
             count += 1
             sec += self.frequency
-            sec = round(sec, 2)
+            #sec = round(sec, 2)
             success = get_frame(sec)
 
     def _extract_keypoints(self):
