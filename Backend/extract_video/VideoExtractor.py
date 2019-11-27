@@ -63,23 +63,43 @@ class VideoExtractor:
     #  it will capture image in each 0.5 second
     def _sample_pictures(self):
         VideoExtractor.create_and_clear(self.picture_dir)
-
+        '''
         def get_frame(sec):
-            self.video.set(cv2.CAP_PROP_POS_MSEC, sec * 1000)
+            self.video.set(cv2.CAP_PROP_POS_FRAMES, sec)  # (cv2.CAP_PROP_POS_MSEC, sec * 1000)
             has_frames, image = self.video.read()
             if has_frames:
+                print(f'count: {count}')
                 cv2.imwrite(os.path.join(self.picture_dir, str(count) + ".jpg"), image)  # save frame as JPG file
             return has_frames
-
+        
         sec = 0
         count = 1
         success = get_frame(sec)
-
-        while success:
-            count += 1
-            sec += self.frequency
-            sec = round(sec, 2)
-            success = get_frame(sec)
+         count = 0
+        while True:
+            #count += 1
+            print(f'count: {count}')
+            (grabbed, frame) = self.video.read()
+            if not grabbed:
+                break
+            else:
+                cv2.imwrite(os.path.join(self.picture_dir, str(count) + ".jpg"), frame)
+                count += 1
+                 # sec += self.frequency
+            # sec = round(sec, 2)
+            # print(f"sec: {sec}")
+            # success = get_frame(count)# old: (sec)
+        '''
+        i = 0
+        while True:
+            self.video.set(1, i)
+            res, frame = self.video.read()
+            if not res:
+                break
+            else:
+                print(f'i: {i}, res: {res}')
+                cv2.imwrite(os.path.join(self.picture_dir, str(i) + ".jpg"), frame)
+                i += 1
 
     def _extract_keypoints(self):
         # put in loop
@@ -111,7 +131,7 @@ class VideoExtractor:
         for file in sorted(os.listdir(self.skeleton_dir),
                            key=lambda x: int(x.split('.')[0])):
             img = cv2.imread(os.path.join(self.skeleton_dir, file))
-        img_arr.append(img)
+            img_arr.append(img)
 
         size = img_arr[0].shape[1::-1]
         out = cv2.VideoWriter(os.path.join(self.result_dir, 'skeleton_video.avi'),
