@@ -19,7 +19,7 @@ def hello_world():
 # receives and stores file using for example
 # curl -X POST -F file=@"/path/to/file.mp4" -F file=@"/path/to/file.json" http://208.43.39.216:5000
 @app.route('/', methods=['POST'])
-def video_in():
+def process_videos():
     video_file, video_name, json_file, json_name = '', '', '', ''
 
     for f in request.files.getlist("file"):
@@ -32,7 +32,7 @@ def video_in():
 
     is_sample = False
     config = json.load(json_file)
-    is_sample = config['is_sample']  # <- boolean
+    is_sample = config['is_sample']  # <-- boolean
     compare_to = config['compare_to']  # <-- samplevideo
 
     video_path = os.path.join(VIDEO_DIR, video_name)
@@ -48,9 +48,8 @@ def video_in():
     else:
         rb = ResponseBuilder(input_path=video_path,
                              sample_id=video_name.split('.')[0])  # video_path: attempt, sample_id: sample
-        result_dir = rb.build()
-        # return send_from_directory(result, filename, as_attachment=True)
-        return send_from_directory(result_dir, 'result.tar.gz', as_attachment=True)
+        result_path = rb.build()
+        return send_from_directory(result_path, 'result.tar.gz', as_attachment=True)
 
 
 if __name__ == '__main__':

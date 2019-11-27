@@ -13,6 +13,7 @@ class ResponseBuilder:
 
     def build(self):
         self.data = self.analyze(self.input_path)
+        print(self.data)
         threshold = 10
         frame_radius = 2  # number of frames to display before and after
         index_of_failure = 0

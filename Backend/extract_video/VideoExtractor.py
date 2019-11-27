@@ -58,7 +58,6 @@ class VideoExtractor:
         self._generate_video()
         return self.body_points
 
-    #  it will capture image in each 0.5 second
     def _sample_pictures(self):
         VideoExtractor.create_and_clear(self.picture_dir)
 
@@ -101,9 +100,8 @@ class VideoExtractor:
             overlay.paste(skeleton, (0, 0))
             overlay.save(os.path.join(self.overlay_dir, str(i) + ".jpg"), format="JPEG")
 
-    def _generate_video(self, use_overlayed=False):
+    def _generate_video(self):
         img_arr = []
-
         for file in os.listdir(self.skeleton_dir):
             img = cv2.imread(os.path.join(self.skeleton_dir, file))
             img_arr.append(img)
