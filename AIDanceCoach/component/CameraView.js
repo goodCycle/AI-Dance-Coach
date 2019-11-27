@@ -64,18 +64,27 @@ class CameraView extends Component {
     this.setState({ recording: false, processing: true });
     const type = `video/${codec}`;
 
-    const json_data = {
-      is_false: false,
-      compare_to: uri
-    }
     const data = new FormData();
     data.append('file', {
-      name: 'app-video',
+      name: 'video.mp4',
       type,
-      // uri,
-      json_data,
+      uri
     });
+    console.log("URI!!!!", uri);
 
+    // const config = {
+    //   is_sample: true,
+    //   compare_to: "sample_video_snipped.mp4"
+    // };
+    // const config_json = JSON.stringify(config);
+    // const blob = new Blob([config_json], {
+    //   type: 'application/json'
+    // });
+    // var fileOfBlob = new File([blob], 'video_config.json');
+    // data.append('file', fileOfBlob);
+
+
+    // data.append('files', request_data);
     try {
       const response = await fetch(Config.ENDPOINT, {
         method: 'post',
