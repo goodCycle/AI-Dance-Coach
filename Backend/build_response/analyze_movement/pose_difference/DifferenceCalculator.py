@@ -105,6 +105,8 @@ class DifferenceCalculator:
 
             for i, point in enumerate(sample):
                 temp = np.linalg.norm(point - transformed_input[i])
+                print(point)
+                print(transformed_input)
                 if temp > dist:
                     dist = temp
             score = dist
