@@ -26,7 +26,7 @@ class MovementAnalyzer:
 
             current_frame_dict = dict()
             current_frame_dict["frame_number"] = frame_num
-            current_frame_dict["score"] = sum([score*weight for _, (score, weight) in score_dict.items()])
+            current_frame_dict["score"] = sum([int(score*weight*1000) for _, (score, weight) in score_dict.items()])
             current_frame_dict["raw_data"] = score_dict
 
             result.append(current_frame_dict)
