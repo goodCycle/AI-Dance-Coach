@@ -91,17 +91,12 @@ class VideoExtractor:
             # success = get_frame(count)# old: (sec)
         '''
         i = 0
-        k = 10
         while True:
             self.video.set(1, i)
             res, frame = self.video.read()
             if not res and k == 0:
                 break
             else:
-                if not res:
-                    k -= 1
-                    i += 1
-                    continue
                 print(f'i: {i}, res: {res}, k:{k}')
                 cv2.imwrite(os.path.join(self.picture_dir, str(i) + ".jpg"), frame)
                 i += 1
