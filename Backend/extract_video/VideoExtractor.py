@@ -45,6 +45,9 @@ class VideoExtractor:
         self.video_path = video_path
 
         self.video = cv2.VideoCapture(self.video_path)
+        self.video.set(cv2.CAP_PROP_POS_AVI_RATIO, 1)
+        print(f'duration: {self.video.get(cv2.CAP_PROP_POS_MSEC)}')
+
         self.frequency = 1 / framerate
 
         self.result_dir = os.path.join(self.media_dir, result_name)
@@ -79,7 +82,7 @@ class VideoExtractor:
         while success:
             count += 1
             sec += self.frequency
-            sec = round(sec, 2)
+            # sec = round(sec, 2)
             print(f"sec: {sec}")
             success = get_frame(sec)
 
