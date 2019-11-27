@@ -94,10 +94,10 @@ class VideoExtractor:
         while True:
             self.video.set(1, i)
             res, frame = self.video.read()
-            if not res and k == 0:
+            if not res:
                 break
             else:
-                print(f'i: {i}, res: {res}, k:{k}')
+                print(f'i: {i}, res: {res}')
                 cv2.imwrite(os.path.join(self.picture_dir, str(i) + ".jpg"), frame)
                 i += 1
 
