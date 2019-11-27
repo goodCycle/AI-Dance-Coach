@@ -9,6 +9,8 @@ class DifferenceCalculator:
     def __init__(self, sample_keypoint_path="./media/video1/bodies_keypoints"):
         self.sample_keypoint_path = sample_keypoint_path
 
+        self.debug_frame= 0
+
         self.sample_keypoints = [np.load(self.sample_keypoint_path + "/" + filename)
                                  for filename in os.listdir(sample_keypoint_path)]
 
@@ -41,8 +43,8 @@ class DifferenceCalculator:
         return [(self.bin_difference(bodypart_indicies, keypoints[0], self.sample_keypoints[i][0]), i)
                 for (keypoints, i) in keypoint_list]
 
-    @staticmethod
-    def bin_difference(bodypart_indicies,
+    #@staticmethod
+    def bin_difference(self, bodypart_indicies,
                        keypoints_a,
                        keypoints_b):
         """
@@ -64,6 +66,10 @@ class DifferenceCalculator:
         input_features = convert_to_2d_array(removed_confidence_b)
 
         score_dict = dict()
+
+        print(self.debug_frame)
+        self.debug_frame += 1
+        print("")
 
         for bodypart in bodypart_indicies:
             sample = sample_features[np.array(bodypart["indicies"])]
@@ -93,6 +99,8 @@ class DifferenceCalculator:
 
             # use max values instead of average?
             # dist = np.linalg.norm(sample - transformed_input)
+            print("avg: "+str(np.linalg.norm(sample - transformed_input)))
+
             dist = 0
 
             for i, point in enumerate(sample):
@@ -100,6 +108,7 @@ class DifferenceCalculator:
                 if temp > dist:
                     dist = temp
             score = dist
+            print("max: " + str(score))
 
             score_dict[bodypart["name"]] = (score, bodypart["weight"])
 
