@@ -24,17 +24,17 @@ class DifferenceCalculator:
             {
                 "name": "face",
                 "indicies": [0, 15, 16, 17, 18],
-                "weight": 1.0
+                "weight": 0.0
             },
             {
-                "name": "torso",
-                "indicies": [1, 2, 3, 4, 5, 6, 7],
+                "name": "body",
+                "indicies": [1, 2, 3, 4, 5, 6, 7,8, 9, 10, 11, 12, 13, 14, 19, 20, 21, 22, 23, 24],
                 "weight": 1.0
             },
             {
                 "name": "legs",
                 "indicies": [8, 9, 10, 11, 12, 13, 14, 19, 20, 21, 22, 23, 24],
-                "weight": 1.0
+                "weight": 0.0
             },
         ]
 
