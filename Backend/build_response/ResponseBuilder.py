@@ -7,6 +7,7 @@ import tarfile
 class ResponseBuilder:
     def __init__(self, sample_id, input_path):
         self.input_path = input_path
+        self.sample_id = sample_id
         self.analyze = MovementAnalyzer(sample_id)
         self.data = list()
         self.result_dir = '.media/result'
@@ -39,11 +40,19 @@ class ResponseBuilder:
 
     # expects 2 lists of file paths to the correct files
     def visualize(self, trial_frames, sample_frames):
+        # todo: build file paths
+        sample_dir = os.path.join("./media", self.sample_id, 'skeletons')
+        trial_dir = os.path.join('./media', 'temp_vid', 'skeletons')
+
+        sample_frames = map(lambda x: os.path.join(sample_dir, x, '.jpg'), sample_frames)
+        trial_frames = map(lambda x: os.path.join(trial_dir, x, '.jpg'), trial_frames)
+
+        # sorted(os.listdir(self.picture_dir), key=lambda x: int(x.split('.')[0]))
         array_trail = []
         array_sample = []
         # add path to files if necessary
-        for i, (file_trail, file_sample) in enumerate(zip(trial_frames, sample_frames)):
-            picture_trail = cv2.imread(file_trail, 'r')
+        for file_trial, file_sample in zip(trial_frames, sample_frames):
+            picture_trail = cv2.imread(file_trial, 'r')
             array_trail.append(picture_trail)
             picture_sample = cv2.imread(file_sample, 'r')
             array_sample.append(picture_sample)
