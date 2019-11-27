@@ -99,6 +99,7 @@ class VideoExtractor:
             else:
                 print(f'i: {i}, res: {res}')
                 cv2.imwrite(os.path.join(self.picture_dir, str(i) + ".jpg"), frame)
+                i += 1
 
     def _extract_keypoints(self):
         # put in loop
