@@ -7,26 +7,16 @@ import {
   View,
   Text,
   StatusBar,
+  TouchableOpacity,
 } from 'react-native';
 
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 
-import {
-  Header,
-  Button,
-} from 'react-native-elements';
-
-import Icon from 'react-native-vector-icons/Entypo';
-
-Icon.loadFont();
+import HeaderComponent from './HeaderComponent';
 
 const styles = StyleSheet.create({
   scrollView: {
     backgroundColor: Colors.lighter,
-  },
-  engine: {
-    position: 'absolute',
-    right: 0,
   },
   body: {
     backgroundColor: Colors.white,
@@ -49,17 +39,23 @@ const styles = StyleSheet.create({
   highlight: {
     fontWeight: '700',
   },
-  footer: {
-    color: Colors.dark,
-    fontSize: 12,
-    fontWeight: '600',
-    padding: 4,
-    paddingRight: 12,
-    textAlign: 'right',
+  buttonContainer: {
+    flex: 1,
+    marginTop: 40,
+    marginHorizontal: 70,
+    justifyContent: 'center',
+    flexDirection: 'row',
+    backgroundColor: '#B82303',
+  },
+  buttonText: {
+    color: '#fff',
+    marginVertical: 10,
+    fontSize: 18,
+    fontWeight: 'bold',
   },
 });
 
-class MainView extends Component {
+class MainContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -70,14 +66,9 @@ class MainView extends Component {
 
     return (
       <>
-        <Header
-          containerStyle={{
-            backgroundColor: '#B82303',
-            justifyContent: 'space-around',
-          }}
-          leftComponent={<Icon name="menu" color="#fff" size={30} />}
-          centerComponent={{ text: 'AI Dance Coach', style: { color: '#fff', fontSize: 20, fontWeight: 'bold' } }}
-          rightComponent={<Icon name="home" color="#fff" size={30} />}
+        <HeaderComponent
+          leftIcon="menu"
+          headerText="AI Dance Coach"
         />
         <StatusBar barStyle="dark-content" />
         <SafeAreaView>
@@ -85,11 +76,6 @@ class MainView extends Component {
             contentInsetAdjustmentBehavior="automatic"
             style={styles.scrollView}
           >
-            {global.HermesInternal == null ? null : (
-              <View style={styles.engine}>
-                <Text style={styles.footer}>Engine: Hermes</Text>
-              </View>
-            )}
             <View style={styles.body}>
               <View style={styles.sectionContainer}>
                 <Text style={styles.sectionTitle}>Deep-learning based App</Text>
@@ -105,20 +91,12 @@ class MainView extends Component {
                   You can correct your dance by comparing your dancing with professional dancers.
                 </Text>
               </View>
-
-              <View style={{
-                flex: 1,
-                marginTop: 40,
-                marginHorizontal: 64,
-              }}
+              <TouchableOpacity
+                style={styles.buttonContainer}
+                onPress={onPressStartRecord}
               >
-                <Button
-                  title="Start Record"
-                  // titleStyle={{ fontWeight: 'bold' }}
-                  buttonStyle={{ backgroundColor: '#B82303' }}
-                  onPress={onPressStartRecord}
-                />
-              </View>
+                <Text style={styles.buttonText}>Start Record</Text>
+              </TouchableOpacity>
             </View>
           </ScrollView>
         </SafeAreaView>
@@ -127,8 +105,8 @@ class MainView extends Component {
   }
 }
 
-MainView.propTypes = {
+MainContainer.propTypes = {
   onPressStartRecord: PropTypes.func.isRequired,
 };
 
-export default MainView;
+export default MainContainer;
