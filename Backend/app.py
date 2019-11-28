@@ -51,6 +51,8 @@ def process_videos():
         rb = ResponseBuilder(input_path=input_path,
                              sample_id=compare_to.split('.')[0])  # video_path: attempt, sample_id: sample
         result_path = rb.build()
+        print(f'result_path: {result_path}')
+
         return send_from_directory(result_path, 'result.tar.gz', as_attachment=True)
 
 
