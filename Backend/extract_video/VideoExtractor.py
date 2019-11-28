@@ -63,43 +63,36 @@ class VideoExtractor:
     #  it will capture image in each 0.5 second
     def _sample_pictures(self):
         VideoExtractor.create_and_clear(self.picture_dir)
-        '''
+
+        print(int(self.video.get(cv2.CAP_PROP_FRAME_COUNT)))
+
         def get_frame(sec):
             self.video.set(cv2.CAP_PROP_POS_FRAMES, sec)  # (cv2.CAP_PROP_POS_MSEC, sec * 1000)
             has_frames, image = self.video.read()
             if has_frames:
-                print(f'count: {count}')
+                #print(f'count: {count}')
                 cv2.imwrite(os.path.join(self.picture_dir, str(count) + ".jpg"), image)  # save frame as JPG file
             return has_frames
         
         sec = 0
         count = 1
         success = get_frame(sec)
-         count = 0
+        count = 0
         while True:
-            #count += 1
-            print(f'count: {count}')
+            count += 1
+            #print(f'count: {count}')
             (grabbed, frame) = self.video.read()
             if not grabbed:
                 break
             else:
                 cv2.imwrite(os.path.join(self.picture_dir, str(count) + ".jpg"), frame)
                 count += 1
-                 # sec += self.frequency
-            # sec = round(sec, 2)
-            # print(f"sec: {sec}")
-            # success = get_frame(count)# old: (sec)
-        '''
-        i = 0
-        while True:
-            self.video.set(1, i)
-            res, frame = self.video.read()
-            if not res:
-                break
-            else:
-                print(f'i: {i}, res: {res}')
-                cv2.imwrite(os.path.join(self.picture_dir, str(i) + ".jpg"), frame)
-                i += 1
+                sec += self.frequency
+            sec = round(sec, 2)
+            #print(f"sec: {sec}")
+
+
+
 
     def _extract_keypoints(self):
         # put in loop
