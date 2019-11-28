@@ -3,6 +3,7 @@ import cv2
 from compressType import CompressType
 from image2RLE import Image2RLE
 from RLE2image import RLE2Image
+from cocoKeyptEval import KeypointEval
 
 try:
     sys.path.append('/usr/local/python')
@@ -36,6 +37,7 @@ class Evaluator:
         return self.evaluate(*args, **kwargs)
 
     def evaluate(self):
+        ##################   Compression    ##################
         # TODO run (a part of) cocoapi pose images through openpose and evaluate accuracy
         '''
         predict_image(image_path)
@@ -47,11 +49,30 @@ class Evaluator:
         '''
         # TODO run compressed images through openpose
 
-        # TODO get keypoint similarities between
+        ######################################################
+
+        ##################   Similarity     ##################
+        # TODO: feed in ground truth json
+        '''
+        ground_truth = 'gt.json'
+        '''
+        # TODO: feed in openpose/openpose compressed json
+        '''
+        openpose_result = 'openpose.json'
+        openpose_comp_result = 'openpose_comp.json'
+        '''
+
+        # get keypoint similarities between
         # - ground truth and openpose
         # - ground truth and openpose compressed
         # - openpose and openpose compressed
-
+        '''
+        keypoint_similarity(ground_truth, openpose_result)
+        keypoint_similarity(ground_truth, openpose_comp_result)
+        keypoint_similarity(openpose_result, openpose_comp_result)
+        '''
+        ######################################################
+        
         # TODO save data for future visualization or analysis
         pass
 
@@ -64,9 +85,8 @@ class Evaluator:
         RLE2Image(comp_type, enc_txt, output_img)
 
     @staticmethod
-    def keypoint_similarity(keypoint_a, keypoints_b):
-        # TODO implement OKS
-        return 1
+    def keypoint_similarity(keypoints_a, keypoints_b):
+        KeypointEval(keypoints_a, keypoints_b)
 
     def predict_image(self, image_path):
         datum = op.Datum()
