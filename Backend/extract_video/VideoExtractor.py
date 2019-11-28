@@ -60,7 +60,7 @@ class VideoExtractor:
         self._generate_video()
         return self.body_points
 
-    #  it will capture image in each 0.5 second
+
     def _sample_pictures(self):
         VideoExtractor.create_and_clear(self.picture_dir)
 
@@ -71,20 +71,19 @@ class VideoExtractor:
             has_frames, image = self.video.read()
             if has_frames:
                 #print(f'count: {count}')
-                cv2.imwrite(os.path.join(self.picture_dir, str(count) + ".jpg"), image)  # save frame as JPG file
+                cv2.imwrite(os.path.join(self.picture_dir, str(count) + ".jpg"), image)
             return has_frames
         
         sec = 0
-        count = 1
         count = 0
         while count <= int(self.video.get(cv2.CAP_PROP_FRAME_COUNT)):
 
-            print(f'count: {count}')
             (grabbed, frame) = self.video.read()
             if not grabbed:
                 count += 1
                 continue
             else:
+                print(f'count: {count}')
                 cv2.imwrite(os.path.join(self.picture_dir, str(count) + ".jpg"), frame)
                 count += 1
                 sec += self.frequency
