@@ -82,9 +82,3 @@ class ResponseBuilder:
             'sample_path': sample_path,
             'trial_path': trial_path
         }
-
-
-'''
-.media/temp_vid/sample.avi
-./media/temp_vid/skeleton_video.avi
-'''

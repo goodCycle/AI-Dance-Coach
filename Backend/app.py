@@ -3,7 +3,7 @@ import os
 import json
 from extract_video.VideoExtractor import VideoExtractor
 from build_response.ResponseBuilder import ResponseBuilder
-from flask import send_from_directory
+from flask import send_file
 
 app = Flask(__name__)
 VIDEO_DIR = './video'
@@ -52,8 +52,7 @@ def process_videos():
                              sample_id=compare_to.split('.')[0])  # video_path: attempt, sample_id: sample
         result_path = rb.build()
         print(f'result_path: {result_path}')
-
-        return send_from_directory(result_path, 'result.tar.gz', as_attachment=True)
+        return send_file(result_path, 'result.tar.gz', as_attachment=True)
 
 
 if __name__ == '__main__':
