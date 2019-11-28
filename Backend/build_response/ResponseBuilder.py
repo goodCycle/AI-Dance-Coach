@@ -17,7 +17,7 @@ class ResponseBuilder:
         self.sample_id = sample_id
         self.analyze = MovementAnalyzer(sample_id)
         self.data = list()
-        self.result_dir = '.media/result'
+        self.result_dir = '.media/temp_vid'
 
     def build(self):
         self.data = self.analyze(self.input_path)
@@ -51,7 +51,6 @@ class ResponseBuilder:
     def visualize(self, trial_frames, sample_frames):
         sample_dir = os.path.join("./media", self.sample_id, 'skeletons')
         trial_dir = os.path.join('./media', 'temp_vid', 'skeletons')
-        create_and_clear(self.result_dir)
 
         sample_frames = [os.path.join(sample_dir, str(x) + '.jpg') for x in sample_frames]
         trial_frames = [os.path.join(trial_dir, str(x) + '.jpg') for x in trial_frames]
