@@ -90,7 +90,7 @@ class DifferenceCalculator:
             input_ = input_ / np.linalg.norm(input_)
 
             matrix = DifferenceCalculator.find_affine_matrix(input_, sample)
-            transformed_input = input_#DifferenceCalculator.affine_transform(matrix, input_)
+            transformed_input = DifferenceCalculator.affine_transform(matrix, input_)
 
             # print("Input:")
             # print(input_)
