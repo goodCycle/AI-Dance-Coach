@@ -80,7 +80,7 @@ class VideoExtractor:
         count = 0
         while True:
             count += 1
-            #print(f'count: {count}')
+            print(f'count: {count}')
             (grabbed, frame) = self.video.read()
             if not grabbed:
                 break
