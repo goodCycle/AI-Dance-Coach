@@ -5,6 +5,7 @@ import tarfile
 import shutil
 
 
+
 def create_and_clear(directory):
     if os.path.exists(directory):
         shutil.rmtree(directory, ignore_errors=True)
@@ -17,7 +18,7 @@ class ResponseBuilder:
         self.sample_id = sample_id
         self.analyze = MovementAnalyzer(sample_id)
         self.data = list()
-        self.result_dir = '.media/temp_vid'
+        self.result_dir = '.media/result'
 
     def build(self):
         self.data = self.analyze(self.input_path)
@@ -40,6 +41,7 @@ class ResponseBuilder:
         result_dict = self.visualize(trial_frames, sample_frames)
         tar_path = os.path.join(self.result_dir, 'result.tar.gz')
         # todo: fix
+        create_and_clear(self.result_dir)
         tar = tarfile.open(tar_path, 'w:gz')
         # add json in required
         tar.add(result_dict['sample_result_path'])
