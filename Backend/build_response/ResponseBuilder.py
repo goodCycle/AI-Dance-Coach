@@ -43,8 +43,8 @@ class ResponseBuilder:
         # todo: build file paths
         sample_dir = os.path.join("./media", self.sample_id, 'skeletons')
         trial_dir = os.path.join('./media', 'temp_vid', 'skeletons')
-        print(f'sample_dir:{sample_dir}')
-        print(f'trial_dir: {trial_dir}')
+        print(f'sample_dir:{sample_dir}, len(sample_frames): {sample_frames}')
+        print(f'trial_dir: {trial_dir}, len(trial_frames): {trial_frames}')
 
         sample_frames = [os.path.join(sample_dir, x, '.jpg') for x in sample_frames]
         trial_frames = [os.path.join(trial_dir, x, '.jpg') for x in trial_frames]
