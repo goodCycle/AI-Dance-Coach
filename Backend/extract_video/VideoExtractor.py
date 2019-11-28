@@ -125,9 +125,9 @@ class VideoExtractor:
             img = cv2.imread(os.path.join(self.skeleton_dir, file))
             img_arr.append(img)
 
-        size = img_arr[0].shape[1::-1]
+        shape = img_arr[0].shape[1::-1]
         out = cv2.VideoWriter(os.path.join(self.result_dir, 'skeleton_video.avi'),
-                              cv2.VideoWriter_fourcc(*'DIVX'), 30, size)
+                              cv2.VideoWriter_fourcc(*'DIVX'), 30, shape)
         for img in img_arr:
             out.write(img)
         out.release()
