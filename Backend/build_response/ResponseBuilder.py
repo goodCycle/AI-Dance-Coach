@@ -46,8 +46,8 @@ class ResponseBuilder:
         print(f'sample_dir:{sample_dir}')
         print(f'trial_dir: {trial_dir}')
 
-        sample_frames = map(lambda x: os.path.join(sample_dir, x, '.jpg'), sample_frames)
-        trial_frames = map(lambda x: os.path.join(trial_dir, x, '.jpg'), trial_frames)
+        sample_frames = [os.path.join(sample_dir, x, '.jpg') for x in sample_frames]
+        trial_frames = [os.path.join(trial_dir, x, '.jpg') for x in trial_frames]
 
         print(f'sample_frames[0]: {sample_frames[0]}')
         print(f'trial_frames[0]: {trial_frames[0]}')
