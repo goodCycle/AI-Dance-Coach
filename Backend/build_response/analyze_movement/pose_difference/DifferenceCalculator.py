@@ -37,6 +37,9 @@ class DifferenceCalculator:
             },
         ]
 
+        if len(keypoint_list) > len(self.sample_keypoints):
+            keypoint_list = keypoint_list[:(len(self.sample_keypoints)-1)]
+
         return [(self.bin_difference(bodypart_indicies, keypoints[0], self.sample_keypoints[i][0]), i)
                 for (keypoints, i) in keypoint_list]
 

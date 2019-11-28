@@ -29,12 +29,13 @@ class ResponseBuilder:
         successful = False
         try:
             index_of_failure = next(i for i, val in enumerate(self.data) if val["score"] > threshold)
+            start = index_of_failure - frame_radius if index_of_failure > frame_radius else 0
+            end = index_of_failure + frame_radius if len(self.data) > frame_radius + index_of_failure else len(
+                self.data) - 1
         except Exception:
             successful = True
-            pass
-        start = index_of_failure - frame_radius if index_of_failure > frame_radius else 0
-        end = index_of_failure + frame_radius if len(self.data) > frame_radius + index_of_failure else len(
-            self.data) - 1
+            start = 0
+            end = len(self.data)-1
 
         trial_frames = list(range(start, end + 1))  # is empty
         sample_frames = [self.data[i]["frame_number"] for i in trial_frames]  # is empty

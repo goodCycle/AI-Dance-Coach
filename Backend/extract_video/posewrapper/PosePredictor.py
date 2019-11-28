@@ -36,10 +36,4 @@ class PosePredictor:
         image_to_process = cv2.imread(image_path)
         datum.cvInputData = image_to_process
         self.opWrapper.emplaceAndPop([datum])
-
-        # Display Image
-
-
         return datum
-
-    # TODO implement multi-picture inference

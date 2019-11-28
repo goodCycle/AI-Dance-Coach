@@ -1,7 +1,7 @@
 # AI Dance Coach
 CS470 (Introduction to Artificial Intelligence) term project
 
-This is a prototype for the AI Dance Coach.
+This is a prototype for the AI Dance Coach. The backend of the application takes in a video of a move being performed
 
 
 
@@ -178,7 +178,6 @@ in the build directory.
     ExecStart = /usr/bin/gunicorn3 --workers 3 --bind unix:app.sock -m 007 app:app
 
 
-BACKEND TESTING INSTRUCTIONS + EXPECTED OUTPUT
 
 ---
 ## Frontend
@@ -196,8 +195,11 @@ BACKEND TESTING INSTRUCTIONS + EXPECTED OUTPUT
 # Running the App
 
 
-
 ## Backend
+
+WITH WSGI AND WITH DEBUG SERVER
+
+BACKEND TESTING INSTRUCTIONS + EXPECTED OUTPUT
 
 ## Frontend
 
