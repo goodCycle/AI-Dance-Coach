@@ -68,22 +68,21 @@ class ResponseBuilder:
         for file_trial, file_sample in zip(trial_frames, sample_frames):
             print(f'file_trial: {file_trial}')
             picture_trial = cv2.imread(file_trial)
-            print(picture_trial)
             array_trial.append(picture_trial)
             picture_sample = cv2.imread(file_sample)
             array_sample.append(picture_sample)
 
         # todo: fix 0 pictures[[0,0,0],[0,0,0],[0,0,0]]
         print(f'len(array_trial): {len(array_trial)}')
-        print(f'array_trial: {array_trial}')
 
-        size = array_trial[0].shape[1::-1]
+        shape = array_trial[0].shape[1::-1]
+        print(shape)
         # where to store the files?
         trail_result_path = os.path.join(self.result_dir, 'trail.avi')
         print(f'trail_result_path: {trail_result_path}')
         out_trail = cv2.VideoWriter(trail_result_path,
                                     cv2.VideoWriter_fourcc(*'DIVX'),
-                                    30, size)
+                                    30, shape)
         for img in array_trial:
             out_trail.write(img)
         out_trail.release()
@@ -92,7 +91,7 @@ class ResponseBuilder:
         print(f'sample_result_path: {sample_result_path}')
         out_sample = cv2.VideoWriter(sample_result_path,
                                      cv2.VideoWriter_fourcc(*'DIVX'),
-                                     30, size)
+                                     30, shape)
         for img in array_sample:
             out_sample.write(img)
         out_sample.release()
