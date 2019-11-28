@@ -45,6 +45,7 @@ class ResponseBuilder:
         print(f'trail_result_path:{result_dict["trail_result_path"]}')
 
         # todo: fix
+        os.makedirs(tar_path)
         with tarfile.open(tar_path, 'w:gz')as tar:
             tar.add(result_dict['sample_result_path'])
             tar.add(result_dict['trail_result_path'])
