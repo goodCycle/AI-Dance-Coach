@@ -54,8 +54,8 @@ class ResponseBuilder:
         print(f'sample_dir:{sample_dir}, len(sample_frames): {sample_frames}')
         print(f'trial_dir: {trial_dir}, len(trial_frames): {trial_frames}')
 
-        sample_frames = [os.path.join(sample_dir, str(x), '.jpg') for x in sample_frames]
-        trial_frames = [os.path.join(trial_dir, str(x), '.jpg') for x in trial_frames]
+        sample_frames = [os.path.join(sample_dir, str(x) + '.jpg') for x in sample_frames]
+        trial_frames = [os.path.join(trial_dir, str(x) + '.jpg') for x in trial_frames]
 
         print(f'sample_frames[0]: {sample_frames[0]}')
         print(f'trial_frames[0]: {trial_frames[0]}')
