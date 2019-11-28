@@ -14,6 +14,7 @@ class ResponseBuilder:
 
     def build(self):
         self.data = self.analyze(self.input_path)
+        print(self.data)
         print(*[(x["frame_number"], x["score"]) for x in self.data])
         threshold = 10
         frame_radius = 2  # number of frames to display before and after
@@ -22,12 +23,14 @@ class ResponseBuilder:
             index_of_failure = next(i for i, val in enumerate(self.data) if val["score"] > threshold)
         except Exception:
             pass
+        print(f'index_of_failure: {index_of_failure}')
         start = index_of_failure - frame_radius if index_of_failure > frame_radius else 0
         end = index_of_failure - frame_radius if len(self.data) > frame_radius + index_of_failure else len(
             self.data) - 1
 
-        trial_frames = list(range(start, end + 1))
-        sample_frames = [self.data[i]["frame_number"] for i in trial_frames]
+        print(f'start:{start}, end: {end}')
+        trial_frames = list(range(start, end + 1)) # is empty
+        sample_frames = [self.data[i]["frame_number"] for i in trial_frames]# is empty
 
         result_dict = self.visualize(trial_frames, sample_frames)
         tar_path = os.path.join(self.result_dir, 'result.tar.gz')
