@@ -3,6 +3,7 @@ import cv2
 import os
 import tarfile
 import shutil
+from PIL import Image
 
 
 def create_and_clear(directory):
@@ -63,9 +64,11 @@ class ResponseBuilder:
         array_sample = []
         # add path to files if necessary
         for file_trial, file_sample in zip(trial_frames, sample_frames):
-            picture_trial = cv2.imread(file_trial, 1)
+            print(f'file_trial: {file_trial}')
+            picture_trial = cv2.imread(file_trial)
             array_trial.append(picture_trial)
-            picture_sample = cv2.imread(file_sample, 1)
+            print(f'file_sample: {file_sample}')
+            picture_sample = cv2.imread(file_sample)
             array_sample.append(picture_sample)
 
         # todo: fix 0 pictures[[0,0,0],[0,0,0],[0,0,0]]
@@ -79,8 +82,8 @@ class ResponseBuilder:
         out_trail = cv2.VideoWriter(trail_result_path,
                                     cv2.VideoWriter_fourcc(*'DIVX'),
                                     30, size)
-        for frame in array_trial:
-            out_trail.write(frame)
+        for img in array_trial:
+            out_trail.write(img)
         out_trail.release()
 
         sample_result_path = os.path.join(self.result_dir, 'sample.avi')
@@ -88,8 +91,8 @@ class ResponseBuilder:
         out_sample = cv2.VideoWriter(sample_result_path,
                                      cv2.VideoWriter_fourcc(*'DIVX'),
                                      30, size)
-        for frame in array_sample:
-            out_sample.write(frame)
+        for img in array_sample:
+            out_sample.write(img)
         out_sample.release()
 
         return {
