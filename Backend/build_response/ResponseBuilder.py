@@ -5,7 +5,6 @@ import tarfile
 import shutil
 
 
-
 def create_and_clear(directory):
     if os.path.exists(directory):
         shutil.rmtree(directory, ignore_errors=True)
@@ -40,12 +39,15 @@ class ResponseBuilder:
 
         result_dict = self.visualize(trial_frames, sample_frames)
         tar_path = os.path.join(self.result_dir, 'result.tar.gz')
+
+        print(f'tar_path: {tar_path}')
+        print(f'sample_result_path:{result_dict["sample_result_path"]}')
+        print(f'trail_result_path:{result_dict["trail_result_path"]}')
+
         # todo: fix
-        tar = tarfile.open(tar_path, 'w:gz')
-        # add json in required
-        tar.add(result_dict['sample_result_path'])
-        tar.add(result_dict['trail_result_path'])
-        tar.close()
+        with tarfile.open(tar_path, 'w:gz')as tar:
+            tar.add(result_dict['sample_result_path'])
+            tar.add(result_dict['trail_result_path'])
         return tar_path
 
     # expects 2 lists of file paths to the correct files
