@@ -43,8 +43,8 @@ class ResponseBuilder:
         # correct until this line
 
         with tarfile.open(tar_path, 'w:gz')as tar:
-            tar.add(result_dict['sample_result_path'])
-            tar.add(result_dict['trail_result_path'])
+            tar.add(result_dict['sample_path'])
+            tar.add(result_dict['trial_path'])
             tar.close()
         return tar_path
 
