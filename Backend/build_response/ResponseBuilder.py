@@ -64,9 +64,9 @@ class ResponseBuilder:
         array_sample = []
         # add path to files if necessary
         for file_trial, file_sample in zip(trial_frames, sample_frames):
-            picture_trail = cv2.imread(file_trial, 'r')
+            picture_trail = cv2.imread(file_trial)
             array_trail.append(picture_trail)
-            picture_sample = cv2.imread(file_sample, 'r')
+            picture_sample = cv2.imread(file_sample)
             array_sample.append(picture_sample)
 
         print(f'len(array_trail): {len(array_trail)}')
