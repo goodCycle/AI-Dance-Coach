@@ -5,7 +5,6 @@ import tarfile
 import shutil
 
 
-
 def create_and_clear(directory):
     if os.path.exists(directory):
         shutil.rmtree(directory, ignore_errors=True)
@@ -41,7 +40,6 @@ class ResponseBuilder:
         result_dict = self.visualize(trial_frames, sample_frames)
         tar_path = os.path.join(self.result_dir, 'result.tar.gz')
         # todo: fix
-        create_and_clear(self.result_dir)
         tar = tarfile.open(tar_path, 'w:gz')
         # add json in required
         tar.add(result_dict['sample_result_path'])
@@ -53,6 +51,7 @@ class ResponseBuilder:
     def visualize(self, trial_frames, sample_frames):
         sample_dir = os.path.join("./media", self.sample_id, 'skeletons')
         trial_dir = os.path.join('./media', 'temp_vid', 'skeletons')
+        create_and_clear(self.result_dir)
 
         sample_frames = [os.path.join(sample_dir, str(x) + '.jpg') for x in sample_frames]
         trial_frames = [os.path.join(trial_dir, str(x) + '.jpg') for x in trial_frames]
