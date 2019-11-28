@@ -76,14 +76,14 @@ class VideoExtractor:
         
         sec = 0
         count = 1
-        success = get_frame(sec)
         count = 0
-        while True:
-            count += 1
+        while count <= int(self.video.get(cv2.CAP_PROP_FRAME_COUNT)):
+
             print(f'count: {count}')
             (grabbed, frame) = self.video.read()
             if not grabbed:
-                break
+                count += 1
+                continue
             else:
                 cv2.imwrite(os.path.join(self.picture_dir, str(count) + ".jpg"), frame)
                 count += 1
