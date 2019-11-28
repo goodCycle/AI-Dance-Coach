@@ -114,10 +114,13 @@ class DifferenceCalculator:
                     counted_keypoints += 1
                     if temp > dist:
                         dist = temp
+                else:
+                    print("zero keypoints")
+
             if counted_keypoints == 0:
                 counted_keypoints = 1
-            score = dist + (distance_sum/counted_keypoints)
-            if rot > 90:
+            score = dist #+ (distance_sum/counted_keypoints)
+            if rot > 90 and rot < 150:
                 score *= 0.25
             print("max+avg: " + str(score))
 
