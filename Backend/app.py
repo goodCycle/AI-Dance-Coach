@@ -17,11 +17,9 @@ def hello_world():
 
 
 # receives and stores file using for example
-# curl -X POST -F file=@"/path/to/file.mp4" -F file=@"/path/to/file.json" http://208.43.39.216:5000
 @app.route('/', methods=['POST'])
 def process_videos():
     video_file, video_name, json_file, json_name = '', '', '', ''
-
     for f in request.files.getlist("file"):
         if f.filename.split('.')[1] == "mp4":
             video_file = f
@@ -33,8 +31,8 @@ def process_videos():
     is_sample = False
     try:
         config = json.load(json_file)
-        is_sample = config['is_sample']  # <-- boolean
-        compare_to = config['compare_to']  # <-- samplevideo
+        is_sample = config['is_sample']
+        compare_to = config['compare_to']
     except OSError:
         is_sample = True
         compare_to = ''
@@ -44,8 +42,6 @@ def process_videos():
         os.makedirs(VIDEO_DIR)
     input_path = os.path.join(VIDEO_DIR, video_name)
     video_file.save(input_path)
-    print(f'video_path: {video_path}')
-    print(f'input_path: {input_path}')
 
     if is_sample:
         vd = VideoExtractor(media_dir="./media", model_path="../../openpose/models/")  # framerate > 1 !!!
@@ -55,7 +51,6 @@ def process_videos():
         rb = ResponseBuilder(input_path=input_path,
                              sample_id=compare_to.split('.')[0])  # video_path: attempt, sample_id: sample
         result_path = rb.build()
-        print(f'result_path: {result_path}')
         return send_file(result_path, 'result.tar.gz', as_attachment=True)
 
 

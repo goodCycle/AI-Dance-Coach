@@ -7,9 +7,7 @@ class DifferenceCalculator:
 
     def __init__(self, sample_keypoint_path="./media/video1/bodies_keypoints"):
         self.sample_keypoint_path = sample_keypoint_path
-
         self.debug_frame = 0
-
         self.sample_keypoints = [np.load(self.sample_keypoint_path + "/" + filename)
                                  for filename in os.listdir(sample_keypoint_path)]
 
@@ -110,7 +108,6 @@ class DifferenceCalculator:
             if 150 > rot > 90:
                 score *= 0.25
             print("max+avg: " + str(score))
-
             score_dict[bodypart["name"]] = (score, bodypart["weight"])
 
         return score_dict

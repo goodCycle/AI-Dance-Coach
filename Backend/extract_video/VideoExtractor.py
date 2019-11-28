@@ -1,9 +1,6 @@
 import cv2
 import os
 import shutil
-import json
-import codecs
-from PIL import Image
 import numpy as np
 
 from extract_video.posewrapper.PosePredictor import PosePredictor
@@ -61,8 +58,6 @@ class VideoExtractor:
     def _sample_pictures(self):
         VideoExtractor.create_and_clear(self.picture_dir)
 
-        print(int(self.video.get(cv2.CAP_PROP_FRAME_COUNT)))
-
         def get_frame(sec):
             self.video.set(cv2.CAP_PROP_POS_FRAMES, sec)  # (cv2.CAP_PROP_POS_MSEC, sec * 1000)
             has_frames, image = self.video.read()
@@ -106,5 +101,3 @@ class VideoExtractor:
         for img in img_arr:
             out.write(img)
         out.release()
-
-
