@@ -75,6 +75,17 @@ class DifferenceCalculator:
             sample = sample_features[np.array(bodypart["indicies"])]
             input_ = input_features[np.array(bodypart["indicies"])]
 
+            sample_clean = list()
+            input_clean = list()
+
+            for i, point in enumerate(sample):
+                if np.linalg.norm(point) != 0 and np.linalg.norm(input_[i]) != 0:
+                    sample_clean.add(point)
+                    input_clean.add(input_[i])
+
+            sample = np.array(sample_clean)
+            input_ = np.array(input_clean)
+
             sample = sample / np.linalg.norm(sample)
             input_ = input_ / np.linalg.norm(input_)
 
