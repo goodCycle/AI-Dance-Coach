@@ -43,11 +43,15 @@ class ResponseBuilder:
         # todo: build file paths
         sample_dir = os.path.join("./media", self.sample_id, 'skeletons')
         trial_dir = os.path.join('./media', 'temp_vid', 'skeletons')
+        print(f'sample_dir:{sample_dir}')
+        print(f'trial_dir: {trial_dir}')
 
         sample_frames = map(lambda x: os.path.join(sample_dir, x, '.jpg'), sample_frames)
         trial_frames = map(lambda x: os.path.join(trial_dir, x, '.jpg'), trial_frames)
 
-        # sorted(os.listdir(self.picture_dir), key=lambda x: int(x.split('.')[0]))
+        print(f'sample_frames[0]: {sample_frames[0]}')
+        print(f'trial_frames[0]: {trial_frames[0]}')
+
         array_trail = []
         array_sample = []
         # add path to files if necessary
@@ -57,6 +61,7 @@ class ResponseBuilder:
             picture_sample = cv2.imread(file_sample, 'r')
             array_sample.append(picture_sample)
 
+        print(f'len(array_trail): {len(array_trail)}')
         size = array_trail[0].shape[1::-1]
         # where to store the files?
         trail_result_path = os.path.join(self.result_dir, 'trail.avi')
