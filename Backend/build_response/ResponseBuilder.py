@@ -75,6 +75,7 @@ class ResponseBuilder:
         size = array_trial[0].shape[1::-1]
         # where to store the files?
         trail_result_path = os.path.join(self.result_dir, 'trail.avi')
+        print(f'trail_result_path: {trail_result_path}')
         out_trail = cv2.VideoWriter(trail_result_path,
                                     cv2.VideoWriter_fourcc(*'DIVX'),
                                     30, size)
@@ -83,12 +84,14 @@ class ResponseBuilder:
         out_trail.release()
 
         sample_result_path = os.path.join(self.result_dir, 'sample.avi')
+        print(f'sample_result_path: {sample_result_path}')
         out_sample = cv2.VideoWriter(sample_result_path,
                                      cv2.VideoWriter_fourcc(*'DIVX'),
                                      30, size)
         for frame in array_sample:
             out_sample.write(frame)
         out_sample.release()
+
         return {
             'sample_result_path': sample_result_path,
             'trail_result_path': trail_result_path
