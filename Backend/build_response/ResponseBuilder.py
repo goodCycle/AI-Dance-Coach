@@ -18,7 +18,7 @@ class ResponseBuilder:
         self.sample_id = sample_id
         self.analyze = MovementAnalyzer(sample_id)
         self.data = list()
-        self.result_dir = '.media/result'
+        self.result_dir = '.media/temp_vid'
 
     def build(self):
         self.data = self.analyze(self.input_path)
@@ -41,7 +41,6 @@ class ResponseBuilder:
         result_dict = self.visualize(trial_frames, sample_frames)
         tar_path = os.path.join(self.result_dir, 'result.tar.gz')
         # todo: fix
-        create_and_clear(self.result_dir)
         tar = tarfile.open(tar_path, 'w:gz')
         # add json in required
         tar.add(result_dict['sample_result_path'])
@@ -82,7 +81,7 @@ class ResponseBuilder:
         out_sample = cv2.VideoWriter(sample_result_path,
                                      cv2.VideoWriter_fourcc(*'MJPG'),
                                      30, size)
-        # old : (sample_result_path,cv2.VideoWriter_fourcc(*'DIVX'),fps=30, frame_size=size)
+
         map(out_trail.write, array_sample)
         out_sample.release()
         return {
