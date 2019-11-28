@@ -3,13 +3,12 @@ import json
 import numpy as np
 
 
-# TODO do the transformation the other way around?
 class DifferenceCalculator:
 
     def __init__(self, sample_keypoint_path="./media/video1/bodies_keypoints"):
         self.sample_keypoint_path = sample_keypoint_path
 
-        self.debug_frame= 0
+        self.debug_frame = 0
 
         self.sample_keypoints = [np.load(self.sample_keypoint_path + "/" + filename)
                                  for filename in os.listdir(sample_keypoint_path)]
@@ -67,6 +66,7 @@ class DifferenceCalculator:
 
         score_dict = dict()
 
+        print("")
         print(self.debug_frame)
         self.debug_frame += 1
         print("")
@@ -92,41 +92,22 @@ class DifferenceCalculator:
             matrix = DifferenceCalculator.find_affine_matrix(input_, sample)
             transformed_input = DifferenceCalculator.affine_transform(matrix, input_)
 
-            # print("Input:")
-            # print(input_)
-            # print("A:")
-            # print(matrix)
-            # print("Result:")
-            # print(transformed_input)
-
-            # normalizing the inputs for scoring
-            #sample = sample / np.linalg.norm(sample)
-            #transformed_input = transformed_input / np.linalg.norm(transformed_input)
-
             # determining rotation still buggy
             rot = np.degrees(
                 -1 * np.arctan2(matrix[0][1] / np.linalg.norm(matrix[0]), matrix[0][0] / np.linalg.norm(matrix[0])))
             print(bodypart["name"] + " " + str(rot))
 
-            # use max values instead of average?
-            # dist = np.linalg.norm(sample - transformed_input)
-
-
             dist = 0
-
             for i, point in enumerate(sample):
                 temp = np.linalg.norm(point - transformed_input[i])
-                #print(point)
-                #print(transformed_input)
                 if np.linalg.norm(point) != 0 and np.linalg.norm(transformed_input[i]) != 0:
-
                     if temp > dist:
                         dist = temp
                 else:
-                    print("zero keypoints")
+                    print("zero keypoints - filtering error")
 
             score = dist + np.linalg.norm(sample - transformed_input)
-            if rot > 90 and rot < 150:
+            if 150 > rot > 90:
                 score *= 0.25
             print("max+avg: " + str(score))
 
