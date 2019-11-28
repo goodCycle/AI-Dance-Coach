@@ -80,8 +80,8 @@ class DifferenceCalculator:
 
             for i, point in enumerate(sample):
                 if np.linalg.norm(point) != 0 and np.linalg.norm(input_[i]) != 0:
-                    sample_clean.add(point)
-                    input_clean.add(input_[i])
+                    sample_clean.append(point)
+                    input_clean.append(input_[i])
 
             sample = np.array(sample_clean)
             input_ = np.array(input_clean)
