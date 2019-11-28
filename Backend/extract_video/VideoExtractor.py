@@ -108,3 +108,8 @@ class VideoExtractor:
         for img in img_arr:
             out.write(img)
         out.release()
+'''
+.media/temp_vid/sample.avi
+./media/temp_vid/skeleton_video.avi
+
+'''

@@ -18,7 +18,7 @@ class ResponseBuilder:
         self.sample_id = sample_id
         self.analyze = MovementAnalyzer(sample_id)
         self.data = list()
-        self.result_dir = '.media/temp_vid'
+        self.result_dir = './media/temp_vid'
 
     def build(self):
         self.data = self.analyze(self.input_path)
@@ -43,8 +43,8 @@ class ResponseBuilder:
         tar_path = os.path.join(self.result_dir, 'result.tar.gz')
 
         print(f'tar_path: {tar_path}')
-        print(f'sample_result_path:{result_dict["sample_result_path"]}')
-        print(f'trail_result_path:{result_dict["trail_result_path"]}')
+        print(f'sample_path:{result_dict["sample_path"]}')
+        print(f'trial_path:{result_dict["trial_path"]}')
         '''
         # todo: fix
         with tarfile.open(tar_path, 'w:gz')as tar:
