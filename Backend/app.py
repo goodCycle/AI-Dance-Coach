@@ -3,7 +3,7 @@ import os
 import json
 from extract_video.VideoExtractor import VideoExtractor
 from build_response.ResponseBuilder import ResponseBuilder
-from flask import send_from_directory
+from flask import send_file
 
 app = Flask(__name__)
 VIDEO_DIR = './video'
@@ -17,11 +17,9 @@ def hello_world():
 
 
 # receives and stores file using for example
-# curl -X POST -F file=@"/path/to/file.mp4" -F file=@"/path/to/file.json" http://208.43.39.216:5000
 @app.route('/', methods=['POST'])
 def process_videos():
     video_file, video_name, json_file, json_name = '', '', '', ''
-
     for f in request.files.getlist("file"):
         if f.filename.split('.')[1] == "mp4":
             video_file = f
@@ -31,17 +29,19 @@ def process_videos():
             json_name = json_file.filename
 
     is_sample = False
-    config = json.load(json_file)
-    is_sample = config['is_sample']  # <-- boolean
-    compare_to = config['compare_to']  # <-- samplevideo
+    try:
+        config = json.load(json_file)
+        is_sample = config['is_sample']
+        compare_to = config['compare_to']
+    except OSError:
+        is_sample = True
+        compare_to = ''
 
     video_path = os.path.join(VIDEO_DIR, video_name)
     if not os.path.exists(VIDEO_DIR):
         os.makedirs(VIDEO_DIR)
     input_path = os.path.join(VIDEO_DIR, video_name)
     video_file.save(input_path)
-    print(f'video_path: {video_path}')
-    print(f'input_path: {input_path}')
 
     if is_sample:
         vd = VideoExtractor(media_dir="./media", model_path="../../openpose/models/")  # framerate > 1 !!!
@@ -51,7 +51,7 @@ def process_videos():
         rb = ResponseBuilder(input_path=input_path,
                              sample_id=compare_to.split('.')[0])  # video_path: attempt, sample_id: sample
         result_path = rb.build()
-        return send_from_directory(result_path, 'result.tar.gz', as_attachment=True)
+        return send_file(result_path, 'result.tar.gz', as_attachment=True)
 
 
 if __name__ == '__main__':
