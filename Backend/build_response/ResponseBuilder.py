@@ -78,15 +78,17 @@ class ResponseBuilder:
         shape = array_trial[0].shape[1::-1]
         print(shape)
         # where to store the files?
-        trail_result_path = os.path.join(self.result_dir, 'trail.avi')
+        trail_result_path = os.path.join(self.result_dir, 'trial.avi')
         print(f'trail_result_path: {trail_result_path}')
         out_trail = cv2.VideoWriter(trail_result_path,
                                     cv2.VideoWriter_fourcc(*'DIVX'),
                                     30, shape)
+        print(f'array_trial: {array_trial}')
         for i, img in enumerate(array_trial):
             print(f"adding img: {i}")
             out_trail.write(img)
         out_trail.release()
+
         print(os.listdir('./media/temp_vid'))
         sample_result_path = os.path.join(self.result_dir, 'sample.avi')
         print(f'sample_result_path: {sample_result_path}')
