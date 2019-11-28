@@ -45,9 +45,9 @@ class ResponseBuilder:
         print(f'trail_result_path:{result_dict["trail_result_path"]}')
 
         # todo: fix
-        with tarfile.open(tar_path, 'w')as tar:
-            tar.addfile(result_dict['sample_result_path'])
-            tar.addfile(result_dict['trail_result_path'])
+        with tarfile.open(tar_path, 'w:gz')as tar:
+            tar.add(result_dict['sample_result_path'])
+            tar.add(result_dict['trail_result_path'])
             tar.close()
         return tar_path
 
@@ -76,16 +76,18 @@ class ResponseBuilder:
         # where to store the files?
         trail_result_path = os.path.join(self.result_dir, 'trail.avi')
         out_trail = cv2.VideoWriter(trail_result_path,
-                                    cv2.VideoWriter_fourcc(*'MJPG'),
+                                    cv2.VideoWriter_fourcc(*'DIVX'),
                                     30, size)
-        map(out_trail.write, array_trial)
+        for frame in array_trial:
+            out_trail.write(frame)
         out_trail.release()
+
         sample_result_path = os.path.join(self.result_dir, 'sample.avi')
         out_sample = cv2.VideoWriter(sample_result_path,
-                                     cv2.VideoWriter_fourcc(*'MJPG'),
+                                     cv2.VideoWriter_fourcc(*'DIVX'),
                                      30, size)
-
-        map(out_trail.write, array_sample)
+        for frame in array_sample:
+            out_sample.write(frame)
         out_sample.release()
         return {
             'sample_result_path': sample_result_path,
