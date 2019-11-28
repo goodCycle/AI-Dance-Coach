@@ -38,7 +38,7 @@ class ResponseBuilder:
         sample_frames = [self.data[i]["frame_number"] for i in trial_frames]  # is empty
 
         result_dict = self.visualize(trial_frames, sample_frames)
-        tar_path = os.path.join(self.result_dir, 'result.tar')
+        tar_path = os.path.join(self.result_dir, 'result.tar.gz')
 
         print(f'tar_path: {tar_path}')
         print(f'sample_result_path:{result_dict["sample_result_path"]}')
@@ -46,8 +46,9 @@ class ResponseBuilder:
 
         # todo: fix
         with tarfile.open(tar_path, 'w')as tar:
-            tar.add(result_dict['sample_result_path'])
-            tar.add(result_dict['trail_result_path'])
+            tar.addfile(result_dict['sample_result_path'])
+            tar.addfile(result_dict['trail_result_path'])
+            tar.close()
         return tar_path
 
     # expects 2 lists of file paths to the correct files
