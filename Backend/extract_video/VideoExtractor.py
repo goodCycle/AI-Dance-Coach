@@ -110,8 +110,3 @@ class VideoExtractor:
         out.release()
 
 
-'''
-.media/temp_vid/sample.avi
-./media/temp_vid/skeleton_video.avi
-
-'''

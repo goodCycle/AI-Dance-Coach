@@ -38,21 +38,15 @@ class ResponseBuilder:
         trial_frames = list(range(start, end + 1))  # is empty
         sample_frames = [self.data[i]["frame_number"] for i in trial_frames]  # is empty
 
-        # correct until this line
         result_dict = self.visualize(trial_frames, sample_frames)
         tar_path = os.path.join(self.result_dir, 'result.tar.gz')
+        # correct until this line
 
-        print(f'tar_path: {tar_path}')
-        print(f'sample_path:{result_dict["sample_path"]}')
-        print(f'trial_path:{result_dict["trial_path"]}')
-        '''
-        # todo: fix
         with tarfile.open(tar_path, 'w:gz')as tar:
             tar.add(result_dict['sample_result_path'])
             tar.add(result_dict['trail_result_path'])
             tar.close()
-        '''
-        return 'tar_path'
+        return tar_path
 
     # expects 2 lists of file paths to the correct files
     def visualize(self, trial_frames, sample_frames):
@@ -61,41 +55,36 @@ class ResponseBuilder:
         sample_frames = [os.path.join(sample_dir, str(x) + '.jpg') for x in sample_frames]
         trial_frames = [os.path.join(trial_dir, str(x) + '.jpg') for x in trial_frames]
 
-        print(f'sample_frames: {sample_frames}')
-        print(f'trial_frames: {trial_frames}')
-
         array_trial = []
         array_sample = []
         # add path to files if necessary
         for frame_trial, frame_sample in zip(trial_frames, sample_frames):
-            print(f'frame_trial: {frame_trial}')
             img_trial = cv2.imread(frame_trial)
             array_trial.append(img_trial)
             img_sample = cv2.imread(frame_sample)
             array_sample.append(img_sample)
 
-        print(f'len(array_trial): {len(array_trial)}')
         shape = array_trial[0].shape[1::-1]
-
         trial_path = os.path.join(self.result_dir, 'trial.avi')
         out_trail = cv2.VideoWriter(trial_path,
                                     cv2.VideoWriter_fourcc(*'DIVX'), 30, shape)
-        for i, img in enumerate(array_trial):
-            print(f"adding img: {i}")
+        for img in array_trial:
             out_trail.write(img)
         out_trail.release()
-
-        print(os.listdir('./media/temp_vid'))
         sample_path = os.path.join(self.result_dir, 'sample.avi')
-        print(f'sample_path: {sample_path}')
         out_sample = cv2.VideoWriter(sample_path,
                                      cv2.VideoWriter_fourcc(*'DIVX'),
                                      30, shape)
         for img in array_sample:
             out_sample.write(img)
         out_sample.release()
-
         return {
             'sample_path': sample_path,
             'trial_path': trial_path
         }
+
+
+'''
+.media/temp_vid/sample.avi
+./media/temp_vid/skeleton_video.avi
+'''
