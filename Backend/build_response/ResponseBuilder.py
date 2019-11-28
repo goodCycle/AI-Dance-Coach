@@ -38,19 +38,21 @@ class ResponseBuilder:
         trial_frames = list(range(start, end + 1))  # is empty
         sample_frames = [self.data[i]["frame_number"] for i in trial_frames]  # is empty
 
+        # correct until this line
         result_dict = self.visualize(trial_frames, sample_frames)
         tar_path = os.path.join(self.result_dir, 'result.tar.gz')
 
         print(f'tar_path: {tar_path}')
         print(f'sample_result_path:{result_dict["sample_result_path"]}')
         print(f'trail_result_path:{result_dict["trail_result_path"]}')
-
+        '''
         # todo: fix
         with tarfile.open(tar_path, 'w:gz')as tar:
             tar.add(result_dict['sample_result_path'])
             tar.add(result_dict['trail_result_path'])
             tar.close()
-        return tar_path
+        '''
+        return 'tar_path'
 
     # expects 2 lists of file paths to the correct files
     def visualize(self, trial_frames, sample_frames):
@@ -66,8 +68,8 @@ class ResponseBuilder:
         for file_trial, file_sample in zip(trial_frames, sample_frames):
             print(f'file_trial: {file_trial}')
             picture_trial = cv2.imread(file_trial)
+            print(picture_trial)
             array_trial.append(picture_trial)
-            print(f'file_sample: {file_sample}')
             picture_sample = cv2.imread(file_sample)
             array_sample.append(picture_sample)
 
