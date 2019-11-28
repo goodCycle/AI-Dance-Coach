@@ -26,9 +26,11 @@ class ResponseBuilder:
         threshold = 120
         frame_radius = 15  # number of frames to display before and after
         index_of_failure = 0
+        successful = False
         try:
             index_of_failure = next(i for i, val in enumerate(self.data) if val["score"] > threshold)
         except Exception:
+            successful = True
             pass
         start = index_of_failure - frame_radius if index_of_failure > frame_radius else 0
         end = index_of_failure + frame_radius if len(self.data) > frame_radius + index_of_failure else len(
@@ -44,10 +46,19 @@ class ResponseBuilder:
         with open(json_path, 'w') as f:
             json.dump(self.data, f)
 
+        result = {
+            'success': successful,
+            'fail_frame': index_of_failure
+        }
+        json_result_path = os.path.join(self.result_dir, 'result.json')
+        with open(json_result_path, 'w') as f:
+            json.dump(result, f)
+
         with tarfile.open(tar_path, 'w:gz')as tar:
             tar.add(result_dict['sample_path'])
             tar.add(result_dict['trial_path'])
             tar.add(json_path)
+            tar.add(json_result_path)
             tar.close()
         return tar_path
 
