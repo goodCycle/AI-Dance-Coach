@@ -38,7 +38,7 @@ class ResponseBuilder:
         sample_frames = [self.data[i]["frame_number"] for i in trial_frames]  # is empty
 
         result_dict = self.visualize(trial_frames, sample_frames)
-        tar_path = os.path.join(self.result_dir, 'result.tar.gz')
+        tar_path = os.path.join(self.result_dir, 'result.tar')
 
         print(f'tar_path: {tar_path}')
         print(f'sample_result_path:{result_dict["sample_result_path"]}')
