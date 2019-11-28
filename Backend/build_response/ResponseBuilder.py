@@ -43,7 +43,7 @@ class ResponseBuilder:
 
         # add json
         json_path = os.path.join(self.result_dir, 'trial.json')
-        with open(json_path) as f:
+        with open(json_path, 'w') as f:
             json.dump(self.data, f)
 
         with tarfile.open(tar_path, 'w:gz')as tar:

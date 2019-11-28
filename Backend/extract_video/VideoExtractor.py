@@ -97,7 +97,6 @@ class VideoExtractor:
         img_arr = []
         for file in sorted(os.listdir(self.skeleton_dir),
                            key=lambda x: int(x.split('.')[0])):
-            print(f'vidExtract: path_imgs: {os.path.join(self.skeleton_dir, file)}')
             img = cv2.imread(os.path.join(self.skeleton_dir, file))
             img_arr.append(img)
 
