@@ -229,7 +229,7 @@ WHERE TO ENTER SERVER IP
 * **Jaeyi Hong** - [goodCycle](https://github.com/goodCycle)
 * **Adrian Steffan** - [adriansteffan](https://github.com/adriansteffan)
 * **Simon Zocholl** - [SimonZocholl](https://github.com/SimonZocholl)
-* **Doheon Hwang** - []()
+* **Doheon Hwang** - [hdh112](https://github.com/hdh112)
 
 
 
