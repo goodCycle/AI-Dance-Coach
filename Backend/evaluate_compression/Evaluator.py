@@ -1,5 +1,8 @@
 import sys
 import cv2
+from compressType import CompressType
+from image2RLE import Image2RLE
+from RLE2image import RLE2Image
 
 try:
     sys.path.append('/usr/local/python')
@@ -8,7 +11,6 @@ except ImportError as e:
     print(
         'Error: OpenPose library could not be found.')
     raise e
-
 
 class Evaluator:
 
@@ -35,8 +37,14 @@ class Evaluator:
 
     def evaluate(self):
         # TODO run (a part of) cocoapi pose images through openpose and evaluate accuracy
-        #  predict_image(image_path)
+        '''
+        predict_image(image_path)
+        '''
         # TODO run compression across dataset
+        '''
+        # output_path = "compressed_image.bmp"
+        compress_image(CompressType.LUM, image_path, output_path)
+        '''
         # TODO run compressed images through openpose
 
         # TODO get keypoint similarities between
@@ -47,10 +55,13 @@ class Evaluator:
         # TODO save data for future visualization or analysis
         pass
 
+    # parameterized image compression
+    # COMP_TYPE tells "How to compress" - Luminance or Chrominance
     @staticmethod
-    def compress_image(image):
-        # TODO implement some form of parameterized image compression ("How much to compress")
-        pass
+    def compress_image(comp_type, input_img, output_img):
+        enc_txt = "rle.txt"
+        Image2RLE(comp_type, input_img, enc_txt)
+        RLE2Image(comp_type, enc_txt, output_img)
 
     @staticmethod
     def keypoint_similarity(keypoint_a, keypoints_b):
