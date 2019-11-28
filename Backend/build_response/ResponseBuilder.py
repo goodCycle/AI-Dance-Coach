@@ -62,15 +62,18 @@ class ResponseBuilder:
         sample_frames = [os.path.join(sample_dir, str(x) + '.jpg') for x in sample_frames]
         trial_frames = [os.path.join(trial_dir, str(x) + '.jpg') for x in trial_frames]
 
+        print(f'sample_frames: {sample_frames}')
+        print(f'trial_frames: {trial_frames}')
+
         array_trial = []
         array_sample = []
         # add path to files if necessary
-        for file_trial, file_sample in zip(trial_frames, sample_frames):
-            print(f'file_trial: {file_trial}')
-            picture_trial = cv2.imread(file_trial)
-            array_trial.append(picture_trial)
-            picture_sample = cv2.imread(file_sample)
-            array_sample.append(picture_sample)
+        for frame_trial, frame_sample in zip(trial_frames, sample_frames):
+            print(f'frame_trial: {frame_trial}')
+            img_trial = cv2.imread(frame_trial)
+            array_trial.append(img_trial)
+            img_sample = cv2.imread(frame_sample)
+            array_sample.append(img_sample)
 
         # todo: fix 0 pictures[[0,0,0],[0,0,0],[0,0,0]]
         print(f'len(array_trial): {len(array_trial)}')
