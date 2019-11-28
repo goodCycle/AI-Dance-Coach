@@ -110,27 +110,22 @@ class DifferenceCalculator:
 
             # use max values instead of average?
             # dist = np.linalg.norm(sample - transformed_input)
-            print("avg: "+str(np.linalg.norm(sample - transformed_input)))
+
 
             dist = 0
-            distance_sum = 0
-            counted_keypoints = 0
 
             for i, point in enumerate(sample):
                 temp = np.linalg.norm(point - transformed_input[i])
                 #print(point)
                 #print(transformed_input)
                 if np.linalg.norm(point) != 0 and np.linalg.norm(transformed_input[i]) != 0:
-                    distance_sum += temp
-                    counted_keypoints += 1
+
                     if temp > dist:
                         dist = temp
                 else:
                     print("zero keypoints")
 
-            if counted_keypoints == 0:
-                counted_keypoints = 1
-            score = dist #+ (distance_sum/counted_keypoints)
+            score = dist + np.linalg.norm(sample - transformed_input)
             if rot > 90 and rot < 150:
                 score *= 0.25
             print("max+avg: " + str(score))
