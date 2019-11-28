@@ -60,32 +60,33 @@ class ResponseBuilder:
         print(f'sample_frames[0]: {sample_frames[0]}')
         print(f'trial_frames[0]: {trial_frames[0]}')
 
-        array_trail = []
+        array_trial = []
         array_sample = []
         # add path to files if necessary
         for file_trial, file_sample in zip(trial_frames, sample_frames):
             print(f'file_trial: {file_trial}')
-            picture_trail = cv2.imread(file_trial, 1)
-            array_trail.append(picture_trail)
+            picture_trial = cv2.imread(file_trial, 1)
+            array_trial.append(picture_trial)
             print(f'file_sample: {file_sample}')
             picture_sample = cv2.imread(file_sample, 1)
             array_sample.append(picture_sample)
 
-        print(f'len(array_trail): {len(array_trail)}')
+        print(f'len(array_trial): {len(array_trial)}')
 
-        print(f'array_trail: {array_trail}')
-        size = array_trail[0].shape[1::-1]
+        print(f'array_trial: {array_trial}')
+        size = array_trial[0].shape[1::-1]
         # where to store the files?
         trail_result_path = os.path.join(self.result_dir, 'trail.avi')
         out_trail = cv2.VideoWriter(trail_result_path,
-                                    cv2.VideoWriter_fourcc(*'DIVX'),
-                                    fps=30, frame_size=size)
-        map(out_trail.write, array_trail)
+                                    cv2.VideoWriter_fourcc(*'MJPG'),
+                                    30, size)
+        map(out_trail.write, array_trial)
         out_trail.release()
         sample_result_path = os.path.join(self.result_dir, 'sample.avi')
         out_sample = cv2.VideoWriter(sample_result_path,
-                                     cv2.VideoWriter_fourcc(*'DIVX'),
-                                     fps=30, frame_size=size)
+                                     cv2.VideoWriter_fourcc(*'MJPG'),
+                                     30, size)
+        # old : (sample_result_path,cv2.VideoWriter_fourcc(*'DIVX'),fps=30, frame_size=size)
         map(out_trail.write, array_sample)
         out_sample.release()
         return {'sample_result_path': sample_result_path,
