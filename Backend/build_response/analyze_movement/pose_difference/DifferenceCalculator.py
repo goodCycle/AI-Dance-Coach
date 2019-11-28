@@ -79,7 +79,7 @@ class DifferenceCalculator:
             input_ = input_ / np.linalg.norm(input_)
 
             matrix = DifferenceCalculator.find_affine_matrix(input_, sample)
-            transformed_input = input_  #  DifferenceCalculator.affine_transform(matrix, input_)
+            transformed_input = DifferenceCalculator.affine_transform(matrix, input_)
 
             # print("Input:")
             # print(input_)
@@ -102,16 +102,22 @@ class DifferenceCalculator:
             print("avg: "+str(np.linalg.norm(sample - transformed_input)))
 
             dist = 0
+            distance_sum = 0
+            counted_keypoints = 0
 
             for i, point in enumerate(sample):
                 temp = np.linalg.norm(point - transformed_input[i])
                 #print(point)
                 #print(transformed_input)
-
-                if temp > dist and np.linalg.norm(point) != 0 and np.linalg.norm(transformed_input[i]) != 0:
-                    dist = temp
-            score = dist
-            print("max: " + str(score))
+                if np.linalg.norm(point) != 0 and np.linalg.norm(transformed_input[i]) != 0:
+                    distance_sum += temp
+                    counted_keypoints += 1
+                    if temp > dist:
+                        dist = temp
+            if counted_keypoints == 0:
+                counted_keypoints = 1
+            score = dist + (distance_sum/counted_keypoints)
+            print("max+avg: " + str(score))
 
             score_dict[bodypart["name"]] = (score, bodypart["weight"])
 
