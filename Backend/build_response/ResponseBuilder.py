@@ -17,7 +17,7 @@ class ResponseBuilder:
 
         print(*[(x["frame_number"], x["score"]) for x in self.data])
         threshold = 10
-        frame_radius = 2  # number of frames to display before and after
+        frame_radius = 5  # number of frames to display before and after
         index_of_failure = 0
         try:
             index_of_failure = next(i for i, val in enumerate(self.data) if val["score"] > threshold)
@@ -31,12 +31,11 @@ class ResponseBuilder:
 
         print(f'start:{start}, end: {end}')
 
-        trial_frames = list(range(start, end + 1)) # is empty
-        sample_frames = [self.data[i]["frame_number"] for i in trial_frames]# is empty
+        trial_frames = list(range(start, end + 1))  # is empty
+        sample_frames = [self.data[i]["frame_number"] for i in trial_frames]  # is empty
 
         print(f'trial_frames(1): {trial_frames}')
         print(f'sample_frames(1):{sample_frames}')
-
 
         result_dict = self.visualize(trial_frames, sample_frames)
         tar_path = os.path.join(self.result_dir, 'result.tar.gz')
@@ -55,8 +54,8 @@ class ResponseBuilder:
         print(f'sample_dir:{sample_dir}, len(sample_frames): {sample_frames}')
         print(f'trial_dir: {trial_dir}, len(trial_frames): {trial_frames}')
 
-        sample_frames = [os.path.join(sample_dir, x, '.jpg') for x in sample_frames]
-        trial_frames = [os.path.join(trial_dir, x, '.jpg') for x in trial_frames]
+        sample_frames = [os.path.join(sample_dir, str(x), '.jpg') for x in sample_frames]
+        trial_frames = [os.path.join(trial_dir, str(x), '.jpg') for x in trial_frames]
 
         print(f'sample_frames[0]: {sample_frames[0]}')
         print(f'trial_frames[0]: {trial_frames[0]}')
