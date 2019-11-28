@@ -17,7 +17,7 @@ class ResponseBuilder:
         self.sample_id = sample_id
         self.analyze = MovementAnalyzer(sample_id)
         self.data = list()
-        self.result_dir = '.media/result'
+        self.result_dir = '.media/temp_vid'
 
     def build(self):
         self.data = self.analyze(self.input_path)
@@ -39,19 +39,21 @@ class ResponseBuilder:
 
         result_dict = self.visualize(trial_frames, sample_frames)
         tar_path = os.path.join(self.result_dir, 'result.tar.gz')
+
+        print(f'tar_path: {tar_path}')
+        print(f'sample_result_path:{result_dict["sample_result_path"]}')
+        print(f'trail_result_path:{result_dict["trail_result_path"]}')
+
         # todo: fix
-        tar = tarfile.open(tar_path, 'w:gz')
-        # add json in required
-        tar.add(result_dict['sample_result_path'])
-        tar.add(result_dict['trail_result_path'])
-        tar.close()
+        with tarfile.open(tar_path, 'x:gz')as tar:
+            tar.add(result_dict['sample_result_path'])
+            tar.add(result_dict['trail_result_path'])
         return tar_path
 
     # expects 2 lists of file paths to the correct files
     def visualize(self, trial_frames, sample_frames):
         sample_dir = os.path.join("./media", self.sample_id, 'skeletons')
         trial_dir = os.path.join('./media', 'temp_vid', 'skeletons')
-        create_and_clear(self.result_dir)
 
         sample_frames = [os.path.join(sample_dir, str(x) + '.jpg') for x in sample_frames]
         trial_frames = [os.path.join(trial_dir, str(x) + '.jpg') for x in trial_frames]
@@ -81,7 +83,7 @@ class ResponseBuilder:
         out_sample = cv2.VideoWriter(sample_result_path,
                                      cv2.VideoWriter_fourcc(*'MJPG'),
                                      30, size)
-        # old : (sample_result_path,cv2.VideoWriter_fourcc(*'DIVX'),fps=30, frame_size=size)
+
         map(out_trail.write, array_sample)
         out_sample.release()
         return {
