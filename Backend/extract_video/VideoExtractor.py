@@ -17,7 +17,7 @@ class VideoExtractor:
         if not os.path.exists(media_dir):
             os.makedirs(media_dir)
 
-        self.predictor = PosePredictor(model=model_path, disable_blending=True)
+        self.predictor = PosePredictor(model=model_path, disable_blending=False)
         self.video = None
         self.frequency = -1
         self.video_path = ""
@@ -102,7 +102,6 @@ class VideoExtractor:
             img_arr.append(img)
 
         shape = img_arr[0].shape[1::-1]
-        print(f'vidExtract: path_vid: {os.path.join(self.result_dir, "skeleton_video.avi")}')
         out = cv2.VideoWriter(os.path.join(self.result_dir, 'skeleton_video.avi'),
                               cv2.VideoWriter_fourcc(*'DIVX'), 30, shape)
         for img in img_arr:

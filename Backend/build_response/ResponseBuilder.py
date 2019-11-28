@@ -3,7 +3,7 @@ import cv2
 import os
 import tarfile
 import shutil
-from PIL import Image
+import json
 
 
 def create_and_clear(directory):
@@ -40,11 +40,16 @@ class ResponseBuilder:
 
         result_dict = self.visualize(trial_frames, sample_frames)
         tar_path = os.path.join(self.result_dir, 'result.tar.gz')
-        # correct until this line
+
+        # add json
+        json_path = os.path.join(self.result_dir, 'trial.json')
+        with open(json_path) as f:
+            json.dump(self.data, f)
 
         with tarfile.open(tar_path, 'w:gz')as tar:
             tar.add(result_dict['sample_path'])
             tar.add(result_dict['trial_path'])
+            tar.add(json_path)
             tar.close()
         return tar_path
 

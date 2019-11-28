@@ -31,9 +31,13 @@ def process_videos():
             json_name = json_file.filename
 
     is_sample = False
-    config = json.load(json_file)
-    is_sample = config['is_sample']  # <-- boolean
-    compare_to = config['compare_to']  # <-- samplevideo
+    try:
+        config = json.load(json_file)
+        is_sample = config['is_sample']  # <-- boolean
+        compare_to = config['compare_to']  # <-- samplevideo
+    except OSError:
+        is_sample = True
+        compare_to = ''
 
     video_path = os.path.join(VIDEO_DIR, video_name)
     if not os.path.exists(VIDEO_DIR):
