@@ -58,7 +58,6 @@ class ResponseBuilder:
     def visualize(self, trial_frames, sample_frames):
         sample_dir = os.path.join("./media", self.sample_id, 'skeletons')
         trial_dir = os.path.join('./media', 'temp_vid', 'skeletons')
-
         sample_frames = [os.path.join(sample_dir, str(x) + '.jpg') for x in sample_frames]
         trial_frames = [os.path.join(trial_dir, str(x) + '.jpg') for x in trial_frames]
 
@@ -75,23 +74,21 @@ class ResponseBuilder:
             img_sample = cv2.imread(frame_sample)
             array_sample.append(img_sample)
 
-        # todo: fix 0 pictures[[0,0,0],[0,0,0],[0,0,0]]
         print(f'len(array_trial): {len(array_trial)}')
-
         shape = array_trial[0].shape[1::-1]
 
-        # where to store the files?
-        out_trail = cv2.VideoWriter(os.path.join(self.result_dir, 'trial.avi'),
+        trial_path = os.path.join(self.result_dir, 'trial.avi')
+        out_trail = cv2.VideoWriter(trial_path,
                                     cv2.VideoWriter_fourcc(*'DIVX'), 30, shape)
         for i, img in enumerate(array_trial):
             print(f"adding img: {i}")
             out_trail.write(img)
         out_trail.release()
-        print(os.listdir('./media/temp_vid'))
 
-        sample_result_path = os.path.join(self.result_dir, 'sample.avi')
-        print(f'sample_result_path: {sample_result_path}')
-        out_sample = cv2.VideoWriter(sample_result_path,
+        print(os.listdir('./media/temp_vid'))
+        sample_path = os.path.join(self.result_dir, 'sample.avi')
+        print(f'sample_path: {sample_path}')
+        out_sample = cv2.VideoWriter(sample_path,
                                      cv2.VideoWriter_fourcc(*'DIVX'),
                                      30, shape)
         for img in array_sample:
@@ -99,6 +96,6 @@ class ResponseBuilder:
         out_sample.release()
 
         return {
-            'sample_result_path': sample_result_path,
-            'trail_result_path': trail_result_path
+            'sample_path': sample_path,
+            'trial_path': trial_path
         }

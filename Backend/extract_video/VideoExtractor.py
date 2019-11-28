@@ -24,7 +24,6 @@ class VideoExtractor:
         self.picture_dir = ""
         self.skeleton_dir = ""
         self.body_dir = ""
-        self.overlay_dir = ""
         self.result_dir = ""
         self.body_points = []
 
@@ -51,7 +50,6 @@ class VideoExtractor:
         self.picture_dir = os.path.join(self.result_dir, "pictures")
         self.skeleton_dir = os.path.join(self.result_dir, "skeletons")
         self.body_dir = os.path.join(self.result_dir, "bodies_keypoints")
-        self.overlay_dir = os.path.join(self.result_dir, "overlays")
 
         # clear previous result with same id
         VideoExtractor.create_and_clear(self.result_dir)
@@ -59,7 +57,6 @@ class VideoExtractor:
         self._extract_keypoints()
         self._generate_video()
         return self.body_points
-
 
     def _sample_pictures(self):
         VideoExtractor.create_and_clear(self.picture_dir)
@@ -70,31 +67,23 @@ class VideoExtractor:
             self.video.set(cv2.CAP_PROP_POS_FRAMES, sec)  # (cv2.CAP_PROP_POS_MSEC, sec * 1000)
             has_frames, image = self.video.read()
             if has_frames:
-                #print(f'count: {count}')
                 cv2.imwrite(os.path.join(self.picture_dir, str(count) + ".jpg"), image)
             return has_frames
-        
+
         sec = 0
         count = 0
         while count <= int(self.video.get(cv2.CAP_PROP_FRAME_COUNT)):
-
             (grabbed, frame) = self.video.read()
             if not grabbed:
                 count += 1
                 continue
             else:
-                print(f'count: {count}')
                 cv2.imwrite(os.path.join(self.picture_dir, str(count) + ".jpg"), frame)
                 count += 1
                 sec += self.frequency
             sec = round(sec, 2)
-            #print(f"sec: {sec}")
-
-
-
 
     def _extract_keypoints(self):
-        # put in loop
         VideoExtractor.create_and_clear(self.skeleton_dir)
         VideoExtractor.create_and_clear(self.body_dir)
 
@@ -104,28 +93,16 @@ class VideoExtractor:
             np.save(os.path.join(self.body_dir, str(i) + ".npy"), datum.poseKeypoints)
             cv2.imwrite(os.path.join(self.skeleton_dir, str(i) + ".jpg"), datum.cvOutputData)
 
-    # currently not working :/
-    def _overlay_images(self):
-        VideoExtractor.create_and_clear(self.overlay_dir)
-        for i, (pic, ske) in enumerate(zip(sorted(os.listdir(self.picture_dir), key=lambda x: int(x.split('.')[0])),
-                                           sorted(os.listdir(self.skeleton_dir),
-                                                  key=lambda x: int(x.split('.')[0])))):
-            picture = Image.open(os.path.join(self.picture_dir, pic), 'r')
-            skeleton = Image.open(os.path.join(self.skeleton_dir, ske), 'r')
-            overlay = Image.new(mode='RGB', size=picture.size)
-            overlay.paste(picture, (0, 0))
-            overlay.paste(skeleton, (0, 0))
-            overlay.save(os.path.join(self.overlay_dir, str(i) + ".jpg"), format="JPEG")
-
     def _generate_video(self):
         img_arr = []
-
         for file in sorted(os.listdir(self.skeleton_dir),
                            key=lambda x: int(x.split('.')[0])):
+            print(f'vidExtract: path_imgs: {os.path.join(self.skeleton_dir, file)}')
             img = cv2.imread(os.path.join(self.skeleton_dir, file))
             img_arr.append(img)
 
         shape = img_arr[0].shape[1::-1]
+        print(f'vidExtract: path_vid: {os.path.join(self.result_dir, "skeleton_video.avi")}')
         out = cv2.VideoWriter(os.path.join(self.result_dir, 'skeleton_video.avi'),
                               cv2.VideoWriter_fourcc(*'DIVX'), 30, shape)
         for img in img_arr:
