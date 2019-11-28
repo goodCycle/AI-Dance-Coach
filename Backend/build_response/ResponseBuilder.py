@@ -83,10 +83,11 @@ class ResponseBuilder:
         out_trail = cv2.VideoWriter(trail_result_path,
                                     cv2.VideoWriter_fourcc(*'DIVX'),
                                     30, shape)
-        for img in array_trial:
+        for i, img in enumerate(array_trial):
+            print(f"adding img: {i}")
             out_trail.write(img)
         out_trail.release()
-
+        print(os.listdir('./media/temp_vid'))
         sample_result_path = os.path.join(self.result_dir, 'sample.avi')
         print(f'sample_result_path: {sample_result_path}')
         out_sample = cv2.VideoWriter(sample_result_path,
