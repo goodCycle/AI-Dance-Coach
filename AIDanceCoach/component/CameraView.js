@@ -84,7 +84,7 @@ class CameraView extends Component {
       mediaType: 'video',
     };
 
-    ImagePicker.launchImageLibrary(options, (response) => {
+    return ImagePicker.launchImageLibrary(options, (response) => {
       // Same code as in above section!
       console.log('SAVE!', response.uri);
       // const source = { uri: response.uri };
@@ -139,6 +139,21 @@ class CameraView extends Component {
       ])
       .then((res) => {
         console.log('The file saved to ', res.path());
+        this.unzipResponse(res.path());
+      })
+      .catch((error) => {
+        console.log('error', error.message);
+      });
+  }
+
+  unzipResponse = (resPath) => {
+    const homeDir = RNFS.DocumentDirectoryPath;
+    const folder = '/AI-Dance-Coach/';
+    const storeDir = homeDir + folder;
+    console.log('storeDir', storeDir);
+    return unzip(resPath, storeDir, 'utf-8')
+      .then((path) => {
+        console.log('unzip path', path);
       });
   }
 
