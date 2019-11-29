@@ -31,7 +31,7 @@ def process_videos():
 
     is_sample = False
     try:
-        with open('config_.json') as json_file: # Jaeyi: for reading json file
+        with open('config.json') as json_file: # Jaeyi: for reading json file
             config = json.load(json_file)
         is_sample = config['is_sample']
         compare_to = config['compare_to']
@@ -53,7 +53,7 @@ def process_videos():
         rb = ResponseBuilder(input_path=input_path,
                              sample_id=compare_to.split('.')[0])  # video_path: attempt, sample_id: sample
         result_path = rb.build()
-        return send_file(result_path, 'result.tar.gz', as_attachment=True)
+        return send_file(result_path, 'result.zip', as_attachment=True)
 
 
 if __name__ == '__main__':
