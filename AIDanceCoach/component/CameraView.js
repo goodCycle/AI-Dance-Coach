@@ -5,7 +5,6 @@ import {
   Text,
   TouchableOpacity,
   View,
-  ActivityIndicator,
 } from 'react-native';
 
 import { RNCamera } from 'react-native-camera';
@@ -80,13 +79,19 @@ class CameraView extends Component {
 
   selectVideo = () => {
     const options = {
-      mediaType:'video',
+      mediaType: 'video',
     };
-    
+
     ImagePicker.launchImageLibrary(options, (response) => {
       // Same code as in above section!
-      const source = { uri: response.uri, video: response.data };
-      this.sendVideoAndConfigToServer(source.uri);
+      console.log('SAVE!', response.uri);
+      // const source = { uri: response.uri };
+      // console.log('URI!!', source.uri);
+      if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      } else {
+        this.sendVideoAndConfigToServer(response.uri);
+      }
     });
   }
 
@@ -105,10 +110,11 @@ class CameraView extends Component {
     // Append json config
     const config = {
       is_sample: false,
-      compare_to: 'sample_video_snipped.mp4',
+      compare_to: 'three_new.mp4',
     };
     const configJson = JSON.stringify(config);
-    const jsonPath = RNFS.DocumentDirectoryPath + '/config.json';
+    const configFileName = '/config.json';
+    const jsonPath = RNFS.DocumentDirectoryPath + configFileName;
 
     // Write json to the file
     await RNFS.writeFile(jsonPath, configJson, 'utf8');
@@ -120,11 +126,12 @@ class CameraView extends Component {
     });
 
     try {
-      const response = await fetch(Config.ENDPOINT, {
+      const response = await fetch(Config.SERVER_ENDPOINT, {
         method: 'post',
         body: data,
       });
-
+      // TODO: save server response with zip
+      console.log('server!!', response);
       // const result = await response.json();
       // console.log('result', result);
       // const { setOpenPoseResult } = this.props;
@@ -137,8 +144,8 @@ class CameraView extends Component {
   startRecording = async () => {
     this.setState({ recording: true });
     // default to mp4 for android as codec is not set
-    const { uri, codec = 'H264' } = await this.camera.recordAsync();
-   
+    const { uri } = await this.camera.recordAsync();
+
     const savedUri = this.saveVideoToCameraRoll(uri);
 
     // this.sendVideoAndConfigToServer(savedUri, codec)
@@ -165,26 +172,24 @@ class CameraView extends Component {
         <View
           style={styles.recordButtonContainer}
         >
-          {
-            <View style={styles.horizontalButtonContainer}>
-              <TouchableOpacity
-                onPress={recording ? this.stopRecording : this.startRecording}
-                style={styles.recordButton}
-              >
-                <Text style={styles.recordButtonText}>
-                  {recording ? 'STOP' : 'RECORD'}
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={this.selectVideo}
-                style={styles.recordButton}
-              >
-                <Text style={styles.recordButtonText}>
-                  Select
-                </Text>
-              </TouchableOpacity>
-            </View>
-          }
+          <View style={styles.horizontalButtonContainer}>
+            <TouchableOpacity
+              onPress={recording ? this.stopRecording : this.startRecording}
+              style={styles.recordButton}
+            >
+              <Text style={styles.recordButtonText}>
+                {recording ? 'STOP' : 'RECORD'}
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={this.selectVideo}
+              style={styles.recordButton}
+            >
+              <Text style={styles.recordButtonText}>
+                Select
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </>
     );
