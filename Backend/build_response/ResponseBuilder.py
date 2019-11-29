@@ -63,7 +63,7 @@ class ResponseBuilder:
         #     tar.add(json_path)
         #     tar.add(json_result_path)
         #     tar.close()
-        with zipfile.ZipFile('result.zip', 'w') as myzip:
+        with zipfile.ZipFile(zip_path, 'w') as myzip:
             myzip.write(result_dict['sample_path'])
             myzip.write(result_dict['trial_path'])
             myzip.write(json_path)
