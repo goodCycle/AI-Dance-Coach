@@ -27,10 +27,12 @@ def process_videos():
         elif f.filename.split('.')[1] == 'json':
             json_file = f
             json_name = json_file.filename
+            json_file.save('config.json') # Jaeyi: this line is needed for successful json encoding
 
     is_sample = False
     try:
-        config = json.load(json_file)
+        with open('config_.json') as json_file: # Jaeyi: for reading json file
+            config = json.load(json_file)
         is_sample = config['is_sample']
         compare_to = config['compare_to']
     except OSError:
