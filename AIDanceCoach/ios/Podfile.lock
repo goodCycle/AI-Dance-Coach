@@ -231,10 +231,20 @@ PODS:
     - React-cxxreact (= 0.61.4)
     - React-jsi (= 0.61.4)
     - ReactCommon/jscallinvoker (= 0.61.4)
+  - rn-fetch-blob (0.11.2):
+    - React-Core
   - RNFS (2.16.2):
     - React
   - RNVectorIcons (6.6.0):
     - React
+  - RNZipArchive (5.0.0):
+    - React
+    - RNZipArchive/Core (= 5.0.0)
+    - SSZipArchive (= 2.2.2)
+  - RNZipArchive/Core (5.0.0):
+    - React
+    - SSZipArchive (= 2.2.2)
+  - SSZipArchive (2.2.2)
   - Yoga (1.14.0)
 
 DEPENDENCIES:
@@ -269,13 +279,16 @@ DEPENDENCIES:
   - React-RCTVibration (from `../node_modules/react-native/Libraries/Vibration`)
   - ReactCommon/jscallinvoker (from `../node_modules/react-native/ReactCommon`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
+  - rn-fetch-blob (from `../node_modules/rn-fetch-blob`)
   - RNFS (from `../node_modules/react-native-fs`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
+  - RNZipArchive (from `../node_modules/react-native-zip-archive`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
   trunk:
     - boost-for-react-native
+    - SSZipArchive
 
 EXTERNAL SOURCES:
   DoubleConversion:
@@ -334,10 +347,14 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/Libraries/Vibration"
   ReactCommon:
     :path: "../node_modules/react-native/ReactCommon"
+  rn-fetch-blob:
+    :path: "../node_modules/rn-fetch-blob"
   RNFS:
     :path: "../node_modules/react-native-fs"
   RNVectorIcons:
     :path: "../node_modules/react-native-vector-icons"
+  RNZipArchive:
+    :path: "../node_modules/react-native-zip-archive"
   Yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
@@ -371,10 +388,13 @@ SPEC CHECKSUMS:
   React-RCTText: 21934e0a51d522abcd0a275407e80af45d6fd9ec
   React-RCTVibration: 0f76400ee3cec6edb9c125da49fed279340d145a
   ReactCommon: a6a294e7028ed67b926d29551aa9394fd989c24c
+  rn-fetch-blob: f525a73a78df9ed5d35e67ea65e79d53c15255bc
   RNFS: 0d4191b1052bef9ce70deff00a5b4169c62bbd9b
   RNVectorIcons: 0bb4def82230be1333ddaeee9fcba45f0b288ed4
+  RNZipArchive: be636657a6630e9771d4a3223dc8fd0bd0137b55
+  SSZipArchive: fa16b8cc4cdeceb698e5e5d9f67e9558532fbf23
   Yoga: ba3d99dbee6c15ea6bbe3783d1f0cb1ffb79af0f
 
-PODFILE CHECKSUM: 273dd7eb8e2374f0f4e61d7854ec0e754ec4c848
+PODFILE CHECKSUM: fadd275ae5d51750c8c626a18d3d8e67b0caccf8
 
 COCOAPODS: 1.8.4

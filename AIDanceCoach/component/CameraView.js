@@ -11,6 +11,8 @@ import { RNCamera } from 'react-native-camera';
 import CameraRoll from '@react-native-community/cameraroll';
 import ImagePicker from 'react-native-image-picker';
 import Config from 'react-native-config';
+import RNFetchBlob from 'rn-fetch-blob';
+import { unzip } from 'react-native-zip-archive';
 
 const RNFS = require('react-native-fs');
 
@@ -96,16 +98,9 @@ class CameraView extends Component {
   }
 
   sendVideoAndConfigToServer = async (uri) => {
-    const data = new FormData();
-
     // Append mp4 video
     const codec = 'H264';
     const type = `video/${codec}`;
-    data.append('file', {
-      name: 'video.mp4',
-      type,
-      uri,
-    });
 
     // Append json config
     const config = {
@@ -118,27 +113,33 @@ class CameraView extends Component {
 
     // Write json to the file
     await RNFS.writeFile(jsonPath, configJson, 'utf8');
-
-    data.append('file', {
-      name: 'video_config.json',
-      type: 'applpication/json',
-      uri: jsonPath,
-    });
-
-    try {
-      const response = await fetch(Config.SERVER_ENDPOINT, {
-        method: 'post',
-        body: data,
+    const blobUri = uri.replace('file://', '');
+    // console.log('json', jsonPath);
+    RNFetchBlob
+      .config({
+        fileCache: true,
+        // by adding this option, the temp files will have a file extension
+        appendExt: 'zip',
+      })
+      .fetch('POST', Config.SERVER_ENDPOINT, {
+        'Content-Type': 'multipart/form-data',
+      }, [
+        {
+          name: 'file',
+          filename: 'video.mp4',
+          type,
+          data: RNFetchBlob.wrap(blobUri),
+        },
+        {
+          name: 'file',
+          filename: 'video_config.json',
+          type: 'applpication/json',
+          data: RNFetchBlob.wrap(jsonPath),
+        },
+      ])
+      .then((res) => {
+        console.log('The file saved to ', res.path());
       });
-      // TODO: save server response with zip
-      console.log('server!!', response);
-      // const result = await response.json();
-      // console.log('result', result);
-      // const { setOpenPoseResult } = this.props;
-      // setOpenPoseResult(result);
-    } catch (e) {
-      console.error(e);
-    }
   }
 
   startRecording = async () => {
