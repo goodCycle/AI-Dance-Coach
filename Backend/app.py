@@ -31,7 +31,7 @@ def process_videos():
 
     is_sample = False
     try:
-        with open('config_.json') as json_file: # Jaeyi: for reading json file
+        with open('config.json') as json_file: # Jaeyi: for reading json file
             config = json.load(json_file)
         is_sample = config['is_sample']
         compare_to = config['compare_to']
