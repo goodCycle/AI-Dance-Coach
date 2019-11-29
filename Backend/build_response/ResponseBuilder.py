@@ -4,6 +4,7 @@ import os
 import tarfile
 import shutil
 import json
+import zipfile
 
 
 def create_and_clear(directory):
@@ -40,7 +41,8 @@ class ResponseBuilder:
         trial_frames = list(range(start, end + 1))  # is empty
         sample_frames = [self.data[i]["frame_number"] for i in trial_frames]  # is empty
         result_dict = self.visualize(trial_frames, sample_frames)
-        tar_path = os.path.join(self.result_dir, 'result.tar.gz')
+        # tar_path = os.path.join(self.result_dir, 'result.tar.gz')
+        zip_path = os.path.join(self.result_dir, 'result.zip')
 
         # add json
         json_path = os.path.join(self.result_dir, 'trial.json')
@@ -55,13 +57,20 @@ class ResponseBuilder:
         with open(json_result_path, 'w') as f:
             json.dump(result, f)
 
-        with tarfile.open(tar_path, 'w:gz')as tar:
-            tar.add(result_dict['sample_path'])
-            tar.add(result_dict['trial_path'])
-            tar.add(json_path)
-            tar.add(json_result_path)
-            tar.close()
-        return tar_path
+        # with tarfile.open(tar_path, 'w:gz')as tar:
+        #     tar.add(result_dict['sample_path'])
+        #     tar.add(result_dict['trial_path'])
+        #     tar.add(json_path)
+        #     tar.add(json_result_path)
+        #     tar.close()
+        with zipfile.ZipFile('result.zip', 'w') as myzip:
+            myzip.write(result_dict['sample_path'])
+            myzip.write(result_dict['trial_path'])
+            myzip.write(json_path)
+            myzip.write(json_result_path)
+            myzip.close()
+        # return tar_path
+        return zip_path
 
     # expects 2 lists of file paths to the correct files
     def visualize(self, trial_frames, sample_frames):
