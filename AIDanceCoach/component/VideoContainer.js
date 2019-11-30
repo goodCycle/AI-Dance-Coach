@@ -26,28 +26,25 @@ class VideoContainer extends Component {
     return {
       recording: false,
       processing: false,
-      hasOpenPoseResult: false,
-      openPoseResult: null,
+      resultVideoPath: null, // 'http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4',
     };
   }
 
-  setOpenPoseResult = (result) => {
+  setOpenPoseResult = (path) => {
     this.setState({
-      hasOpenPoseResult: true,
-      openPoseResult: result,
+      resultVideoPath: path,
     });
   }
 
   flushOpenPoseResult = () => {
     this.setState({
-      hasOpenPoseResult: false,
-      openPoseResult: null,
+      resultVideoPath: null,
     });
   }
 
   render() {
     const { onPressStopRecord } = this.props;
-    const { hasOpenPoseResult, openPoseResult } = this.state;
+    const { resultVideoPath } = this.state;
 
     return (
       <View style={styles.container}>
@@ -57,10 +54,10 @@ class VideoContainer extends Component {
           headerText="Record Dance"
         />
         {
-          hasOpenPoseResult
+          (resultVideoPath != null)
             ? (
               <ResultView
-                openPoseResult={openPoseResult}
+                resultVideoPath={resultVideoPath}
                 flushOpenPoseResult={this.flushOpenPoseResult}
               />
             )

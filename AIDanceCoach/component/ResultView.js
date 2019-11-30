@@ -5,7 +5,11 @@ import {
   View,
   Text,
   TouchableOpacity,
+  Dimensions,
 } from 'react-native';
+import Video from 'react-native-video';
+
+const { width: windowWidth } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   container: {
@@ -14,8 +18,8 @@ const styles = StyleSheet.create({
   },
   preview: {
     flex: 1,
+    backgroundColor: 'gray',
     justifyContent: 'center',
-    alignItems: 'center',
   },
   buttonContainer: {
     flex: 0.2,
@@ -36,30 +40,51 @@ const styles = StyleSheet.create({
     color: '#B82303',
     fontWeight: 'bold',
   },
+  sampleVideoContainer: {
+    // flex: 1,
+  },
+  trainVideoContainer: {
+    // flex: 1,
+  },
 });
 
 class ResultView extends Component {
   constructor(props) {
     super(props);
-    this.state = this.getInitialState();
-  }
-
-  getInitialState() {
-    return {
-      recording: false,
-      processing: false,
-      hasOpenPoseResult: false,
-      openPoseResult: null,
+    this.state = {
+      videoHeight: 0,
     };
   }
 
   render() {
-    const { openPoseResult, flushOpenPoseResult } = this.props;
+    const { resultVideoPath, flushOpenPoseResult } = this.props;
+    const sampleVideoUri = `${resultVideoPath}/media/temp_vid/sample.mp4`;
+    const trialVideoUri = `${resultVideoPath}/media/temp_vid/trial.mp4`;
+
+    const { videoHeight } = this.state;
+    const videoSizeStyle = { width: windowWidth, height: videoHeight };
 
     return (
       <View style={styles.container}>
         <View style={styles.preview}>
-          <Text>{openPoseResult}</Text>
+          <View style={styles.sampleVideoContainer}>
+            <Video
+              source={{ uri: sampleVideoUri }}
+              style={videoSizeStyle}
+              repeat
+              onLoad={({ naturalSize: { height, width } }) => {
+                const ratio = height / width;
+                this.setState({ videoHeight: windowWidth * ratio });
+              }}
+            />
+          </View>
+          <View style={styles.trainVideoContainer}>
+            <Video
+              source={{ uri: trialVideoUri }}
+              style={videoSizeStyle}
+              repeat
+            />
+          </View>
         </View>
         <View style={styles.buttonContainer}>
           <TouchableOpacity
@@ -77,7 +102,7 @@ class ResultView extends Component {
 }
 
 ResultView.propTypes = {
-  openPoseResult: PropTypes.objectOf().isRequired,
+  resultVideoPath: PropTypes.string.isRequired,
   flushOpenPoseResult: PropTypes.func.isRequired,
 };
 

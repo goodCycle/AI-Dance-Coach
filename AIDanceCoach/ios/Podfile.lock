@@ -196,6 +196,11 @@ PODS:
     - React
   - react-native-image-picker (1.1.0):
     - React
+  - react-native-video (5.0.2):
+    - React
+    - react-native-video/Video (= 5.0.2)
+  - react-native-video/Video (5.0.2):
+    - React
   - React-RCTActionSheet (0.61.4):
     - React-Core/RCTActionSheetHeaders (= 0.61.4)
   - React-RCTAnimation (0.61.4):
@@ -268,6 +273,7 @@ DEPENDENCIES:
   - "react-native-cameraroll (from `../node_modules/@react-native-community/cameraroll`)"
   - react-native-config (from `../node_modules/react-native-config`)
   - react-native-image-picker (from `../node_modules/react-native-image-picker`)
+  - react-native-video (from `../node_modules/react-native-video`)
   - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
   - React-RCTAnimation (from `../node_modules/react-native/Libraries/NativeAnimation`)
   - React-RCTBlob (from `../node_modules/react-native/Libraries/Blob`)
@@ -327,6 +333,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-config"
   react-native-image-picker:
     :path: "../node_modules/react-native-image-picker"
+  react-native-video:
+    :path: "../node_modules/react-native-video"
   React-RCTActionSheet:
     :path: "../node_modules/react-native/Libraries/ActionSheetIOS"
   React-RCTAnimation:
@@ -378,6 +386,7 @@ SPEC CHECKSUMS:
   react-native-cameraroll: 463aff54e37cff27ea76eb792e6f1fa43b876320
   react-native-config: f2c2ae45625a068c35681a16b9bfb1ca58b0adc7
   react-native-image-picker: 7a85cf7b0a53845f03ae52fb4592a2748ded069b
+  react-native-video: d01ed7ff1e38fa7dcc6c15c94cf505e661b7bfd0
   React-RCTActionSheet: 7369b7c85f99b6299491333affd9f01f5a130c22
   React-RCTAnimation: d07be15b2bd1d06d89417eb0343f98ffd2b099a7
   React-RCTBlob: 8e0b23d95c9baa98f6b0e127e07666aaafd96c34
