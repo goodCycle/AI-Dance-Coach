@@ -12,7 +12,7 @@ class KeypointEval:
     def __call__(self, gt, detect):
         pylab.rcParams['figure.figsize'] = (10.0, 8.0)
 
-        print 'Running demo for keypoints results.'
+        print('Running demo for keypoints results.')
 
         # initialize COCO ground truth api
         cocoGt=COCO(gt)
@@ -26,7 +26,7 @@ class KeypointEval:
 
 
         # run and prints evaluation results
-        cocoEval = COCOeval(cocoGt,cocoDt,annType)
+        cocoEval = COCOeval(cocoGt,cocoDt,'bbox')
         cocoEval.params.imgIds  = imgIds
         cocoEval.evaluate()
         cocoEval.accumulate()
