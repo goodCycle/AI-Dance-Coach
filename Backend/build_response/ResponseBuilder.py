@@ -87,10 +87,12 @@ class ResponseBuilder:
         for img in array_trial:
             out_trail.write(img)
         out_trail.release()
+
+        sample_shape = array_sample[0].shape[1::-1]
         sample_path = os.path.join(self.result_dir, 'sample.mp4')
         out_sample = cv2.VideoWriter(sample_path,
                                      cv2.VideoWriter_fourcc(*'mp4v'),
-                                     30, shape)
+                                     30, sample_shape)
         for img in array_sample:
             out_sample.write(img)
         out_sample.release()
