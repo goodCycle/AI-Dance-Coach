@@ -61,8 +61,7 @@ class CameraView extends Component {
   getInitialState() {
     return {
       recording: false,
-      hasOpenPoseResult: false,
-      openPoseResult: null,
+      resultVideoPath: null,
       recordedVideoUri: null,
       recordedVideoCodec: null,
     };
@@ -82,6 +81,8 @@ class CameraView extends Component {
   selectVideo = () => {
     const options = {
       mediaType: 'video',
+      videoQuality: 'high',
+      allowsEditing: false,
     };
 
     return ImagePicker.launchImageLibrary(options, (response) => {
@@ -148,12 +149,15 @@ class CameraView extends Component {
 
   unzipResponse = (resPath) => {
     const homeDir = RNFS.DocumentDirectoryPath;
-    const folder = '/AI-Dance-Coach/';
+    const folder = `/AI-Dance-Coach/${Date.now()}`;
     const storeDir = homeDir + folder;
     console.log('storeDir', storeDir);
+
+    const { setOpenPoseResult } = this.props;
     return unzip(resPath, storeDir, 'utf-8')
       .then((path) => {
         console.log('unzip path', path);
+        setOpenPoseResult(path);
       });
   }
 
@@ -161,9 +165,9 @@ class CameraView extends Component {
     this.setState({ recording: true });
     // default to mp4 for android as codec is not set
     const { uri } = await this.camera.recordAsync();
+    console.log('recording url', uri);
 
-    const savedUri = this.saveVideoToCameraRoll(uri);
-
+    this.saveVideoToCameraRoll(uri);
     // this.sendVideoAndConfigToServer(savedUri, codec)
     this.setState({ recording: false });
   }
@@ -184,6 +188,7 @@ class CameraView extends Component {
           style={styles.preview}
           type={RNCamera.Constants.Type.back}
           flashMode={RNCamera.Constants.FlashMode.on}
+          captureAudio={false}
         />
         <View
           style={styles.recordButtonContainer}
