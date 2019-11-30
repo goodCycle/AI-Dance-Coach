@@ -5,6 +5,7 @@ import {
   Text,
   TouchableOpacity,
   View,
+  ActivityIndicator,
 } from 'react-native';
 
 import { RNCamera } from 'react-native-camera';
@@ -50,6 +51,16 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
+  loadingView: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  indicatorText: {
+    fontSize: 20,
+    color: 'gray',
+    fontWeight: 'bold',
+  },
 });
 
 class CameraView extends Component {
@@ -64,6 +75,7 @@ class CameraView extends Component {
       resultVideoPath: null,
       recordedVideoUri: null,
       recordedVideoCodec: null,
+      isServerRunning: false,
     };
   }
 
@@ -94,7 +106,9 @@ class CameraView extends Component {
       if (response.error) {
         console.log('ImagePicker Error: ', response.error);
       } else {
-        this.sendVideoAndConfigToServer(response.uri);
+        this.setState({ isServerRunning: true }, () => {
+          this.sendVideoAndConfigToServer(response.uri);
+        });
       }
     });
   }
@@ -152,13 +166,13 @@ class CameraView extends Component {
     const homeDir = RNFS.DocumentDirectoryPath;
     const folder = `/AI-Dance-Coach/${Date.now()}`;
     const storeDir = homeDir + folder;
-    console.log('storeDir', storeDir);
 
     const { setOpenPoseResult } = this.props;
     return unzip(resPath, storeDir, 'utf-8')
       .then((path) => {
-        console.log('unzip path', path);
-        setOpenPoseResult(path);
+        this.setState({ isServerRunning: false }, () => {
+          setOpenPoseResult(path);
+        });
       });
   }
 
@@ -166,7 +180,6 @@ class CameraView extends Component {
     this.setState({ recording: true });
     // default to mp4 for android as codec is not set
     const { uri } = await this.camera.recordAsync();
-    console.log('recording url', uri);
 
     this.saveVideoToCameraRoll(uri);
     // this.sendVideoAndConfigToServer(savedUri, codec)
@@ -178,42 +191,51 @@ class CameraView extends Component {
   }
 
   render() {
-    const { recording } = this.state;
+    const { recording, isServerRunning } = this.state;
 
     return (
-      <>
-        <RNCamera
-          ref={(ref) => {
-            this.camera = ref;
-          }}
-          style={styles.preview}
-          type={RNCamera.Constants.Type.back}
-          flashMode={RNCamera.Constants.FlashMode.on}
-          captureAudio={false}
-        />
-        <View
-          style={styles.recordButtonContainer}
-        >
-          <View style={styles.horizontalButtonContainer}>
-            <TouchableOpacity
-              onPress={recording ? this.stopRecording : this.startRecording}
-              style={styles.recordButton}
-            >
-              <Text style={styles.recordButtonText}>
-                {recording ? 'STOP' : 'RECORD'}
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={this.selectVideo}
-              style={styles.recordButton}
-            >
-              <Text style={styles.recordButtonText}>
-                Select
-              </Text>
-            </TouchableOpacity>
+      isServerRunning
+        ? (
+          <View style={styles.loadingView}>
+            <ActivityIndicator size="large" />
+            <Text style={styles.indicatorText}>OpenPose is running...</Text>
           </View>
-        </View>
-      </>
+        )
+        : (
+          <>
+            <RNCamera
+              ref={(ref) => {
+                this.camera = ref;
+              }}
+              style={styles.preview}
+              type={RNCamera.Constants.Type.back}
+              flashMode={RNCamera.Constants.FlashMode.on}
+              captureAudio={false}
+            />
+            <View
+              style={styles.recordButtonContainer}
+            >
+              <View style={styles.horizontalButtonContainer}>
+                <TouchableOpacity
+                  onPress={recording ? this.stopRecording : this.startRecording}
+                  style={styles.recordButton}
+                >
+                  <Text style={styles.recordButtonText}>
+                    {recording ? 'STOP' : 'RECORD'}
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={this.selectVideo}
+                  style={styles.recordButton}
+                >
+                  <Text style={styles.recordButtonText}>
+                    Select
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </>
+        )
     );
   }
 }
