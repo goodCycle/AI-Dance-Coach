@@ -83,6 +83,7 @@ class CameraView extends Component {
       mediaType: 'video',
       videoQuality: 'high',
       allowsEditing: false,
+      noCompressing: true,
     };
 
     return ImagePicker.launchImageLibrary(options, (response) => {

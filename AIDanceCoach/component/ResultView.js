@@ -5,12 +5,11 @@ import {
   View,
   Text,
   TouchableOpacity,
+  Dimensions,
 } from 'react-native';
 import Video from 'react-native-video';
-import CameraRoll from '@react-native-community/cameraroll';
 
-const RNFS = require('react-native-fs');
-const video = require('./sample.mp4');
+const { width: windowWidth } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   container: {
@@ -19,7 +18,8 @@ const styles = StyleSheet.create({
   },
   preview: {
     flex: 1,
-    backgroundColor: 'red',
+    backgroundColor: 'gray',
+    justifyContent: 'center',
   },
   buttonContainer: {
     flex: 0.2,
@@ -40,28 +40,20 @@ const styles = StyleSheet.create({
     color: '#B82303',
     fontWeight: 'bold',
   },
+  sampleVideoContainer: {
+    // flex: 1,
+  },
+  trainVideoContainer: {
+    // flex: 1,
+  },
 });
 
 class ResultView extends Component {
   constructor(props) {
     super(props);
-    this.state = this.getInitialState();
-  }
-
-  getInitialState() {
-    return {
+    this.state = {
+      videoHeight: 0,
     };
-  }
-
-  saveVideoToCameraRoll = async (uri) => {
-    let videoUri = null;
-    try {
-      videoUri = await CameraRoll.saveToCameraRoll(uri);
-      console.log('saved!', videoUri);
-    } catch (error) {
-      console.log(error.message);
-    }
-    return videoUri;
   }
 
   render() {
@@ -69,53 +61,29 @@ class ResultView extends Component {
     const sampleVideoUri = `${resultVideoPath}/media/temp_vid/sample.mp4`;
     const trialVideoUri = `${resultVideoPath}/media/temp_vid/trial.mp4`;
 
-    RNFS.exists(sampleVideoUri).then((exist) => { console.log('file', exist); });
-    console.log('sampleVideoUri', sampleVideoUri);
+    const { videoHeight } = this.state;
+    const videoSizeStyle = { width: windowWidth, height: videoHeight };
 
     return (
       <View style={styles.container}>
         <View style={styles.preview}>
-          <View style={{flex: 1}}>
-            <Video source={{ uri: sampleVideoUri }} // Can be a URL or a local file.
-              // ref={(ref) => {
-              //   this.player = ref
-              // }}                                      // Store reference
-              // onBuffer={this.onBuffer}
-              onLoadStart={(props) => console.log(props)}
-              onLoad={(props) => console.log(props)}             // Callback when remote video is buffering
-              onError={(error) => console.error(error)}               // Callback when video cannot be loaded
-              style={
-                {
-                  position: 'absolute',
-                  top: 0,
-                  left: 0,
-                  bottom: 0,
-                  right: 0,
-                }
-              }
+          <View style={styles.sampleVideoContainer}>
+            <Video
+              source={{ uri: sampleVideoUri }}
+              style={videoSizeStyle}
               repeat
+              onLoad={({ naturalSize: { height, width } }) => {
+                const ratio = height / width;
+                this.setState({ videoHeight: windowWidth * ratio });
+              }}
             />
           </View>
-          <View style={{flex: 1}}>
-          <Video source={{ uri: trialVideoUri }} // Can be a URL or a local file.
-            // ref={(ref) => {
-            //   this.player = ref
-            // }}                                      // Store reference
-            // onBuffer={this.onBuffer}
-            onLoadStart={(props) => console.log(props)}
-            onLoad={(props) => console.log('tiral', props)}             // Callback when remote video is buffering
-            onError={(error) => console.error(error)}               // Callback when video cannot be loaded
-            style={
-              {
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                bottom: 0,
-                right: 0,
-              }
-            }
-            repeat
-          />
+          <View style={styles.trainVideoContainer}>
+            <Video
+              source={{ uri: trialVideoUri }}
+              style={videoSizeStyle}
+              repeat
+            />
           </View>
         </View>
         <View style={styles.buttonContainer}>
