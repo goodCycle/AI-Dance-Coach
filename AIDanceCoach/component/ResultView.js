@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   Dimensions,
 } from 'react-native';
-import Video from 'react-native-video';
+import Video from 'react-native-video'; // For showing result video
 
 const { width: windowWidth } = Dimensions.get('window');
 
