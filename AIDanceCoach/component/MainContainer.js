@@ -17,13 +17,15 @@ import HeaderComponent from './HeaderComponent';
 const styles = StyleSheet.create({
   scrollView: {
     backgroundColor: Colors.lighter,
+    flex: 1,
   },
-  body: {
-    backgroundColor: Colors.white,
+  srollViewContainerStyle: {
+    flex: 1,
   },
   sectionContainer: {
     marginTop: 32,
     paddingHorizontal: 24,
+    flex: 1,
   },
   sectionTitle: {
     fontSize: 24,
@@ -40,8 +42,8 @@ const styles = StyleSheet.create({
     fontWeight: '700',
   },
   buttonContainer: {
-    flex: 1,
     marginTop: 40,
+    marginBottom: 120,
     marginHorizontal: 70,
     justifyContent: 'center',
     flexDirection: 'row',
@@ -70,36 +72,32 @@ class MainContainer extends Component {
           leftIcon="menu"
           headerText="AI Dance Coach"
         />
-        <StatusBar barStyle="dark-content" />
-        <SafeAreaView>
-          <ScrollView
-            contentInsetAdjustmentBehavior="automatic"
-            style={styles.scrollView}
+        <ScrollView
+          contentInsetAdjustmentBehavior="automatic"
+          style={styles.scrollView}
+          contentContainerStyle={styles.srollViewContainerStyle}
+        >
+          <View style={styles.sectionContainer}>
+            <Text style={styles.sectionTitle}>Deep-learning based App</Text>
+            <Text style={styles.sectionDescription}>
+              Apply
+              <Text style={styles.highlight}> OpenPose </Text>
+              pose estimation deep learning library.
+            </Text>
+          </View>
+          <View style={styles.sectionContainer}>
+            <Text style={styles.sectionTitle}>Pose Correction</Text>
+            <Text style={styles.sectionDescription}>
+              You can correct your pose by comparing your dancing with professional dancers.
+            </Text>
+          </View>
+          <TouchableOpacity
+            style={styles.buttonContainer}
+            onPress={onPressStartRecord}
           >
-            <View style={styles.body}>
-              <View style={styles.sectionContainer}>
-                <Text style={styles.sectionTitle}>Deep-learning based App</Text>
-                <Text style={styles.sectionDescription}>
-                  Apply Single-Network Whole-Body Pose Estimation which is based on
-                  <Text style={styles.highlight}>OpenPose</Text>
-                  library.
-                </Text>
-              </View>
-              <View style={styles.sectionContainer}>
-                <Text style={styles.sectionTitle}>Dancing Pose Correction</Text>
-                <Text style={styles.sectionDescription}>
-                  You can correct your dance by comparing your dancing with professional dancers.
-                </Text>
-              </View>
-              <TouchableOpacity
-                style={styles.buttonContainer}
-                onPress={onPressStartRecord}
-              >
-                <Text style={styles.buttonText}>Start Record</Text>
-              </TouchableOpacity>
-            </View>
-          </ScrollView>
-        </SafeAreaView>
+            <Text style={styles.buttonText}>Start Record</Text>
+          </TouchableOpacity>
+        </ScrollView>
       </>
     );
   }

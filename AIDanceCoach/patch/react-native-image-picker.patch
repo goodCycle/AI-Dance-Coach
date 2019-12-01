@@ -1,0 +1,23 @@
+--- a/ImagePickerManager.m
++++ b/ImagePickerManager.m
+@@ -182,6 +182,11 @@
+     if ([[self.options objectForKey:@"allowsEditing"] boolValue]) {
+         self.picker.allowsEditing = true;
+     }
++
++    if ([[self.options objectForKey:@"noCompressing"] boolValue]) {
++        self.picker.videoExportPreset = AVAssetExportPresetPassthrough;
++    }
++
+     self.picker.modalPresentationStyle = UIModalPresentationCurrentContext;
+     self.picker.delegate = self;
+ 
+@@ -460,7 +465,7 @@
+ 
+                 if (videoURL) { // Protect against reported crash
+                   NSError *error = nil;
+-                  [fileManager moveItemAtURL:videoURL toURL:videoDestinationURL error:&error];
++                  [fileManager copyItemAtURL:videoURL toURL:videoDestinationURL error:&error];
+                   if (error) {
+                       self.callback(@[@{@"error": error.localizedFailureReason}]);
+                       return;
