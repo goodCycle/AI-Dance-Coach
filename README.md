@@ -118,39 +118,21 @@ in the build directory.
 
 (Getting these to run requires additional workarounds)
 
-## Dependencies (Flask Application)
+## Flask Application
 
-## Server Setup:
+### Web server setup
 
+Using [Flask](https://palletsprojects.com/p/flask/)  as framework, [nginx](http://nginx.org/) as  web server, and [gunicorn](https://gunicorn.org/) as server gateway interface.
 
-### what to do
-
-    # update and install dependencies
-    sudo apt-get update
-    sudo apt install python3-pip
     sudo apt-get install nginx
     sudo apt-get install gunicorn3
     pip3 install flask
-    
-    # clode git repository into  /home/pose
-    git clone https://github.com/goodCycle/AI-Dance-Coach.git
-    
-    # configuring the nginx 
-    cd /etc/nginx/sites-enabled/
-    sudo nano app
-    
-    # make sure the server allows http requests on port 80
-    
-    # setup gunicorn3
-    cd /etc/systemd/system/
-    sudo vim gunicorn3.service
-    
-    # restart everything
-    sudo systemctl daemon-reload
-    sudo service gunicorn3 restart
-    sudo service nginx restart
 
-## app
+Configure nginx
+
+make sure that server allows incomming http requests on port 80
+
+in  /etc/nginx/sites-enabled/ create file called "app" with the following content
 
     server{
             listen 80;
@@ -161,22 +143,75 @@ in the build directory.
             } 
     }
 
-### gunicorn3.service
+Configure gunicorn
+
+in /path/to/file create a file called "gunicorn3.service" with the following content
 
     [Unit]
     Description=Gunicorn instance to serve myproject
     After=network.target
-    # We will give our regular user account ownership of the process since it owns all of the relevant files
     [Service]
-    # Service specify the user and group under which our process will run.
     User=pose
-    # give group ownership to the www-data goup so that Nginx can communicate easily with the Gunicorn processes.
     Group=www-data
-    # We'll then map out the working directory and set the PATH environmental variable so that the init system knows where our the executables for the process are located (within our virtual environment).
     WorkingDirectory=/home/pose/AI-Dance-Coach/Backend
-    # We'll then specify the commanded to start the service
     ExecStart = /usr/bin/gunicorn3 --workers 3 --bind unix:app.sock -m 007 app:app
 
+Setup App
+
+Clone git repository into /home/pose
+
+    git clone https://github.com/goodCycle/AI-Dance-Coach.git
+    git pull
+
+Start everything
+
+    sudo systemctl daemon-reload
+    sudo service gunicorn3 start
+    sudo service nginx start
+
+### Testing the server
+
+send an http request
+
+    curl -X POST -F file=@"/path/to/file.mp4" -F file=@"/path/to/file.json" http://208.43.39.216 --output response.zip
+
+with file.mp4 beeing an video of a human performing a coreography 
+(note: behaviour is only defined for exactly one human beeing in the video)
+
+and file.json beeing a json, config file with the following format
+
+    {
+      "is_sample": <bool>,
+      "compare_to": <name_of_file.mp4>
+    }
+
+The server will return a zip filder, with returning the result of the analysis.
+
+2 video files, a json with the raw data, and a json with a short configuration
+
+First send sample a sample video
+
+Second send trial videos and get the respose
+
+So an example for two sending up a sample and comparing it could be:
+
+    curl -X POST -F file=@"/mnt/c/Users/nomis/Desktop/one.mp4" -F file=@"/mnt/c/Users/nomis/Desktop/test0.json" http://208.43.39.216
+    
+    curl -X POST -F file=@"/mnt/c/Users/nomis/Desktop/two.mp4" -F file=@"/mnt/c/Users/nomis/Desktop/test1.json" http://208.43.39.216 --output response.zip
+
+With test0.json beeing
+
+    {
+      "is_sample": true,
+      "compare_to": "one.mp4"
+    }
+
+and test1.json beeing
+
+    {
+      "is_sample": false,
+      "compare_to": "one.mp4"
+    }
 
 
 ---

@@ -1,3 +1,5 @@
+/* EndPoint of our App */
+
 import React from 'react';
 import MainContainer from './component/MainContainer';
 import VideoContainer from './component/VideoContainer';
