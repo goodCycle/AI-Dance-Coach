@@ -12,19 +12,19 @@ except ImportError as e:
 
 
 class PosePredictor:
+    """
+    A wrapper that initializes the internal OpenPose Wrapper and
+    exposes a method to extract pose keypoints from singular images.
+    """
 
-    def __init__(self, model="../../openpose/models/", disable_blending =False):  # "../../../openpose/models/"?
+    def __init__(self, model="../../openpose/models/", disable_blending =False):
 
+        # Flags for calling OpenPose
         params = dict()
         params["model_folder"] = model
-
-        params["model_pose"] = "BODY_25"  # "BODY_25B"D
-
-        # TODO set as parameter (transmit from the device?)
+        params["model_pose"] = "BODY_25"
         params["net_resolution"] = "-1x368"
-        params["disable_blending"] = str(disable_blending)  # check if broken
-        # params["scale_number"] = "4"
-        # params["scale_gap"] = "0.25"
+        params["disable_blending"] = str(disable_blending)
 
         # Starting OpenPose
         self.opWrapper = op.WrapperPython()
@@ -32,6 +32,11 @@ class PosePredictor:
         self.opWrapper.start()
 
     def predict_image(self, image_path):
+        """
+
+        :param image_path: the file path to the image to be analyzed
+        :return: The result of the inference by OpenPose
+        """
         datum = op.Datum()
         image_to_process = cv2.imread(image_path)
         datum.cvInputData = image_to_process
