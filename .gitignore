@@ -12,5 +12,5 @@ Backend/videoextractor/__pycache__/
 Backend/build_response/__pycache__/
 Backend/build_response/analyze_movement/__pycache__/
 Backend/build_response/analyze_movement/pose_difference/__pycache__
-Backend/media
+# Backend/media
 Backend/video
