@@ -2,8 +2,9 @@ import math
 
 class AvgDistance:
     def __init__(self, keypoints_a, keypoints_b):
-        self.a = keypoints_a
-        self.b = keypoints_b
+        # Analyze for detecting one person
+        self.a = keypoints_a[0]
+        self.b = keypoints_b[0]
     
     def calculate(self):
         count = min(len(self.a), len(self.b))
