@@ -3,6 +3,10 @@ from build_response.analyze_movement.pose_difference.DifferenceCalculator import
 
 
 class MovementAnalyzer:
+    """
+    Handles the video extraction and pose comparison to provide data that aids
+    the locating of the first mistake in the performance videos
+    """
 
     def __init__(self, sample_id):
         self.extract = VideoExtractor(media_dir="./media", model_path="../../openpose/models/")
@@ -20,6 +24,11 @@ class MovementAnalyzer:
 
         score_dicts = self.difference([(pose, int(i * step)) for i, pose in enumerate(poses)])
 
+        # Builds the result data structure:
+        # List of dicts, one for each input frame:
+        #   frame_number: frame number of the corresponding frame in the sample video
+        #   score: weighted score for pose difference
+        #   raw_data: the raw dictionary created by DifferenceCalculator
         result = list()
         for i, (score_dict, frame_num) in enumerate(score_dicts):
             current_frame_dict = dict()
