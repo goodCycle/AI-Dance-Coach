@@ -9,9 +9,11 @@ This is a prototype for the AI Dance Coach, an application that compares your mo
   
    The app runs on smartphones running iOS.
 
-   A short demo video can be fond [here](https://drive.google.com/file/d/1stwlxUdNVAYhl817kuzX1GkZBdsm_Hw0/view).
+   A short demo video can be found [here](https://drive.google.com/file/d/1stwlxUdNVAYhl817kuzX1GkZBdsm_Hw0/view).
    
    Video samples for testing the app can be found [here](https://drive.google.com/drive/u/0/folders/1daD3I4Pri5CF8vuz1-AeLGCcGby_wDyf).
+   
+   For testing the app with fidelity-lowered compressed videos, sample images for evaluating the app can be found [here](http://cocodataset.org/#explore).
 
 
 
@@ -188,7 +190,7 @@ in /path/to/file create a file called "gunicorn3.service" with the following con
 
 ## Frontend
 
-## iOS
+### iOS
 
 * After cloning the Project,
 ```
@@ -245,20 +247,20 @@ So an example for two sending up a sample and comparing it could be:
     
     curl -X POST -F file=@"/mnt/c/Users/nomis/Desktop/four.mp4" -F file=@"/mnt/c/Users/nomis/Desktop/test1.json" http://208.43.39.216 --output response.zip
 
-With test0.json beeing
+With test0.json being
 
     {
       "is_sample": true,
       "compare_to": "three.mp4"
     }
 
-and test1.json beeing
+and test1.json being
 
     {
       "is_sample": false,
       "compare_to": "three.mp4"
     }
-
+    
 
 ## Built With
 
