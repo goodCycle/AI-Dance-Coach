@@ -5,24 +5,26 @@ import cv2
 import numpy as np
 import math
 import random
-from matplotlib import pyplot as plt
-import matplotlib.cm as cm
+# from matplotlib import pyplot as plt
+# import matplotlib.cm as cm
 
 class ApplyDCTcomp:
         def __init__(self, qf, in_path, out_path):
                 ###################################################
                 # Step 1: Read image
                 B=8 # blocksize (In Jpeg the
+                print("output path:", out_path)
                 img1 = cv2.imread(in_path, cv2.IMREAD_UNCHANGED)
                 # print("read")
                 h, w = img1.shape[:2]
                 point = (random.randrange(0,math.floor(h)), random.randrange(0,math.floor(w)))
                 # print(point)
 
-                h,w=np.array(img1.shape[:2])/B * B
-                h = math.ceil(h)
-                w = math.ceil(w)        
+                # h,w=np.array(img1.shape[:2])/40 * 40
+                h = math.ceil((h//80)*80)
+                w = math.ceil((w//80)*80)
                 img1=img1[:h,:w]
+
                 #Convert BGR to RGB
                 img2=np.zeros(img1.shape,np.uint8)
                 img2[:,:,0]=img1[:,:,2]
@@ -74,7 +76,7 @@ class ApplyDCTcomp:
                         scale = 200-2*QF
                 else:
                         print("Quality Factor must be in the range [1..99]")
-                        return -1
+                        scale = np.floor(1/QF)
                 scale=scale/100.0
                 ### Quantization based on YCrCb 
                 Q=[QY*scale,QC*scale,QC*scale]
@@ -136,4 +138,4 @@ class ApplyDCTcomp:
                 img3[:,:,2]=reImg[:,:,0]
                 SSE=np.sqrt(np.sum((img2-img3)**2))
                 # print("Sum of squared error: ",SSE)
-                return SSE
+                # return SSE

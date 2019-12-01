@@ -2,10 +2,7 @@ import sys
 import cv2
 import json
 from .jpegDCT import ApplyDCTcomp
-# from .compressType import CompressType
-# from .image2RLE import Image2RLE
-# from .RLE2image import RLE2Image
-from .cocoKeyptEval import KeypointEval
+from .avgDistance import AvgDistance
 
 try:
     sys.path.append('/usr/local/python')
@@ -33,78 +30,74 @@ class Evaluator:
         self.opWrapper.configure(params)
         self.opWrapper.start()
 
-        # TODO Load in coco data set
-
     def __call__(self, *args, **kwargs):
         return self.evaluate(*args, **kwargs)
 
-    def evaluate(self):
+    def evaluate(self, qf):
         ##################   Compression    ##################
         # run (a part of) cocoapi pose images through openpose and evaluate accuracy
-        # image_path = 'http://farm8.staticflickr.com/7247/7813035534_1d9944d6d9_z.jpg'
-        # image_path = 'C:\\Users\\avohd\\downloads\\CS470\\PoseCoach\\DancePose\\Backend\\evaluate_compression\\7813035534_1d9944d6d9_z.jpg'
-        image_path = '/home/AI-Dance-Coach/Backend/evaluate_compression/7813035534_1d9944d6d9_z.jpg'
-        bbox = [378.09,241.9,53.52,150.09]
-        keypts = predict_image(image_path)
+        res_file = open('evaluate_results_qf%d.txt' % qf, "w")
+        image_dir = '/home/pose/AI-Dance-Coach/Backend/evaluate_compression/eval-images/'
+        out_suffix = '_comp{}'.format(qf)
+        for pose_size in ['Large', 'Medium']:
+            for img in range(10):
+                image_path = "{}{}/{}.jpg".format(image_dir, pose_size, img)
+                keypts = self.predict_image(image_path)
         
-        # run compression across (a part of) dataset
-        # output_path = "C:\\Users\\avohd\\downloads\\CS470\\PoseCoach\\DancePose\\Backend\\evaluate_compression\\compressed_image.jpg"
-        output_path = '/home/AI-Dance-Coach/Backend/evaluate_compression/compressed_img.jpg'
-        SSE = self.compress_image(40, image_path, output_path)
-        print("Sum of squared error: ",SSE)
-        # self.compress_image(CompressType.LUM, image_path, output_path)
+                # run compression across (a part of) dataset, with quality factor QF
+                output_path = "{}{}{}/{}.jpg".format(image_dir, pose_size, out_suffix, img)
+                self.compress_image(qf, image_path, output_path)
 
-        # run (a part of) compressed images through openpose
-        keypts_comp = predict_image(output_path)
+                # run (a part of) compressed images through openpose
+                keypts_comp = self.predict_image(output_path)
         ######################################################
 
         ##################   Similarity     ##################
-        # feed in openpose/openpose compressed keypoints
-        openpose_result = keypts
-        openpose_comp_result = keypts_comp
+                # feed in openpose/openpose compressed keypoints
+                openpose_result = keypts
+                openpose_comp_result = keypts_comp
 
-        # get keypoint similarities between
-        # - ground truth and openpose
-        # - ground truth and openpose compressed
-        # - openpose and openpose compressed
-        '''
-        keypoint_similarity(ground_truth, openpose_result)
-        keypoint_similarity(ground_truth, openpose_comp_result)
-        '''
-        keypoint_similarity(bbox, openpose_result, openpose_comp_result)
+                # get keypoint similarities between openpose and openpose compressed
+                # similarity is measured by 2D Euclidean distance
+                similarity = AvgDistance(openpose_result, openpose_comp_result)
+                res_file.write('{}{} {}\n'.format(pose_size, img, similarity.calculate()))
+        res_file.close()
         ######################################################
 
     # parameterized image compression with scalable quality factor QF
     # QF = [1..99]
     def compress_image(self, qf, input_path, output_path):
-        return ApplyDCTcomp(qf)
-    # def compress_image(self, comp_type, input_img, output_img):
-        # enc_txt = "C:\\Users\\avohd\\downloads\\CS470\\PoseCoach\\DancePose\\Backend\\evaluate_compression\\rle.txt"
-        # Image2RLE(comp_type, input_img, enc_txt)
-        # print("compressed to rle.txt")
-        # RLE2Image(comp_type, enc_txt, output_img)
-        # print("compressed to bmp image")
+        ApplyDCTcomp(qf, input_path, output_path)
 
+    # Helper function that measures Object Keypoint Similarity(OKS)
     def keypoint_similarity(self, bbox, keypoints_a, keypoints_b):
-        json_a = self.jsonify_keypts(keypoints_a, bbox)
-        json_b = self.jsonify_keypts(keypoints_b, bbox)
-        KeypointEval(json_a, json_b)
+        json_a = "keypoints_a_10.json"
+        self.jsonify_keypts(keypoints_a, bbox, json_a)
+        json_b = "keypoints_b_10.json"
+        self.jsonify_keypts(keypoints_b, bbox, json_b)
+        #KeypointEval(json_a, json_b)
     
+    # Helper function that turns a python list of points into json file format
     # Reference: http://cocodataset.org/#keypoints-eval
-    def jsonify_keypts(self, keypts_list, bbox):
+    def jsonify_keypts(self, keypts_list, bbox, json_path):
         json_pts = {
             'keypoints': [],
             'bbox': bbox
-        }
+        } 
 
         for person in keypts_list:
             for pt in person:
-                json_pts['keypoints'].append(pt[0])   # x
-                json_pts['keypoints'].append(pt[1])   # y
-                json_pts['keypoints'].append(2)       # v=2: labeled and visible
+                json_pts['keypoints'].append(str(pt[0]))   # x
+                json_pts['keypoints'].append(str(pt[1]))   # y
+                json_pts['keypoints'].append(str(2))       # v=2: labeled and visible
             
-        return json.dumps(json_pts)
+        data = json.dumps(json_pts)
+        with open(json_path, "w") as f:
+            f.write(data)
 
+        f.close()
+
+    # Predicts pose based on Openpose and return estimated pose keypoints
     def predict_image(self, image_path):
         datum = op.Datum()
         image_to_process = cv2.imread(image_path)
