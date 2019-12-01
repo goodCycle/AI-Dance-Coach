@@ -1,7 +1,17 @@
 # AI Dance Coach
-CS470 (Introduction to Artificial Intelligence) term project
+CS470 (Introduction to Artificial Intelligence) Term Project
 
-This is a prototype for the AI Dance Coach. The backend of the application takes in a video of a move being performed
+This is a prototype for the AI Dance Coach, an application that compares your movements to those of a professional performer and highlights mistakes.
+
+ The pipeline consists of recording a video and sending it to our server for processing where it is broken down into separate frames and fed them into OpenPose, an open-source pose detection model.
+
+  It then uses a custom pose difference calculation to compare the submitted video frames to a sample video and respond with a visualization of the first part where the pose of the user strongly deviates from the sample pose. 
+  
+   The app runs on smartphones running iOS.
+
+   A short demo video can be fond [here](https://drive.google.com/file/d/1stwlxUdNVAYhl817kuzX1GkZBdsm_Hw0/view).
+   
+   Video samples for testing the app can be found [here](https://drive.google.com/drive/u/0/folders/1daD3I4Pri5CF8vuz1-AeLGCcGby_wDyf).
 
 
 
@@ -126,7 +136,11 @@ Using [Flask](https://palletsprojects.com/p/flask/)  as framework, [nginx](http:
 
     sudo apt-get install nginx
     sudo apt-get install gunicorn3
-    pip3 install flask
+
+To install all packages needed for this project:
+
+    cd Backend
+    pip3 install -r requirements.txt
 
 Configure nginx
 
@@ -136,7 +150,7 @@ in  /etc/nginx/sites-enabled/ create file called "app" with the following conten
 
     server{
             listen 80;
-            server_name 208.43.39.216;
+            server_name <YOUR SERVER IP>;
     
             location / {
                     proxy_pass http://unix:/home/pose/AI-Dance-Coach/Backend/app.sock;
@@ -156,63 +170,6 @@ in /path/to/file create a file called "gunicorn3.service" with the following con
     WorkingDirectory=/home/pose/AI-Dance-Coach/Backend
     ExecStart = /usr/bin/gunicorn3 --workers 3 --bind unix:app.sock -m 007 app:app
 
-Setup App
-
-Clone git repository into /home/pose
-
-    git clone https://github.com/goodCycle/AI-Dance-Coach.git
-    git pull
-
-Start everything
-
-    sudo systemctl daemon-reload
-    sudo service gunicorn3 start
-    sudo service nginx start
-
-### Testing the server
-
-send an http request
-
-    curl -X POST -F file=@"/path/to/file.mp4" -F file=@"/path/to/file.json" http://208.43.39.216 --output response.zip
-
-with file.mp4 beeing an video of a human performing a coreography 
-(note: behaviour is only defined for exactly one human beeing in the video)
-
-and file.json beeing a json, config file with the following format
-
-    {
-      "is_sample": <bool>,
-      "compare_to": <name_of_file.mp4>
-    }
-
-The server will return a zip filder, with returning the result of the analysis.
-
-2 video files, a json with the raw data, and a json with a short configuration
-
-First send sample a sample video
-
-Second send trial videos and get the respose
-
-So an example for two sending up a sample and comparing it could be:
-
-    curl -X POST -F file=@"/mnt/c/Users/nomis/Desktop/one.mp4" -F file=@"/mnt/c/Users/nomis/Desktop/test0.json" http://208.43.39.216
-    
-    curl -X POST -F file=@"/mnt/c/Users/nomis/Desktop/two.mp4" -F file=@"/mnt/c/Users/nomis/Desktop/test1.json" http://208.43.39.216 --output response.zip
-
-With test0.json beeing
-
-    {
-      "is_sample": true,
-      "compare_to": "one.mp4"
-    }
-
-and test1.json beeing
-
-    {
-      "is_sample": false,
-      "compare_to": "one.mp4"
-    }
-
 
 ---
 ## Frontend
@@ -229,13 +186,6 @@ and test1.json beeing
 ---
 # Running the App
 
-
-## Backend
-
-WITH WSGI AND WITH DEBUG SERVER
-
-BACKEND TESTING INSTRUCTIONS + EXPECTED OUTPUT
-
 ## Frontend
 
 ## iOS
@@ -250,6 +200,65 @@ BACKEND TESTING INSTRUCTIONS + EXPECTED OUTPUT
 ```
 
 WHERE TO ENTER SERVER IP
+
+## Backend
+
+To run the deployment server after setup, run:
+
+    sudo systemctl daemon-reload
+    sudo service gunicorn3 start
+    sudo service nginx start
+
+For testing purposes, you can start the flask development server by running
+
+    sudo python3 app.py
+
+in the Backend directory. This will open the app on port 5000 as opposed to 80.
+
+### Testing the server (replace the IP with your own)
+
+send an http request 
+
+    curl -X POST -F file=@"/path/to/file.mp4" -F file=@"/path/to/file.json" http://208.43.39.216 --output response.zip
+
+with file.mp4 beeing an video of a human performing a coreography 
+(note: behaviour is only defined for exactly one human beeing in the video)
+
+and file.json beeing a json, config file with the following format
+
+    {
+      "is_sample": <bool>,
+      "compare_to": <name_of_file.mp4>
+    }
+
+The server will return a zip filder, with returning the result of the analysis.
+
+2 video files, a json with the raw data, and a json with a short configuration.
+
+First send sample a sample video.
+
+Second send trial videos and get the respose.
+
+So an example for two sending up a sample and comparing it could be:
+
+    curl -X POST -F file=@"/mnt/c/Users/nomis/Desktop/three.mp4" -F file=@"/mnt/c/Users/nomis/Desktop/test0.json" http://208.43.39.216
+    
+    curl -X POST -F file=@"/mnt/c/Users/nomis/Desktop/four.mp4" -F file=@"/mnt/c/Users/nomis/Desktop/test1.json" http://208.43.39.216 --output response.zip
+
+With test0.json beeing
+
+    {
+      "is_sample": true,
+      "compare_to": "three.mp4"
+    }
+
+and test1.json beeing
+
+    {
+      "is_sample": false,
+      "compare_to": "three.mp4"
+    }
+
 
 ## Built With
 
