@@ -263,7 +263,23 @@ and test1.json being
       "is_sample": false,
       "compare_to": "three.mp4"
     }
-    
+
+
+## Evaluation
+In the `Backend` folder, run
+```
+ python3 evaluate.py
+```
+
+With input images compressed with parameter `QF`(in `Backend/evaluate.py`), this evaluates accuracy of pose detection in compressed images.
+
+Directory of input images can be customized in `Backend/evaluate_compression/Evaluator.py`.
+
+The accuracy is measured by 2D Euclidean distance between keypoints of uncompressed image and keypoints of compressed image.
+
+Accuracy measurement can be improved by implementing [Object Keypoint Similarity(OKS)](http://cocodataset.org/#keypoints-eval), but need additional adjustments to match the input format of the OKS API.
+
+
 
 ## Built With
 
