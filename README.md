@@ -201,7 +201,10 @@ in /path/to/file create a file called "gunicorn3.service" with the following con
    react-native run-ios
 ```
 
-WHERE TO ENTER SERVER IP
+* You can change the server address in `AIDanceCoach/.env`.
+```
+   SERVER_ENDPOINT=http://208.43.39.216:5000 #Change this address
+```
 
 ## Backend
 
