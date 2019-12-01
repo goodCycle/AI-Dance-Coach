@@ -8,12 +8,12 @@ import {
   ActivityIndicator,
 } from 'react-native';
 
-import { RNCamera } from 'react-native-camera';
-import CameraRoll from '@react-native-community/cameraroll';
-import ImagePicker from 'react-native-image-picker';
+import { RNCamera } from 'react-native-camera'; // For recording
+import CameraRoll from '@react-native-community/cameraroll'; // For accessing camera roll
+import ImagePicker from 'react-native-image-picker'; // For choosing a video in camera roll
 import Config from 'react-native-config';
-import RNFetchBlob from 'rn-fetch-blob';
-import { unzip } from 'react-native-zip-archive';
+import RNFetchBlob from 'rn-fetch-blob'; // For fetching video file and json file
+import { unzip } from 'react-native-zip-archive'; // For unzipping the result
 
 const RNFS = require('react-native-fs');
 
@@ -82,8 +82,7 @@ class CameraView extends Component {
   saveVideoToCameraRoll = async (uri) => {
     let videoUri = null;
     try {
-      videoUri = await CameraRoll.saveToCameraRoll(uri);
-      console.log('saved!', videoUri);
+      videoUri = await CameraRoll.saveToCameraRoll(uri); // Save video that is recorded
     } catch (error) {
       console.log(error.message);
     }
@@ -98,11 +97,8 @@ class CameraView extends Component {
       noCompressing: true,
     };
 
+    // Open camera roll to select video to send
     return ImagePicker.launchImageLibrary(options, (response) => {
-      // Same code as in above section!
-      console.log('SAVE!', response.uri);
-      // const source = { uri: response.uri };
-      // console.log('URI!!', source.uri);
       if (response.error) {
         console.log('ImagePicker Error: ', response.error);
       } else {
@@ -154,7 +150,6 @@ class CameraView extends Component {
         },
       ])
       .then((res) => {
-        console.log('The file saved to ', res.path());
         this.unzipResponse(res.path());
       })
       .catch((error) => {
@@ -164,7 +159,7 @@ class CameraView extends Component {
 
   unzipResponse = (resPath) => {
     const homeDir = RNFS.DocumentDirectoryPath;
-    const folder = `/AI-Dance-Coach/${Date.now()}`;
+    const folder = `/AI-Dance-Coach/${Date.now()}`; // Path where result file stored on the phone
     const storeDir = homeDir + folder;
 
     const { setOpenPoseResult } = this.props;
@@ -182,7 +177,6 @@ class CameraView extends Component {
     const { uri } = await this.camera.recordAsync();
 
     this.saveVideoToCameraRoll(uri);
-    // this.sendVideoAndConfigToServer(savedUri, codec)
     this.setState({ recording: false });
   }
 
