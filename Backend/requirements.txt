@@ -1,7 +1,7 @@
 opencv_python==4.2.0.32
 numpy==1.16.4
 Pillow==8.3.2
-Flask==1.1.1
+Flask==2.3.2
 matplotlib==3.1.2
 pycocotools==2.0.0
 pylab==0.0.1
